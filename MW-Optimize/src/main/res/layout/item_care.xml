@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="4dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="57dp"
+            android:layout_height="57dp"
+            android:background="#000000">
+
+            <ImageButton
+                android:id="@+id/care_item_status_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0000"
+                android:padding="3dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/care_item_status_textview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="28sp"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/care_item_container"
+            android:layout_width="0dp"
+            android:layout_height="57dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_light">
+
+            <TextView
+                android:id="@+id/care_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="20dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical|left"
+                android:maxLines="1"
+                android:paddingLeft="8dp"
+                android:text="准时睡觉起床"
+                android:textColor="#262626"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/care_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:paddingLeft="8dp"
+                android:text="06:00-08:00"
+                android:textColor="#000000"
+                android:textSize="10sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/care_item_title_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingRight="8dp"
+                android:text="+ 4"
+                android:textColor="#ffffff"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/care_item_goal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:paddingRight="8dp"
+                android:text="目标 : 30"
+                android:textColor="#ffffff"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

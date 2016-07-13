@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MW-Optimize/MW-Optimize.iml" filepath="$PROJECT_DIR$/MW-Optimize/MW-Optimize.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyWorld.iml" filepath="$PROJECT_DIR$/MyWorld.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MW-Optimize/mw-优化.iml" filepath="$PROJECT_DIR$/MW-Optimize/mw-优化.iml" />
+    </modules>
+  </component>
+</project>

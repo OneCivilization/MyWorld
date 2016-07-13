@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_picker_1">#f63c3c</color>
+    <color name="color_picker_2">#ed4b11</color>
+    <color name="color_picker_3">#e36c16</color>
+    <color name="color_picker_4">#ffcc00</color>
+    <color name="color_picker_5">#ff86d2</color>
+    <color name="color_picker_6">#c641ff</color>
+    <color name="color_picker_7">#4ca9ff</color>
+    <color name="color_picker_8">#3dc8dd</color>
+    <color name="color_picker_9">#72c352</color>
+    <color name="color_picker_10">#9faeb5</color>
+    <color name="color_picker_11">#75879d</color>
+    <color name="color_picker_12">#808080</color>
+
+    <color name="colorPrimary">#2a2a2a</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">@android:color/holo_blue_light</color>
+
+</resources>

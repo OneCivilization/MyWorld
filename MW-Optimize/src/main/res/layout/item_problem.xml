@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="horizontal"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="57dp"
+        android:layout_weight="1"
+        android:background="@android:color/holo_green_light">
+
+        <TextView
+            android:id="@+id/problem_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:text="任务过多"
+            android:textColor="#262626"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/problem_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingRight="13dp"
+            android:text="16"
+            android:textColor="#ffffff"
+            android:textSize="28sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

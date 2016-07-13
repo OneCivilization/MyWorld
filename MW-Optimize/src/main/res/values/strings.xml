@@ -1,0 +1,36 @@
+<resources>
+
+    <string name="app_name">MW-优化</string>
+
+    <string name="care">注意点</string>
+    <string name="problem">问题</string>
+    <string name="exit_warning">再按一次退出</string>
+    <string name="giving_up_modifies">再按一次放弃修改返回</string>
+    <string name="create_new_care_item">创建注意点</string>
+    <string name="title">标题</string>
+    <string name="description">描述</string>
+    <string name="care_type">类型：</string>
+    <string name="color">颜色：</string>
+    <string name="create">创建</string>
+    <string name="empty_title_warning">标题不能为空！</string>
+    <string name="OK">确定</string>
+
+    <string name="home">主页</string>
+    <string name="archived">已归档</string>
+    <string name="options">选项</string>
+    <string name="settings">设置</string>
+    <string name="help">帮助</string>
+    <string name="share">分享</string>
+    <string name="feedback">反馈</string>
+    <string name="about">关于</string>
+
+    <string name="sort">排序</string>
+    <string name="tips">Tips</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+</resources>
+ 
