@@ -20,28 +20,34 @@ public abstract class Care {
     protected String title = "";
     protected String descriptionTitle = "";
     protected String description = "";
+    protected long descriptionLastEditedTime = 0L;
     protected int type = 0;
     protected int state = 0;
     protected int order = 0;
     protected String category = "";
-    protected boolean isAchieved = false;
-    protected boolean isArchived = false;
     protected long createTime = 0L;
     protected long achievedTime = 0L;
     protected long archivedTime = 0L;
 
-    public Care(String title, String descriptionTitle, String description, int state, int order, String category, boolean isAchieved, boolean isArchived, long createTime, long achievedTime, long archivedTime) {
+    public Care(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int state, int order, String category, long createTime, long achievedTime, long archivedTime) {
         this.title = title;
         this.descriptionTitle = descriptionTitle;
         this.description = description;
+        this.descriptionLastEditedTime = descriptionLastEditedTime;
         this.state = state;
         this.order = order;
         this.category = category;
-        this.isAchieved = isAchieved;
-        this.isArchived = isArchived;
         this.createTime = createTime;
         this.achievedTime = achievedTime;
         this.archivedTime = archivedTime;
+    }
+
+    public long getDescriptionLastEditedTime() {
+        return descriptionLastEditedTime;
+    }
+
+    public void setDescriptionLastEditedTime(long descriptionLastEditedTime) {
+        this.descriptionLastEditedTime = descriptionLastEditedTime;
     }
 
     public String getDescriptionTitle() {
@@ -109,19 +115,11 @@ public abstract class Care {
     }
 
     public boolean isArchived() {
-        return isArchived;
-    }
-
-    public void setArchived(boolean archived) {
-        isArchived = archived;
+        return !(archivedTime == 0L);
     }
 
     public boolean isAchieved() {
-        return isAchieved;
-    }
-
-    public void setAchieved(boolean achieved) {
-        isAchieved = achieved;
+        return !(achievedTime == 0L);
     }
 
     public String getTitle() {

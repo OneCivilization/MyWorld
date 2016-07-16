@@ -81,6 +81,7 @@ public class Schema {
                 Cols.TITLE + TEXT + NOT_NULL + "," +
                 Cols.DESCRIPTION_TITLE + TEXT + "," +
                 Cols.DESCRIPTION + TEXT + "," +
+                Cols.DESCRIPTION_LAST_EDITED_TIME + INTEGER + "," +
                 Cols.ACHIEVED_TIME + INTEGER + "," +
                 Cols.COLOR + INTEGER + "," +
                 Cols.GOAL + INTEGER + "," +
@@ -98,6 +99,7 @@ public class Schema {
                 Cols.TITLE + TEXT + NOT_NULL + "," +
                 Cols.DESCRIPTION_TITLE + TEXT + "," +
                 Cols.DESCRIPTION + TEXT + "," +
+                Cols.DESCRIPTION_LAST_EDITED_TIME + INTEGER + "," +
                 Cols.ACHIEVED_TIME + INTEGER + "," +
                 Cols.ARCHIVED_TIME + INTEGER + "," +
                 Cols.CATEGORY + TEXT + "," +
@@ -116,6 +118,7 @@ public class Schema {
             public static final String TITLE = "title";
             public static final String DESCRIPTION_TITLE = "descriptionTitle";
             public static final String DESCRIPTION = "description";
+            public static final String DESCRIPTION_LAST_EDITED_TIME = "descriptionLastEditedTime";
             public static final String TYPE = "type";
             public static final String STATE = "state";
             public static final String ORDER = "'order'";

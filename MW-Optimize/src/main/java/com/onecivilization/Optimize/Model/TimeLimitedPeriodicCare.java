@@ -10,8 +10,8 @@ public class TimeLimitedPeriodicCare extends PeriodicCare {
 
     protected TimePair timePair;
 
-    public TimeLimitedPeriodicCare(String title, String descriptionTitle, String description, int state, int order, String category, boolean isAchieved, boolean isArchived, long createTime, long achievedTime, long archivedTime, int progress, int givenUp, int goal, ArrayList<Record> records, int periodUnit, int periodLength, int punishment, TimePair timePair) {
-        super(title, descriptionTitle, description, state, order, category, isAchieved, isArchived, createTime, achievedTime, archivedTime, progress, givenUp, goal, records, periodUnit, periodLength, punishment);
+    public TimeLimitedPeriodicCare(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int state, int order, String category, long createTime, long achievedTime, long archivedTime, int progress, int givenUp, int goal, ArrayList<Record> records, int periodUnit, int periodLength, int punishment, TimePair timePair) {
+        super(title, descriptionTitle, description, descriptionLastEditedTime, state, order, category, createTime, achievedTime, archivedTime, progress, givenUp, goal, records, periodUnit, periodLength, punishment);
         this.timePair = timePair;
     }
 

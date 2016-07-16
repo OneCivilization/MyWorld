@@ -29,7 +29,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private long lastBackPressedTime = 0L;
     private Toolbar toolbar;
     private TabLayout tabLayout;
-    private SectionsPagerAdapter pagerAdapter;
     private ViewPager viewPager;
     private FloatingActionButton fab;
     private DrawerLayout drawerLayout;
@@ -59,10 +58,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
 
-        pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        viewPager.setAdapter(pagerAdapter);
+        viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
 
         tabLayout.setupWithViewPager(viewPager);
 
@@ -158,9 +156,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getResources().getString(R.string.care);
+                    return getString(R.string.care);
                 case 1:
-                    return getResources().getString(R.string.problem);
+                    return getString(R.string.problem);
             }
             return null;
         }

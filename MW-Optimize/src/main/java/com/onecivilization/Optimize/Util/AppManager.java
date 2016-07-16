@@ -19,6 +19,7 @@ public class AppManager {
     public static final int DEFAULT_LANGUAGE = 0;
     public static final int CHINESE = 1;
     public static final int ENGLISH = 2;
+    public static Locale LOCALE;
 
     private static List<BaseActivity> activities = new ArrayList<>();
     private static SharedPreferences sharedPreferences;
@@ -66,7 +67,10 @@ public class AppManager {
                     sharedPreferences.edit().putInt("Language", language).apply();
                 }
                 break;
+            case DEFAULT_LANGUAGE:
+                break;
         }
+        LOCALE = config.locale;
     }
 
 }

@@ -1,7 +1,9 @@
 package com.onecivilization.Optimize.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.onecivilization.Optimize.Activity.CareDetailsActivity;
 import com.onecivilization.Optimize.Database.DataManager;
 import com.onecivilization.Optimize.Model.Care;
 import com.onecivilization.Optimize.Model.TextCare;
@@ -33,6 +36,7 @@ public class CareListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyAdapter(DataManager.getInstance(getActivity()).getCareList());
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         return view;
     }
 
@@ -63,13 +67,19 @@ public class CareListFragment extends Fragment {
             goal = (TextView) itemView.findViewById(R.id.care_item_goal);
         }
 
-        public void bindCare(Care care) {
+        public void bindCare(Care care, final int position) {
             title.setText(care.getTitle());
             switch (care.getType()) {
                 case Care.TEXT:
                     progress.setVisibility(View.GONE);
                     goal.setVisibility(View.GONE);
                     container.setBackgroundColor(((TextCare) care).getColor());
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(getActivity(), CareDetailsActivity.class).putExtra("careItemPosition", position));
+                        }
+                    });
                     break;
             }
         }
@@ -91,7 +101,7 @@ public class CareListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.bindCare(careList.get(position));
+            holder.bindCare(careList.get(position), position);
         }
 
         @Override

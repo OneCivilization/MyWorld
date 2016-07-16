@@ -16,7 +16,7 @@
     <string name="OK">确定</string>
 
     <string name="home">主页</string>
-    <string name="archived">已归档</string>
+    <string name="archive">已归档</string>
     <string name="options">选项</string>
     <string name="settings">设置</string>
     <string name="help">帮助</string>
@@ -27,10 +27,25 @@
     <string name="sort">排序</string>
     <string name="tips">Tips</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="edit_description">编辑描述</string>
+    <string name="save_changes">保存更改</string>
+    <string name="care_item_details">注意点详情</string>
+    <string name="delete">删除</string>
+    <string name="details">详情</string>
+    <string name="properties">属性</string>
+    <string name="created_at">创建于：</string>
+    <string name="existed_time">已经过：</string>
+    <string name="achieved">已达成</string>
+    <string name="unachieved">未达成</string>
+    <string name="days">天</string>
+    <string name="delete_warning">您确定要删除吗？</string>
+    <string name="cancel">取消</string>
+    <string name="edit">编辑</string>
+    <string name="edit_description_title">编辑描述标题</string>
+    <string name="save">保存</string>
 
 </resources>
  

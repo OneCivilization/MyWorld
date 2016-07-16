@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="18dp">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/description_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:lineSpacingExtra="2dp"
+            android:textColor="#404040"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/description_last_edited_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="right"
+        android:drawableRight="@drawable/edit"
+        android:gravity="right"
+        android:paddingRight="8dp"
+        android:paddingTop="18dp" />
+
+</LinearLayout>

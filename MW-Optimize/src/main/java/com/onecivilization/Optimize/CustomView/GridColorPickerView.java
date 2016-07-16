@@ -87,6 +87,15 @@ public class GridColorPickerView extends GridView {
         selectedItemPosition = position;
     }
 
+    public void setSelectionByColor(int selectedColor) {
+        for (int position = 0; position < colors.length; position++) {
+            if (getResources().getColor(colors[position]) == selectedColor) {
+                selectedItemPosition = position;
+                break;
+            }
+        }
+    }
+
     private class GridColorPickerAdapter extends BaseAdapter {
         @Override
         public int getCount() {

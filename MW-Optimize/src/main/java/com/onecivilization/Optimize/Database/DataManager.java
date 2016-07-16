@@ -27,8 +27,6 @@ public class DataManager {
 
     private DataManager(Context context) {
         db = new DatabaseOpenHelper(context).getWritableDatabase();
-        loadCareList();
-        loadProblemList();
     }
 
     public synchronized static DataManager getInstance(Context context) {
@@ -48,13 +46,13 @@ public class DataManager {
                 String title = cursor.getString(cursor.getColumnIndex(CareItemTable.Cols.TITLE));
                 String descriptionTitle = cursor.getString(cursor.getColumnIndex(CareItemTable.Cols.DESCRIPTION_TITLE));
                 String description = cursor.getString(cursor.getColumnIndex(CareItemTable.Cols.DESCRIPTION));
+                long descriptionLastEditedTime = cursor.getLong(cursor.getColumnIndex(CareItemTable.Cols.DESCRIPTION_LAST_EDITED_TIME));
                 long achievedTime = cursor.getLong(cursor.getColumnIndex(CareItemTable.Cols.ACHIEVED_TIME));
-                boolean isAchieved = (achievedTime != 0L);
                 int type = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.TYPE));
                 switch (type) {
                     case Care.TEXT:
                         int color = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.COLOR));
-                        careList.add(new TextCare(title, descriptionTitle, description, order, null, isAchieved, false, createTime, achievedTime, 0L, color));
+                        careList.add(new TextCare(title, descriptionTitle, description, descriptionLastEditedTime, order, null, createTime, achievedTime, 0L, color));
                         break;
                 }
             } while (cursor.moveToNext());
@@ -62,7 +60,8 @@ public class DataManager {
         cursor.close();
     }
 
-    public void loadProblemList() {
+    public int getMaxCareOrder() {
+        return getCareList().get(careList.size() - 1).getOrder();
     }
 
     public boolean addCareItem(Care careItem) {
@@ -72,8 +71,9 @@ public class DataManager {
             values.put(CareItemTable.Cols.TYPE, careItem.getType());
             values.put(CareItemTable.Cols.ORDER, careItem.getOrder());
             values.put(CareItemTable.Cols.TITLE, careItem.getTitle());
-            values.put(CareItemTable.Cols.DESCRIPTION, careItem.getDescriptionTitle());
+            values.put(CareItemTable.Cols.DESCRIPTION_TITLE, careItem.getDescriptionTitle());
             values.put(CareItemTable.Cols.DESCRIPTION, careItem.getDescription());
+            values.put(CareItemTable.Cols.DESCRIPTION_LAST_EDITED_TIME, careItem.getDescriptionLastEditedTime());
             values.put(CareItemTable.Cols.ACHIEVED_TIME, careItem.getAchievedTime());
             switch (careItem.getType()) {
                 case Care.TEXT:
@@ -89,8 +89,38 @@ public class DataManager {
 
     }
 
-    public boolean deleteCareItem(Care careItem) {
-        return false;
+    public boolean updateCareItem(Care careItem) {
+        try {
+            ContentValues values = new ContentValues();
+            values.put(CareItemTable.Cols.ORDER, careItem.getOrder());
+            values.put(CareItemTable.Cols.TITLE, careItem.getTitle());
+            values.put(CareItemTable.Cols.DESCRIPTION_TITLE, careItem.getDescriptionTitle());
+            values.put(CareItemTable.Cols.DESCRIPTION, careItem.getDescription());
+            values.put(CareItemTable.Cols.DESCRIPTION_LAST_EDITED_TIME, careItem.getDescriptionLastEditedTime());
+            values.put(CareItemTable.Cols.ACHIEVED_TIME, careItem.getAchievedTime());
+            switch (careItem.getType()) {
+                case Care.TEXT:
+                    values.put(CareItemTable.Cols.COLOR, ((TextCare) careItem).getColor());
+                    break;
+            }
+            db.update(CareItemTable.NAME, values, CareItemTable.Cols.CREATE_TIME + "=?", new String[]{String.valueOf(careItem.getCreateTime())});
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean deleteCareItem(int position) {
+        try {
+            db.delete(CareItemTable.NAME, CareItemTable.Cols.CREATE_TIME + "=?", new String[]{String.valueOf(getCareList().get(position).getCreateTime())});
+            careList.remove(position);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void loadProblemList() {
     }
 
     public boolean addProblemItem(Problem problemItem) {
@@ -102,6 +132,9 @@ public class DataManager {
     }
 
     public List<Care> getCareList() {
+        if (careList == null) {
+            loadCareList();
+        }
         return careList;
     }
 

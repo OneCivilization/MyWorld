@@ -7,13 +7,13 @@
     <string name="giving_up_modifies">Press again to give up and step back</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
-    <string name="care_type">Type: </string>
+    <string name="care_type">Type：</string>
     <string name="create">Create</string>
-    <string name="color">Color: </string>
+    <string name="color">Color：</string>
     <string name="empty_title_warning">Title can\'t be empty !</string>
     <string name="OK">OK</string>
     <string name="home">Home</string>
-    <string name="archived">Archived</string>
+    <string name="archive">Archive</string>
     <string name="settings">Settings</string>
     <string name="feedback">Feedback</string>
     <string name="help">Help</string>
@@ -26,6 +26,22 @@
     <string name="sort">Sort</string>
     <string name="tips">Tips</string>
     <string name="options">Options</string>
+    <string name="edit_description">Edit description</string>
+    <string name="save_changes">save changes</string>
+    <string name="care_item_details">Care item details</string>
+    <string name="delete">delete</string>
+    <string name="details">Details</string>
+    <string name="properties">Properties</string>
+    <string name="created_at">Created at：</string>
+    <string name="existed_time">Existed for：</string>
+    <string name="achieved">ACHIEVED</string>
+    <string name="unachieved">UNACHIEVED</string>
+    <string name="days">Days</string>
+    <string name="delete_warning">Are you sure you want to delete it?</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="edit_description_title">Edit description title</string>
+    <string name="save">Save</string>
 
 </resources>
  

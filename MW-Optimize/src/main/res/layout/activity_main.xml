@@ -19,13 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:elevation="2dp">
+            app:elevation="1dp">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                app:layout_scrollFlags="scroll|enterAlways"
                 app:title="@string/app_name"
                 app:titleMarginStart="20dp" />
 
@@ -33,9 +32,9 @@
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#f1f1f1"
-                app:tabSelectedTextColor="#0192d0"
-                app:tabTextAppearance="@style/myTextStyle" />
+                android:background="@color/background"
+                app:tabSelectedTextColor="@color/colorAccent"
+                app:tabTextAppearance="@style/myTabTextStyle" />
 
         </android.support.design.widget.AppBarLayout>
 

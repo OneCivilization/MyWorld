@@ -14,7 +14,7 @@ import com.onecivilization.Optimize.Database.Schema.TimePairTable;
  */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
-    private static final int VERSION = 2;
+    private static final int VERSION = 1;
     private static final String DATABASE_NAME = "MyOptimize.db";
 
     public DatabaseOpenHelper(Context context) {
@@ -36,9 +36,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         switch (oldVersion) {
-            case 1:
-                db.execSQL("alter table " + CareItemTable.NAME + " add column " + CareItemTable.Cols.DESCRIPTION_TITLE + Schema.TEXT);
-                db.execSQL("alter table " + CareItemTable.HISTORY_NAME + " add column " + CareItemTable.Cols.DESCRIPTION_TITLE + Schema.TEXT);
+
         }
     }
 

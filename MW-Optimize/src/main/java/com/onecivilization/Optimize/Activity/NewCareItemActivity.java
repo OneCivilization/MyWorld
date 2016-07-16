@@ -1,5 +1,6 @@
 package com.onecivilization.Optimize.Activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,19 +31,31 @@ public class NewCareItemActivity extends BaseActivity {
     private long lastBackPressedTime = 0L;
     private Toolbar toolbar;
     private EditText titleEditText;
+    private LinearLayout description;
     private TextView descriptionTitle;
     private Spinner typeChooser;
     private FragmentManager fragmentManager;
     private NewCareFragment newCareFragment;
     private Button createButton;
     private DataManager dataManager = DataManager.getInstance(this);
+    private String descriptionContent = "";
+    private long descriptionLastEditedTime = 0L;
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         titleEditText = (EditText) findViewById(R.id.title_editText);
+        description = (LinearLayout) findViewById(R.id.description);
         descriptionTitle = (TextView) findViewById(R.id.description_title);
         typeChooser = (Spinner) findViewById(R.id.type_chooser);
         createButton = (Button) findViewById(R.id.create_button);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -57,12 +71,13 @@ public class NewCareItemActivity extends BaseActivity {
                 .add(R.id.fragment_container, temp)
                 .commit();
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        description.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivityForResult(new Intent(NewCareItemActivity.this, DescriptionActivity.class)
+                        .putExtra("descriptionTitle", descriptionTitle.getText().toString())
+                        .putExtra("descriptionContent", descriptionContent)
+                        .putExtra("descriptionLastEditedTime", System.currentTimeMillis()), 1);
             }
         });
 
@@ -83,7 +98,6 @@ public class NewCareItemActivity extends BaseActivity {
                         Toast.makeText(NewCareItemActivity.this, position + "", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -98,9 +112,9 @@ public class NewCareItemActivity extends BaseActivity {
                     Bundle result = newCareFragment.getResult();
                     switch (result.getInt("type")) {
                         case Care.TEXT:
-                            dataManager.addCareItem(new TextCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(), "",
-                                    dataManager.getCareList().size() + 1, null, false, false,
-                                    System.currentTimeMillis(), 0L, 0L, result.getInt("color")));
+                            dataManager.addCareItem(new TextCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
+                                    descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
+                                    null, System.currentTimeMillis(), 0L, 0L, result.getInt("color")));
                             finish();
                             break;
                     }
@@ -143,4 +157,16 @@ public class NewCareItemActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    descriptionTitle.setText(data.getStringExtra("descriptionTitle"));
+                    descriptionContent = data.getStringExtra("descriptionContent");
+                    descriptionLastEditedTime = data.getLongExtra("descriptionLastEditedTime", 0L);
+                }
+                break;
+        }
+    }
 }

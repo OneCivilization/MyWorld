@@ -5,6 +5,7 @@
     android:id="@+id/new_care_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".Activity.NewCareItemActivity">
@@ -38,6 +39,7 @@
         android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -55,7 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="#f2852b">
+            android:background="@color/colorAccent">
 
             <TextView
                 android:id="@+id/description_title"
@@ -104,13 +106,15 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"></FrameLayout>
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/create_button"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:background="#a4a8bdc4"
         android:text="@string/create"
         android:textSize="20sp" />
 

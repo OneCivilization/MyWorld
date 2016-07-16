@@ -16,8 +16,8 @@ public class NonperiodicCare extends Care {
         type = NONPERIODIC;
     }
 
-    public NonperiodicCare(String title, String descriptionTitle, String description, int state, int order, String category, boolean isAchieved, boolean isArchived, long createTime, long achievedTime, long archivedTime, int goal, int progress, int givenUp, ArrayList<Record> records) {
-        super(title, descriptionTitle, description, state, order, category, isAchieved, isArchived, createTime, achievedTime, archivedTime);
+    public NonperiodicCare(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int state, int order, String category, long createTime, long achievedTime, long archivedTime, int goal, int progress, int givenUp, ArrayList<Record> records) {
+        super(title, descriptionTitle, description, descriptionLastEditedTime, state, order, category, createTime, achievedTime, archivedTime);
         this.goal = goal;
         this.progress = progress;
         this.givenUp = givenUp;
@@ -32,7 +32,7 @@ public class NonperiodicCare extends Care {
         progress++;
         records.add(new Record(System.currentTimeMillis(), true));
         if (progress >= goal) {
-            isAchieved = true;
+            achievedTime = System.currentTimeMillis();
         }
     }
 
