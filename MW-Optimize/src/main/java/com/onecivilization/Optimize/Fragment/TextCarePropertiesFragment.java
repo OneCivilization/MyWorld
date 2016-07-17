@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -30,15 +31,17 @@ public class TextCarePropertiesFragment extends Fragment {
     private ToggleButton stateButton;
     private GridColorPickerView colorPicker;
     private TextCare textCare;
+    private long achievedTime = 0L;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         textCare = (TextCare) DataManager.getInstance(getActivity()).getCareList().get(getActivity().getIntent().getIntExtra("careItemPosition", -1));
+        achievedTime = textCare.getAchievedTime();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_text_care_properties, container, false);
         createdTimeTextView = (TextView) view.findViewById(R.id.created_time);
         existedTimeTextView = (TextView) view.findViewById(R.id.existed_time);
@@ -54,19 +57,38 @@ public class TextCarePropertiesFragment extends Fragment {
         int days = (int) (new Date(yearNow, 0, 1).getTime() - new Date(yearCreated, 0, 1).getTime()) / 86400000;
         existedTimeTextView.setText(days + dayNow - dayCreated + "  " + getString(R.string.days));
         colorPicker.setSelectionByColor(textCare.getColor());
+        colorPicker.setEnabled(!textCare.isAchieved());
         stateButton.setChecked(textCare.isAchieved());
+        stateButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    colorPicker.setSelection(8);
+                    colorPicker.setEnabled(false);
+                    textCare.setAchievedTime(System.currentTimeMillis());
+                } else {
+                    colorPicker.setEnabled(true);
+                    textCare.setAchievedTime(0L);
+                }
+            }
+        });
         return view;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (stateButton.isChecked() && textCare.getAchievedTime() == 0L) {
-            textCare.setAchievedTime(System.currentTimeMillis());
+        if (stateButton.isChecked()) {
+            if (achievedTime == 0L) {
+                textCare.setAchievedTime(System.currentTimeMillis());
+            } else {
+                textCare.setAchievedTime(achievedTime);
+            }
+            textCare.setColor(getResources().getColor(R.color.color_picker_9));
         } else {
             textCare.setAchievedTime(0L);
+            textCare.setColor(colorPicker.getSelectedColor());
         }
-        textCare.setColor(colorPicker.getSelectedColor());
         DataManager.getInstance(getActivity()).updateCareItem(textCare);
     }
 }

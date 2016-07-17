@@ -57,7 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@color/colorAccent">
+            android:background="#96b2c8">
 
             <TextView
                 android:id="@+id/description_title"
@@ -66,8 +66,8 @@
                 android:layout_marginLeft="50dp"
                 android:gravity="center"
                 android:text="@string/description"
-                android:textColor="#393939"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="57dp"

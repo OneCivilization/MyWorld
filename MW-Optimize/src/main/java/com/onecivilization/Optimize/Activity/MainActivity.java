@@ -8,7 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.onecivilization.Optimize.Fragment.BlankFragment;
 import com.onecivilization.Optimize.Fragment.CareListFragment;
+import com.onecivilization.Optimize.Fragment.HistoryCareListFragment;
 import com.onecivilization.Optimize.R;
 import com.onecivilization.Optimize.Util.AppManager;
 
@@ -33,6 +34,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private FloatingActionButton fab;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private int navigationPosition = 0;
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -102,7 +104,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sort:
-                if (PreferenceManager.getDefaultSharedPreferences(this).getInt("Language", AppManager.CHINESE) == AppManager.CHINESE) {
+                if (PreferenceManager.getDefaultSharedPreferences(this).getInt("Language", AppManager.DEFAULT_LANGUAGE) == AppManager.CHINESE) {
                     AppManager.setLanguage(AppManager.ENGLISH);
                 } else {
                     AppManager.setLanguage(AppManager.CHINESE);
@@ -118,19 +120,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                toolbar.setTitle(R.string.app_name);
+                navigationPosition = 0;
+                viewPager.getAdapter().notifyDataSetChanged();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.nav_archived:
+                toolbar.setTitle(R.string.archive);
+                navigationPosition = 1;
+                viewPager.getAdapter().notifyDataSetChanged();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+        }
+        return false;
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -138,12 +145,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
+            switch (navigationPosition) {
                 case 0:
-                    return new CareListFragment();
+                    switch (position) {
+                        case 0:
+                            return new CareListFragment();
+                        case 1:
+                            return new BlankFragment();
+                    }
+                    break;
                 case 1:
-                    return new BlankFragment();
+                    switch (position) {
+                        case 0:
+                            return new HistoryCareListFragment();
+                        case 1:
+                            return new BlankFragment();
+                    }
+                    break;
             }
+
             return null;
         }
 
@@ -162,5 +182,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
             return null;
         }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
     }
+
 }

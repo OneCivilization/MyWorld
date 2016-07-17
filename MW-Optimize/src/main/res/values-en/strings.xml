@@ -42,6 +42,11 @@
     <string name="edit">Edit</string>
     <string name="edit_description_title">Edit description title</string>
     <string name="save">Save</string>
+    <string name="do_archive">Archive</string>
+    <string name="archive_confirm">Are you sure you want to archive it?</string>
+    <string name="archive_warning">The care item hasn\'t been achieved yet, are you sure you want to give up and archive it?</string>
+    <string name="give_up_confirm">Are you really sure you want to give up?</string>
+    <string name="yes">Yes</string>
 
 </resources>
  

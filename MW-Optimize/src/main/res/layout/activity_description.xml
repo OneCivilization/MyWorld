@@ -30,7 +30,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="12dp"
-        android:background="@android:color/holo_orange_dark"
+        android:background="#96b2c8"
         android:orientation="horizontal">
 
         <FrameLayout

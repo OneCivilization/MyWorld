@@ -22,4 +22,9 @@
     <color name="toggle_button_unchecked_color">#69848e</color>
     <color name="toggle_button_checked_color">#65af48</color>
 
+    <color name="state_true">#33b5e5</color>
+    <color name="state_false">#ff8800</color>
+    <color name="state_warning">#ff4444</color>
+    <color name="state_achieved">#72c352</color>
+
 </resources>

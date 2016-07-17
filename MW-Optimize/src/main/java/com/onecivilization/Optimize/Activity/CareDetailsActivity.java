@@ -55,7 +55,6 @@ public class CareDetailsActivity extends BaseActivity {
         });
         viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
-        viewPager.setCurrentItem(1);
         careItemTitle.setText(care.getTitle());
     }
 
@@ -63,7 +62,7 @@ public class CareDetailsActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         String title = careItemTitle.getText().toString();
-        if (!title.equals(care.getTitle())) {
+        if (!title.equals(care.getTitle()) && !title.equals("")) {
             care.setTitle(title);
             DataManager.getInstance(this).updateCareItem(care);
         }
@@ -90,6 +89,40 @@ public class CareDetailsActivity extends BaseActivity {
                         })
                         .setNegativeButton(R.string.cancel, null)
                         .create().show();
+                return true;
+            case R.id.action_archive:
+
+                if (care.isAchieved()) {
+                    new AlertDialog.Builder(this)
+                            .setTitle(R.string.archive_confirm)
+                            .setPositiveButton(R.string.do_archive, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DataManager.getInstance(CareDetailsActivity.this).archiveCareItem(getIntent().getIntExtra("careItemPosition", -1));
+                                    finish();
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, null).create().show();
+                } else {
+                    new AlertDialog.Builder(this)
+                            .setMessage(R.string.archive_warning)
+                            .setPositiveButton(R.string.do_archive, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    new AlertDialog.Builder(CareDetailsActivity.this)
+                                            .setTitle(R.string.give_up_confirm)
+                                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    DataManager.getInstance(CareDetailsActivity.this).archiveCareItem(getIntent().getIntExtra("careItemPosition", -1));
+                                                    finish();
+                                                }
+                                            })
+                                            .setNegativeButton(R.string.cancel, null).create().show();
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, null).create().show();
+                }
                 return true;
             case R.id.action_tips:
                 return true;

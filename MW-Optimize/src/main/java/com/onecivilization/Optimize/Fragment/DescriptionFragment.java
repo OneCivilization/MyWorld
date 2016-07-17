@@ -25,7 +25,7 @@ import java.util.Date;
  */
 public class DescriptionFragment extends Fragment {
 
-    private TextView descriptionContent;
+    private EditText descriptionContent;
     private TextView descriptionLastedEditedTime;
     private Care care;
     private String descriptionTitle;

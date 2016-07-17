@@ -67,21 +67,36 @@ public class CareListFragment extends Fragment {
             goal = (TextView) itemView.findViewById(R.id.care_item_goal);
         }
 
-        public void bindCare(Care care, final int position) {
+        public void bindCare(final Care care, final int position) {
             title.setText(care.getTitle());
             switch (care.getType()) {
                 case Care.TEXT:
                     progress.setVisibility(View.GONE);
                     goal.setVisibility(View.GONE);
                     container.setBackgroundColor(((TextCare) care).getColor());
-                    itemView.setOnClickListener(new View.OnClickListener() {
+                    if (care.isAchieved()) {
+                        statusImageButton.setImageResource(R.drawable.state_true);
+                    } else {
+                        statusImageButton.setImageResource(0);
+                    }
+                    statusImageButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(getActivity(), CareDetailsActivity.class).putExtra("careItemPosition", position));
+                            statusImageButton.setImageResource(care.isAchieved() ? 0 : R.drawable.state_true);
+                            care.setAchievedTime(care.isAchieved() ? 0L : System.currentTimeMillis());
+                            ((TextCare) care).setColor(getResources().getColor(R.color.state_achieved));
+                            container.setBackgroundColor(((TextCare) care).getColor());
+                            DataManager.getInstance(getActivity()).updateCareItem(care);
                         }
                     });
                     break;
             }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), CareDetailsActivity.class).putExtra("careItemPosition", position));
+                }
+            });
         }
 
     }
