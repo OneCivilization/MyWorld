@@ -39,7 +39,7 @@ public class NewCareItemActivity extends BaseActivity {
     private Button createButton;
     private DataManager dataManager = DataManager.getInstance(this);
     private String descriptionContent = "";
-    private long descriptionLastEditedTime = 0L;
+    private long descriptionLastEditedTime = System.currentTimeMillis();
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -114,7 +114,7 @@ public class NewCareItemActivity extends BaseActivity {
                         case Care.TEXT:
                             dataManager.addCareItem(new TextCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                                     descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
-                                    null, System.currentTimeMillis(), 0L, 0L, result.getInt("color")));
+                                    System.currentTimeMillis(), result.getInt("color")));
                             finish();
                             break;
                     }
@@ -133,7 +133,7 @@ public class NewCareItemActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
         return true;
     }
 
@@ -141,6 +141,21 @@ public class NewCareItemActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_tips:
+                return true;
+            case R.id.action_save_changes:
+                if (titleEditText.getText().toString().equals("")) {
+                    Toast.makeText(this, R.string.empty_title_warning, Toast.LENGTH_SHORT).show();
+                } else {
+                    Bundle result = newCareFragment.getResult();
+                    switch (result.getInt("type")) {
+                        case Care.TEXT:
+                            dataManager.addCareItem(new TextCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
+                                    descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
+                                    System.currentTimeMillis(), result.getInt("color")));
+                            finish();
+                            break;
+                    }
+                }
                 return true;
         }
         return false;

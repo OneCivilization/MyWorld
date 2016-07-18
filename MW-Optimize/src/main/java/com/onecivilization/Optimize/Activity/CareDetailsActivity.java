@@ -80,7 +80,7 @@ public class CareDetailsActivity extends BaseActivity {
             case R.id.action_delete:
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.delete_warning)
-                        .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 DataManager.getInstance(CareDetailsActivity.this).deleteCareItem(getIntent().getIntExtra("careItemPosition", -1));
@@ -95,7 +95,7 @@ public class CareDetailsActivity extends BaseActivity {
                 if (care.isAchieved()) {
                     new AlertDialog.Builder(this)
                             .setTitle(R.string.archive_confirm)
-                            .setPositiveButton(R.string.do_archive, new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     DataManager.getInstance(CareDetailsActivity.this).archiveCareItem(getIntent().getIntExtra("careItemPosition", -1));
@@ -106,7 +106,7 @@ public class CareDetailsActivity extends BaseActivity {
                 } else {
                     new AlertDialog.Builder(this)
                             .setMessage(R.string.archive_warning)
-                            .setPositiveButton(R.string.do_archive, new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     new AlertDialog.Builder(CareDetailsActivity.this)

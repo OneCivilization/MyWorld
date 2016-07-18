@@ -7,10 +7,23 @@ public class TextCare extends Care {
 
     private int color;
 
-    public TextCare(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int order, String category, long createTime, long achievedTime, long archivedTime, int color) {
-        super(title, descriptionTitle, description, descriptionLastEditedTime, STATE_NONE, order, category, createTime, achievedTime, archivedTime);
-        this.color = color;
+    {
         type = TEXT;
+    }
+
+    public TextCare(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int order, long createTime, int color) {
+        super(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime);
+        this.color = color;
+    }
+
+    public TextCare(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int order, long createTime, long achievedTime, int color) {
+        super(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime, achievedTime);
+        this.color = color;
+    }
+
+    public TextCare(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int order, long createTime, long achievedTime, long archivedTime, int color) {
+        super(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime, achievedTime, archivedTime);
+        this.color = color;
     }
 
     public int getColor() {

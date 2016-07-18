@@ -1,5 +1,6 @@
 package com.onecivilization.Optimize.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,9 +13,9 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.onecivilization.Optimize.Activity.HistoryCareDetailsActivity;
 import com.onecivilization.Optimize.Database.DataManager;
 import com.onecivilization.Optimize.Model.Care;
-import com.onecivilization.Optimize.Model.TextCare;
 import com.onecivilization.Optimize.R;
 
 import java.text.SimpleDateFormat;
@@ -72,16 +73,23 @@ public class HistoryCareListFragment extends Fragment {
             goal.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date(care.getArchivedTime())));
             switch (care.getType()) {
                 case Care.TEXT:
-                    container.setBackgroundColor(((TextCare) care).getColor());
                     if (care.isAchieved()) {
                         progress.setText("100%");
+                        container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
                         statusImageButton.setImageResource(R.drawable.state_true);
                     } else {
                         progress.setText("0%");
+                        container.setBackgroundColor(getResources().getColor(R.color.state_warning));
                         statusImageButton.setImageResource(R.drawable.state_false);
                     }
                     break;
             }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), HistoryCareDetailsActivity.class).putExtra("careItemPosition", position));
+                }
+            });
         }
 
     }

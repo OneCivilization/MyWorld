@@ -13,7 +13,7 @@
     <string name="color">颜色：</string>
     <string name="create">创建</string>
     <string name="empty_title_warning">标题不能为空！</string>
-    <string name="OK">确定</string>
+    <string name="confirm">确定</string>
 
     <string name="home">主页</string>
     <string name="archive">已归档</string>
@@ -51,6 +51,12 @@
     <string name="archive_confirm">您确定要归档吗？</string>
     <string name="give_up_confirm">你真的要放弃吗？</string>
     <string name="yes">是的</string>
+    <string name="unarchive_warning">您确定要取消归档吗？</string>
+    <string name="unarchive_tip">欢迎回来！这次可不要放弃了呦~</string>
+    <string name="ok">好的</string>
+    <string name="lasted_time">持续时间：</string>
+    <string name="achieved_at">达成于：</string>
+    <string name="archived_at">归档于：</string>
 
 </resources>
  

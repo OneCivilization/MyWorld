@@ -23,7 +23,7 @@ public class PeriodicCare extends Care {
     protected int punishment = 1;
 
     public PeriodicCare(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int state, int order, String category, long createTime, long achievedTime, long archivedTime, int progress, int givenUp, int goal, ArrayList<Record> records, int periodUnit, int periodLength, int punishment) {
-        super(title, descriptionTitle, description, descriptionLastEditedTime, state, order, category, createTime, achievedTime, archivedTime);
+        super(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime, achievedTime, archivedTime);
         this.progress = progress;
         this.givenUp = givenUp;
         this.goal = goal;

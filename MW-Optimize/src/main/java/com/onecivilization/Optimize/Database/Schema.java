@@ -76,7 +76,6 @@ public class Schema {
         public static final String CREATE_STATEMENT = CREATE_TABLE + NAME + "(" +
                 Cols.CREATE_TIME + INTEGER + PRIMARY_KEY + "," +
                 Cols.TYPE + INTEGER + NOT_NULL + "," +
-                Cols.STATE + INTEGER + "," +
                 Cols.ORDER + INTEGER + "," +
                 Cols.TITLE + TEXT + NOT_NULL + "," +
                 Cols.DESCRIPTION_TITLE + TEXT + "," +
@@ -102,7 +101,6 @@ public class Schema {
                 Cols.DESCRIPTION_LAST_EDITED_TIME + INTEGER + "," +
                 Cols.ACHIEVED_TIME + INTEGER + "," +
                 Cols.ARCHIVED_TIME + INTEGER + "," +
-                Cols.CATEGORY + TEXT + "," +
                 Cols.COLOR + INTEGER + "," +
                 Cols.GOAL + INTEGER + "," +
                 Cols.PROGRESS + INTEGER + "," +
@@ -120,7 +118,6 @@ public class Schema {
             public static final String DESCRIPTION = "description";
             public static final String DESCRIPTION_LAST_EDITED_TIME = "descriptionLastEditedTime";
             public static final String TYPE = "type";
-            public static final String STATE = "state";
             public static final String ORDER = "'order'";
             public static final String ACHIEVED_TIME = "achievedTime";
             public static final String CREATE_TIME = "createTime";
@@ -134,7 +131,6 @@ public class Schema {
             public static final String SUB_GOAL = "subGoal";
             public static final String SUB_PROGRESS = "subProgress";
 
-            public static final String CATEGORY = "category";
             public static final String ARCHIVED_TIME = "archivedTime";
         }
     }

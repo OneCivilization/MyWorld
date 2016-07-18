@@ -81,8 +81,7 @@ public class DescriptionActivity extends BaseActivity {
         setResult(RESULT_OK, new Intent()
                 .putExtra("descriptionTitle", description_title.getText().toString())
                 .putExtra("descriptionContent", description_content.getText().toString())
-                .putExtra("descriptionLastEditedTime", description_content_text.equals(description_content.getText().toString())
-                        ? descriptionLastEditedTime : System.currentTimeMillis())
+                .putExtra("descriptionLastEditedTime", System.currentTimeMillis())
         );
     }
 

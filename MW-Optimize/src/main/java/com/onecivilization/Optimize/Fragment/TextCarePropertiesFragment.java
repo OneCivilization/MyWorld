@@ -50,13 +50,19 @@ public class TextCarePropertiesFragment extends Fragment {
         createdTimeTextView.setText(SimpleDateFormat.getDateInstance(DateFormat.LONG, AppManager.LOCALE).format(new Date(textCare.getCreateTime())));
         Calendar calendar = Calendar.getInstance();
         int dayNow = calendar.get(Calendar.DAY_OF_YEAR);
-        int yearCreated = calendar.get(Calendar.YEAR);
-        calendar.setTimeInMillis(textCare.getCreateTime());
+        int monthNow = calendar.get(Calendar.MONTH);
         int yearNow = calendar.get(Calendar.YEAR);
+        calendar.setTimeInMillis(textCare.getCreateTime());
+        int yearCreated = calendar.get(Calendar.YEAR);
+        int monthCreated = calendar.get(Calendar.MONTH);
         int dayCreated = calendar.get(Calendar.DAY_OF_YEAR);
-        int days = (int) (new Date(yearNow, 0, 1).getTime() - new Date(yearCreated, 0, 1).getTime()) / 86400000;
-        existedTimeTextView.setText(days + dayNow - dayCreated + "  " + getString(R.string.days));
-        colorPicker.setSelectionByColor(textCare.getColor());
+        int days = (int) (new Date(yearNow, monthNow, dayNow).getTime() - new Date(yearCreated, monthCreated, dayCreated).getTime()) / 86400000;
+        existedTimeTextView.setText(days + "  " + getString(R.string.days));
+        if (textCare.isAchieved()) {
+            colorPicker.setSelection(8);
+        } else {
+            colorPicker.setSelectionByColor(textCare.getColor());
+        }
         colorPicker.setEnabled(!textCare.isAchieved());
         stateButton.setChecked(textCare.isAchieved());
         stateButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -68,6 +74,7 @@ public class TextCarePropertiesFragment extends Fragment {
                     textCare.setAchievedTime(System.currentTimeMillis());
                 } else {
                     colorPicker.setEnabled(true);
+                    colorPicker.setSelectionByColor(textCare.getColor());
                     textCare.setAchievedTime(0L);
                 }
             }
@@ -84,7 +91,6 @@ public class TextCarePropertiesFragment extends Fragment {
             } else {
                 textCare.setAchievedTime(achievedTime);
             }
-            textCare.setColor(getResources().getColor(R.color.color_picker_9));
         } else {
             textCare.setAchievedTime(0L);
             textCare.setColor(colorPicker.getSelectedColor());

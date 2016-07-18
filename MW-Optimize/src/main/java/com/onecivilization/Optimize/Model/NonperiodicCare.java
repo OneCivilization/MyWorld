@@ -17,7 +17,7 @@ public class NonperiodicCare extends Care {
     }
 
     public NonperiodicCare(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int state, int order, String category, long createTime, long achievedTime, long archivedTime, int goal, int progress, int givenUp, ArrayList<Record> records) {
-        super(title, descriptionTitle, description, descriptionLastEditedTime, state, order, category, createTime, achievedTime, archivedTime);
+        super(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime, achievedTime, archivedTime);
         this.goal = goal;
         this.progress = progress;
         this.givenUp = givenUp;

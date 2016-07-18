@@ -125,12 +125,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 toolbar.setTitle(R.string.app_name);
                 navigationPosition = 0;
                 viewPager.getAdapter().notifyDataSetChanged();
+                fab.setVisibility(View.VISIBLE);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_archived:
                 toolbar.setTitle(R.string.archive);
                 navigationPosition = 1;
                 viewPager.getAdapter().notifyDataSetChanged();
+                fab.setVisibility(View.GONE);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
         }

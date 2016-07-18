@@ -11,7 +11,7 @@
     <string name="create">Create</string>
     <string name="color">Color：</string>
     <string name="empty_title_warning">Title can\'t be empty !</string>
-    <string name="OK">OK</string>
+    <string name="confirm">Yes</string>
     <string name="home">Home</string>
     <string name="archive">Archive</string>
     <string name="settings">Settings</string>
@@ -47,6 +47,12 @@
     <string name="archive_warning">The care item hasn\'t been achieved yet, are you sure you want to give up and archive it?</string>
     <string name="give_up_confirm">Are you really sure you want to give up?</string>
     <string name="yes">Yes</string>
+    <string name="unarchive_warning">Are you sure you want to unarchive?</string>
+    <string name="unarchive_tip">Welcome back! And please don\'t give up this time~</string>
+    <string name="ok">OK</string>
+    <string name="lasted_time">Lasted time：</string>
+    <string name="achieved_at">Achieved at:</string>
+    <string name="archived_at">Archived at：</string>
 
 </resources>
  

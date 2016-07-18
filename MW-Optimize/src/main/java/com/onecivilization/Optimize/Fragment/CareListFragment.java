@@ -73,7 +73,11 @@ public class CareListFragment extends Fragment {
                 case Care.TEXT:
                     progress.setVisibility(View.GONE);
                     goal.setVisibility(View.GONE);
-                    container.setBackgroundColor(((TextCare) care).getColor());
+                    if (care.isAchieved()) {
+                        container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
+                    } else {
+                        container.setBackgroundColor(((TextCare) care).getColor());
+                    }
                     if (care.isAchieved()) {
                         statusImageButton.setImageResource(R.drawable.state_true);
                     } else {
@@ -82,10 +86,15 @@ public class CareListFragment extends Fragment {
                     statusImageButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            statusImageButton.setImageResource(care.isAchieved() ? 0 : R.drawable.state_true);
-                            care.setAchievedTime(care.isAchieved() ? 0L : System.currentTimeMillis());
-                            ((TextCare) care).setColor(getResources().getColor(R.color.state_achieved));
-                            container.setBackgroundColor(((TextCare) care).getColor());
+                            if (care.isAchieved()) {
+                                statusImageButton.setImageResource(0);
+                                care.setAchievedTime(0L);
+                                container.setBackgroundColor(((TextCare) care).getColor());
+                            } else {
+                                statusImageButton.setImageResource(R.drawable.state_true);
+                                care.setAchievedTime(System.currentTimeMillis());
+                                container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
+                            }
                             DataManager.getInstance(getActivity()).updateCareItem(care);
                         }
                     });

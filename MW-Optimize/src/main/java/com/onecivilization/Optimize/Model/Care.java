@@ -22,21 +22,36 @@ public abstract class Care {
     protected String description = "";
     protected long descriptionLastEditedTime = 0L;
     protected int type = 0;
-    protected int state = 0;
     protected int order = 0;
-    protected String category = "";
     protected long createTime = 0L;
     protected long achievedTime = 0L;
     protected long archivedTime = 0L;
 
-    public Care(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int state, int order, String category, long createTime, long achievedTime, long archivedTime) {
+    public Care(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int order, long createTime) {
         this.title = title;
         this.descriptionTitle = descriptionTitle;
         this.description = description;
         this.descriptionLastEditedTime = descriptionLastEditedTime;
-        this.state = state;
         this.order = order;
-        this.category = category;
+        this.createTime = createTime;
+    }
+
+    public Care(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int order, long createTime, long achievedTime) {
+        this.title = title;
+        this.descriptionTitle = descriptionTitle;
+        this.description = description;
+        this.descriptionLastEditedTime = descriptionLastEditedTime;
+        this.order = order;
+        this.createTime = createTime;
+        this.achievedTime = achievedTime;
+    }
+
+    public Care(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int order, long createTime, long achievedTime, long archivedTime) {
+        this.title = title;
+        this.descriptionTitle = descriptionTitle;
+        this.description = description;
+        this.descriptionLastEditedTime = descriptionLastEditedTime;
+        this.order = order;
         this.createTime = createTime;
         this.achievedTime = achievedTime;
         this.archivedTime = archivedTime;
@@ -66,28 +81,12 @@ public abstract class Care {
         this.order = order;
     }
 
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
     public long getAchievedTime() {
         return achievedTime;
     }
 
     public void setAchievedTime(long achievedTime) {
         this.achievedTime = achievedTime;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public long getArchivedTime() {
@@ -102,20 +101,12 @@ public abstract class Care {
         return createTime;
     }
 
-    public void setCreateTime(long createTime) {
-        this.createTime = createTime;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public boolean isArchived() {
-        return !(archivedTime == 0L);
     }
 
     public boolean isAchieved() {
@@ -134,7 +125,4 @@ public abstract class Care {
         return type;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
 }

@@ -92,7 +92,7 @@
                 android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:paddingBottom="2dp"
-                android:paddingRight="8dp"
+                android:paddingRight="9dp"
                 android:text="目标 : 30"
                 android:textColor="#000000"
                 android:textSize="10sp" />

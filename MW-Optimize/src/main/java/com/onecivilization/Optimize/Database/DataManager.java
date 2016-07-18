@@ -1,5 +1,6 @@
 package com.onecivilization.Optimize.Database;
 
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by CGZ on 2016/7/10.
  */
-public class DataManager {
+public class DataManager extends Application {
 
     private static DataManager dataManager;
     private SQLiteDatabase db;
@@ -52,7 +53,7 @@ public class DataManager {
                 switch (type) {
                     case Care.TEXT:
                         int color = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.COLOR));
-                        careList.add(new TextCare(title, descriptionTitle, description, descriptionLastEditedTime, order, null, createTime, achievedTime, 0L, color));
+                        careList.add(new TextCare(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime, achievedTime, color));
                         break;
                 }
             } while (cursor.moveToNext());
@@ -76,7 +77,7 @@ public class DataManager {
                 switch (type) {
                     case Care.TEXT:
                         int color = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.COLOR));
-                        historyCareList.add(new TextCare(title, descriptionTitle, description, descriptionLastEditedTime, 0, null, createTime, achievedTime, archivedTime, color));
+                        historyCareList.add(new TextCare(title, descriptionTitle, description, descriptionLastEditedTime, 0, createTime, achievedTime, archivedTime, color));
                         break;
                 }
             } while (cursor.moveToNext());
@@ -89,10 +90,6 @@ public class DataManager {
             loadCareList();
         }
         return careList;
-    }
-
-    public void setCareList(List<Care> CareList) {
-        careList = CareList;
     }
 
     public List<Care> getHistoryCareList() {
@@ -163,10 +160,21 @@ public class DataManager {
         }
     }
 
+    public boolean deleteHistoryCareItem(int position) {
+        try {
+            db.delete(CareItemTable.HISTORY_NAME, CareItemTable.Cols.CREATE_TIME + "=?", new String[]{String.valueOf(getHistoryCareList().get(position).getCreateTime())});
+            historyCareList.remove(position);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public boolean archiveCareItem(int position) {
         try {
             Care careItem = getCareList().get(position);
             careItem.setArchivedTime(System.currentTimeMillis());
+            ((ArrayList) getHistoryCareList()).add(0, careItem);
             ContentValues values = new ContentValues();
             values.put(CareItemTable.Cols.CREATE_TIME, careItem.getCreateTime());
             values.put(CareItemTable.Cols.TYPE, careItem.getType());
@@ -182,8 +190,20 @@ public class DataManager {
                     break;
             }
             db.insert(CareItemTable.HISTORY_NAME, null, values);
-            ((ArrayList) getHistoryCareList()).add(0, careItem);
             deleteCareItem(position);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean unarchiveCareItem(int position) {
+        try {
+            Care careItem = getHistoryCareList().get(position);
+            careItem.setArchivedTime(0L);
+            careItem.setOrder(getMaxCareOrder() + 1);
+            addCareItem(careItem);
+            deleteHistoryCareItem(position);
             return true;
         } catch (Exception e) {
             return false;

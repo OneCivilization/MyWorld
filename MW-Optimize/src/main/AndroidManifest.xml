@@ -17,6 +17,7 @@
         <activity android:name=".Activity.NewCareItemActivity" />
         <activity android:name=".Activity.DescriptionActivity" />
         <activity android:name=".Activity.CareDetailsActivity" />
+        <activity android:name=".Activity.HistoryCareDetailsActivity" />
     </application>
 
 </manifest>
