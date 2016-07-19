@@ -51,8 +51,10 @@
     <string name="unarchive_tip">Welcome back! And please don\'t give up this time~</string>
     <string name="ok">OK</string>
     <string name="lasted_time">Lasted time：</string>
-    <string name="achieved_at">Achieved at:</string>
+    <string name="achieved_at">Achieved at：</string>
     <string name="archived_at">Archived at：</string>
+    <string name="goal">Goal：</string>
+    <string name="punishment">Punishment：</string>
 
 </resources>
  

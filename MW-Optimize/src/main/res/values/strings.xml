@@ -57,6 +57,8 @@
     <string name="lasted_time">持续时间：</string>
     <string name="achieved_at">达成于：</string>
     <string name="archived_at">归档于：</string>
+    <string name="goal">目标：</string>
+    <string name="punishment">惩罚：</string>
 
 </resources>
  

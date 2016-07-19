@@ -20,9 +20,11 @@ import android.widget.Toast;
 
 import com.onecivilization.Optimize.Database.DataManager;
 import com.onecivilization.Optimize.Fragment.BlankFragment;
+import com.onecivilization.Optimize.Fragment.NewNonperiodicCareFragment;
 import com.onecivilization.Optimize.Fragment.NewTextCareFragment;
 import com.onecivilization.Optimize.Interface.NewCareFragment;
 import com.onecivilization.Optimize.Model.Care;
+import com.onecivilization.Optimize.Model.NonperiodicCare;
 import com.onecivilization.Optimize.Model.TextCare;
 import com.onecivilization.Optimize.R;
 
@@ -64,13 +66,6 @@ public class NewCareItemActivity extends BaseActivity {
         setContentView(R.layout.activity_new_care_item);
         findViews();
 
-        fragmentManager = getSupportFragmentManager();
-        NewTextCareFragment temp = new NewTextCareFragment();
-        newCareFragment = temp;
-        fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, temp)
-                .commit();
-
         description.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +77,7 @@ public class NewCareItemActivity extends BaseActivity {
         });
 
         typeChooser.setAdapter(new ArrayAdapter<String>(this, R.layout.item_type, getResources().getStringArray(R.array.care_item_types)));
+        typeChooser.setSelection(1);
         typeChooser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -93,6 +89,9 @@ public class NewCareItemActivity extends BaseActivity {
                     case 0:
                         replaceFragment(new NewTextCareFragment());
                         break;
+                    case 1:
+                        replaceFragment(new NewNonperiodicCareFragment());
+                        break;
                     default:
                         replaceFragment(new BlankFragment());
                         Toast.makeText(NewCareItemActivity.this, position + "", Toast.LENGTH_SHORT).show();
@@ -102,6 +101,13 @@ public class NewCareItemActivity extends BaseActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        fragmentManager = getSupportFragmentManager();
+        NewNonperiodicCareFragment temp = new NewNonperiodicCareFragment();
+        newCareFragment = temp;
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, temp)
+                .commit();
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +121,12 @@ public class NewCareItemActivity extends BaseActivity {
                             dataManager.addCareItem(new TextCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                                     descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
                                     System.currentTimeMillis(), result.getInt("color")));
+                            finish();
+                            break;
+                        case Care.NONPERIODIC:
+                            dataManager.addCareItem(new NonperiodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
+                                    descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
+                                    System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1)));
                             finish();
                             break;
                     }
@@ -152,6 +164,12 @@ public class NewCareItemActivity extends BaseActivity {
                             dataManager.addCareItem(new TextCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                                     descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
                                     System.currentTimeMillis(), result.getInt("color")));
+                            finish();
+                            break;
+                        case Care.NONPERIODIC:
+                            dataManager.addCareItem(new NonperiodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
+                                    descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
+                                    System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1)));
                             finish();
                             break;
                     }

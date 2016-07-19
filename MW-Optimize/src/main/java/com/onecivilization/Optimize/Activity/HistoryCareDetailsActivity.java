@@ -128,6 +128,13 @@ public class HistoryCareDetailsActivity extends BaseActivity {
                         case 1:
                             return new HistoryTextCarePropertiesFragment();
                     }
+                    break;
+                case Care.NONPERIODIC:
+                    switch (position) {
+                        case 0:
+                            return new HistoryDescriptionFragment();
+                    }
+                    break;
             }
             return null;
         }
@@ -137,17 +144,29 @@ public class HistoryCareDetailsActivity extends BaseActivity {
             switch (care.getType()) {
                 case Care.TEXT:
                     return 2;
+                case Care.NONPERIODIC:
+                    return 1;
             }
             return 0;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return care.getDescriptionTitle();
-                case 1:
-                    return getString(R.string.properties);
+            switch (care.getType()) {
+                case Care.TEXT:
+                    switch (position) {
+                        case 0:
+                            return care.getDescriptionTitle();
+                        case 1:
+                            return getString(R.string.properties);
+                    }
+                    break;
+                case Care.NONPERIODIC:
+                    switch (position) {
+                        case 0:
+                            return care.getDescriptionTitle();
+                    }
+                    break;
             }
             return null;
         }

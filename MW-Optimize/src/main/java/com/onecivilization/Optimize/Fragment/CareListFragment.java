@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.onecivilization.Optimize.Activity.CareDetailsActivity;
 import com.onecivilization.Optimize.Database.DataManager;
 import com.onecivilization.Optimize.Model.Care;
+import com.onecivilization.Optimize.Model.NonperiodicCare;
 import com.onecivilization.Optimize.Model.TextCare;
 import com.onecivilization.Optimize.R;
 
@@ -98,6 +99,34 @@ public class CareListFragment extends Fragment {
                             DataManager.getInstance(getActivity()).updateCareItem(care);
                         }
                     });
+                    break;
+                case Care.NONPERIODIC:
+                    NonperiodicCare careItem = (NonperiodicCare) care;
+                    int Progress = careItem.getProgress();
+                    String sign;
+                    if (Progress > 0) {
+                        sign = "+ ";
+                    } else if (Progress == 0) {
+                        sign = "";
+                    } else {
+                        sign = "- ";
+                    }
+                    progress.setText(sign + careItem.getProgress());
+                    goal.setText(getString(R.string.goal) + careItem.getGoal());
+                    switch (careItem.getState()) {
+                        case Care.STATE_UNDONE:
+                            statusImageButton.setImageResource(R.drawable.state_nonperiodic);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_false));
+                            break;
+                        case Care.STATE_DONE:
+                            statusImageButton.setImageResource(R.drawable.state_true);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_true));
+                            break;
+                        case Care.STATE_MINUS:
+                            statusImageButton.setImageResource(R.drawable.state_false);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                            break;
+                    }
                     break;
             }
             itemView.setOnClickListener(new View.OnClickListener() {

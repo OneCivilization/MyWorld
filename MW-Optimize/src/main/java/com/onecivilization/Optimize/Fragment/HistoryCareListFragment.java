@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.onecivilization.Optimize.Activity.HistoryCareDetailsActivity;
 import com.onecivilization.Optimize.Database.DataManager;
 import com.onecivilization.Optimize.Model.Care;
+import com.onecivilization.Optimize.Model.NonperiodicCare;
 import com.onecivilization.Optimize.R;
 
 import java.text.SimpleDateFormat;
@@ -81,6 +82,24 @@ public class HistoryCareListFragment extends Fragment {
                         progress.setText("0%");
                         container.setBackgroundColor(getResources().getColor(R.color.state_warning));
                         statusImageButton.setImageResource(R.drawable.state_false);
+                    }
+                    break;
+                case Care.NONPERIODIC:
+                    NonperiodicCare careItem = (NonperiodicCare) care;
+                    int percentage = (int) careItem.getPercentage();
+                    progress.setText(percentage + "%");
+                    if (percentage <= 0) {
+                        container.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                        statusImageButton.setImageResource(R.drawable.state_false);
+                    } else if (percentage < 60) {
+                        container.setBackgroundColor(getResources().getColor(R.color.state_false));
+                        statusImageButton.setImageResource(R.drawable.state_unachieved);
+                    } else if (percentage < 100) {
+                        container.setBackgroundColor(getResources().getColor(R.color.state_true));
+                        statusImageButton.setImageResource(R.drawable.state_unachieved);
+                    } else {
+                        container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
+                        statusImageButton.setImageResource(R.drawable.state_true);
                     }
                     break;
             }

@@ -13,6 +13,7 @@ public class Schema {
     public static final String PRIMARY_KEY = " primary key";
     public static final String AUTOINCREMENT = " autoincrement";
     public static final String NOT_NULL = " not null";
+    public static final String UNIQUE = " unique";
     public static final String PRIMARY_KEY_ = "primary key";
     public static final String FOREIGN_KEY = "foreign key(";
     public static final String REFERENCES = ") references ";
@@ -76,7 +77,7 @@ public class Schema {
         public static final String CREATE_STATEMENT = CREATE_TABLE + NAME + "(" +
                 Cols.CREATE_TIME + INTEGER + PRIMARY_KEY + "," +
                 Cols.TYPE + INTEGER + NOT_NULL + "," +
-                Cols.ORDER + INTEGER + "," +
+                Cols.ORDER + INTEGER + UNIQUE + "," +
                 Cols.TITLE + TEXT + NOT_NULL + "," +
                 Cols.DESCRIPTION_TITLE + TEXT + "," +
                 Cols.DESCRIPTION + TEXT + "," +
@@ -84,11 +85,10 @@ public class Schema {
                 Cols.ACHIEVED_TIME + INTEGER + "," +
                 Cols.COLOR + INTEGER + "," +
                 Cols.GOAL + INTEGER + "," +
-                Cols.PROGRESS + INTEGER + "," +
-                Cols.GIVEN_UP + INTEGER + "," +
+                Cols.PUNISHMENT + INTEGER + "," +
+                Cols.MODIFIED + INTEGER + "," +
                 Cols.PERIOD_UNIT + INTEGER + "," +
                 Cols.PERIOD_LENGTH + INTEGER + "," +
-                Cols.PUNISHMENT + INTEGER + "," +
                 Cols.SUB_GOAL + INTEGER + "," +
                 Cols.SUB_PROGRESS + INTEGER +
                 ")";
@@ -103,11 +103,10 @@ public class Schema {
                 Cols.ARCHIVED_TIME + INTEGER + "," +
                 Cols.COLOR + INTEGER + "," +
                 Cols.GOAL + INTEGER + "," +
-                Cols.PROGRESS + INTEGER + "," +
-                Cols.GIVEN_UP + INTEGER + "," +
+                Cols.PUNISHMENT + INTEGER + "," +
+                Cols.MODIFIED + INTEGER + "," +
                 Cols.PERIOD_UNIT + INTEGER + "," +
                 Cols.PERIOD_LENGTH + INTEGER + "," +
-                Cols.PUNISHMENT + INTEGER + "," +
                 Cols.SUB_GOAL + INTEGER + "," +
                 Cols.SUB_PROGRESS + INTEGER +
                 ")";
@@ -118,16 +117,15 @@ public class Schema {
             public static final String DESCRIPTION = "description";
             public static final String DESCRIPTION_LAST_EDITED_TIME = "descriptionLastEditedTime";
             public static final String TYPE = "type";
-            public static final String ORDER = "'order'";
+            public static final String ORDER = "order_";
             public static final String ACHIEVED_TIME = "achievedTime";
             public static final String CREATE_TIME = "createTime";
             public static final String COLOR = "color";
             public static final String GOAL = "goal";
-            public static final String PROGRESS = "progress";
-            public static final String GIVEN_UP = "givenUp";
+            public static final String PUNISHMENT = "punishment";
+            public static final String MODIFIED = "modified";
             public static final String PERIOD_UNIT = "periodUnit";
             public static final String PERIOD_LENGTH = "periodLength";
-            public static final String PUNISHMENT = "punishment";
             public static final String SUB_GOAL = "subGoal";
             public static final String SUB_PROGRESS = "subProgress";
 

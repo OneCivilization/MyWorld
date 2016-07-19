@@ -16,7 +16,7 @@ import java.io.File;
  */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
-    private static final int VERSION = 2;
+    private static final int VERSION = 5;
     private static final String DATABASE_NAME = "MyOptimize.db";
 
     public DatabaseOpenHelper(Context context) {
@@ -25,12 +25,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CareItemTable.CREATE_STATEMENT);
+        db.execSQL(CareItemTable.HISTORY_CREATE_STATEMENT);
         db.execSQL(RecordTable.CREATE_STATEMENT);
         db.execSQL(RecordTable.HISTORY_CREATE_STATEMENT);
         db.execSQL(TimePairTable.CREATE_STATEMENT);
         db.execSQL(TimePairTable.HISTORY_CREATE_STATEMENT);
-        db.execSQL(CareItemTable.CREATE_STATEMENT);
-        db.execSQL(CareItemTable.HISTORY_CREATE_STATEMENT);
         db.execSQL(ProblemItemTable.CREATE_STATEMENT);
         db.execSQL(ProblemItemTable.HISTORY_CREATE_STATEMENT);
     }

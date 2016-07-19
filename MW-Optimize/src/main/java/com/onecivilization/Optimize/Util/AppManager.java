@@ -1,6 +1,5 @@
 package com.onecivilization.Optimize.Util;
 
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
@@ -22,7 +21,6 @@ public class AppManager {
     public static Locale LOCALE;
 
     private static List<BaseActivity> activities = new ArrayList<>();
-    private static SharedPreferences sharedPreferences;
 
     public static void addActivity(BaseActivity activity) {
         activities.add(activity);
@@ -55,16 +53,14 @@ public class AppManager {
                 if (!config.locale.equals(Locale.CHINESE)) {
                     config.locale = Locale.CHINESE;
                     resources.updateConfiguration(config, resources.getDisplayMetrics());
-                    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activities.get(0));
-                    sharedPreferences.edit().putInt("Language", language).apply();
+                    PreferenceManager.getDefaultSharedPreferences(activities.get(0)).edit().putInt("Language", language).apply();
                 }
                 break;
             case ENGLISH:
                 if (!config.locale.equals(Locale.ENGLISH)) {
                     config.locale = Locale.ENGLISH;
                     resources.updateConfiguration(config, resources.getDisplayMetrics());
-                    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activities.get(0));
-                    sharedPreferences.edit().putInt("Language", language).apply();
+                    PreferenceManager.getDefaultSharedPreferences(activities.get(0)).edit().putInt("Language", language).apply();
                 }
                 break;
             case DEFAULT_LANGUAGE:
