@@ -56,6 +56,7 @@ public class HistoryCareDetailsActivity extends BaseActivity {
         viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
         careItemTitle.setText(care.getTitle());
+        careItemTitle.setEnabled(false);
     }
 
     @Override

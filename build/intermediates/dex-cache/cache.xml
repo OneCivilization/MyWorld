@@ -1,3 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.4.0_ab8099b25cb56873f12803a8c049fb51efbb85de.jar" />
+    </item>
+    <item
+        jar="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.4.0_408abe1340803a4ce681a29cbb353da32e8a8cb7.jar" />
+    </item>
+    <item
+        jar="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.4.0_015860700a64cad8d673ca470d14e17ea832b669.jar" />
+    </item>
+    <item
+        jar="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\pre-dexed\debug\internal_impl-23.4.0_6b0673346f0a465c78dafc3b7854ff97538e0b53.jar" />
+    </item>
+    <item
+        jar="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\exploded-aar\com.android.support\design\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\pre-dexed\debug\com.android.support-design-23.4.0_23363862f5bb04091bfce4faa086e7223382ef22.jar" />
+    </item>
+    <item
+        jar="C:\Development\Android_SDK\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\pre-dexed\debug\support-annotations-23.4.0_bca8532606433f29bebd2b94212c6a3bae9e0821.jar" />
+    </item>
+    <item
+        jar="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.4.0_359abe9ba8d80abfc1c486eae97d429587c33639.jar" />
+    </item>
+    <item
+        jar="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="C:\Development\AndroidStudio\MyWorld\MW-Optimize\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.4.0_cd874e4ba93267cb9361f400f2bb69c42f11451f.jar" />
+    </item>
+
+</items>

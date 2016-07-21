@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.onecivilization.Optimize.Database.DataManager;
+import com.onecivilization.Optimize.Fragment.BlankFragment;
+import com.onecivilization.Optimize.Fragment.CareProgressFragment;
 import com.onecivilization.Optimize.Fragment.DescriptionFragment;
 import com.onecivilization.Optimize.Fragment.TextCarePropertiesFragment;
 import com.onecivilization.Optimize.Model.Care;
@@ -56,6 +58,9 @@ public class CareDetailsActivity extends BaseActivity {
         viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
         careItemTitle.setText(care.getTitle());
+        if (care.getType() != Care.TEXT) {
+            viewPager.setCurrentItem(1);
+        }
     }
 
     @Override
@@ -151,6 +156,10 @@ public class CareDetailsActivity extends BaseActivity {
                     switch (position) {
                         case 0:
                             return new DescriptionFragment();
+                        case 1:
+                            return new CareProgressFragment();
+                        case 2:
+                            return new BlankFragment();
                     }
                     break;
             }
@@ -163,7 +172,7 @@ public class CareDetailsActivity extends BaseActivity {
                 case Care.TEXT:
                     return 2;
                 case Care.NONPERIODIC:
-                    return 1;
+                    return 3;
             }
             return 0;
         }
@@ -183,6 +192,10 @@ public class CareDetailsActivity extends BaseActivity {
                     switch (position) {
                         case 0:
                             return care.getDescriptionTitle();
+                        case 1:
+                            return getString(R.string.progress);
+                        case 2:
+                            return getString(R.string.records);
                     }
                     break;
             }

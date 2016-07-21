@@ -34,7 +34,7 @@ public class DataManager {
 
     public synchronized static DataManager getInstance(Context context) {
         if (dataManager == null) {
-            dataManager = new DataManager(context);
+            dataManager = new DataManager(context.getApplicationContext());
         }
         return dataManager;
     }
@@ -146,7 +146,7 @@ public class DataManager {
                         int punishment = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PUNISHMENT));
                         int modified = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.MODIFIED));
                         LinkedList<Record> records = getRecordList(createTime, true);
-                        historyCareList.add(new NonperiodicCare(title, descriptionTitle, description, descriptionLastEditedTime, 0, createTime, achievedTime,
+                        historyCareList.add(new NonperiodicCare(title, descriptionTitle, description, descriptionLastEditedTime, 0, createTime, achievedTime, archivedTime,
                                 goal, punishment, modified, records));
                         break;
                 }

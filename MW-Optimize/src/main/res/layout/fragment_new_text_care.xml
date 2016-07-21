@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="20dp">
 
-        <com.onecivilization.Optimize.CustomView.GridColorPickerView
+        <com.onecivilization.Optimize.CustomView.GridColorPicker
             android:id="@+id/color_picker"
             android:layout_width="match_parent"
             android:layout_height="230dp"

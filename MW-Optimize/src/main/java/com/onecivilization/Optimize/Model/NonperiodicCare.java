@@ -1,7 +1,12 @@
 package com.onecivilization.Optimize.Model;
 
+import android.content.Context;
+
+import com.onecivilization.Optimize.Database.DataManager;
+
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  * Created by CGZ on 2016/7/8.
@@ -13,7 +18,7 @@ public class NonperiodicCare extends Care {
     private int goal = 1;
     private int progress = 0;
     private int succeeded = 0;
-    private int givenUp = 0;
+    private int failed = 0;
     private int punishment = 1;
     private int modified = 0;
     private LinkedList<Record> records;
@@ -53,7 +58,7 @@ public class NonperiodicCare extends Care {
                 succeeded++;
                 progress++;
             } else {
-                givenUp++;
+                failed++;
                 progress = progress - punishment;
             }
         }
@@ -63,15 +68,20 @@ public class NonperiodicCare extends Care {
         return (modified <= goal * MODIFY_RATE);
     }
 
-    public void addRecord(boolean tag) {
+    public void addRecord(boolean tag, Context context) {
         if (tag) {
             succeeded++;
             progress++;
+            if (progress == goal) {
+                achievedTime = System.currentTimeMillis();
+            }
         } else {
-            givenUp++;
+            failed++;
             progress = progress - punishment;
         }
         records.add(new Record(System.currentTimeMillis(), tag));
+        DataManager.getInstance(context).addRecord(createTime, records.getLast(), false);
+        DataManager.getInstance(context).updateCareItem(this);
     }
 
     public boolean insertRecord(long time, boolean tag) {
@@ -96,7 +106,7 @@ public class NonperiodicCare extends Care {
                 succeeded--;
                 progress--;
             } else {
-                givenUp--;
+                failed--;
                 progress = progress + punishment;
             }
             modified++;
@@ -128,15 +138,31 @@ public class NonperiodicCare extends Care {
 
     public int getState() {
         if (records.isEmpty()) {
-            return STATE_UNDONE;
+            return STATE_NONE;
         } else {
             Date date = new Date();
-            if (records.getLast().time >= new Date(date.getYear(), date.getMonth(), date.getDay()).getTime()) {
+            long today = new Date(date.getYear(), date.getMonth(), date.getDay()).getTime();
+            ListIterator<Record> iterator = records.listIterator(records.size());
+            int progressToday = 0;
+            Record record;
+            while (iterator.hasPrevious()) {
+                record = iterator.previous();
+                if (record.time < today) {
+                    break;
+                } else {
+                    progressToday = record.tag ? progressToday + 1 : progressToday - punishment;
+                }
+            }
+            if (progressToday > 0) {
                 return STATE_DONE;
-            } else if (progress < 0) {
-                return STATE_MINUS;
+            } else if (progressToday == 0) {
+                return STATE_NONE;
             } else {
-                return STATE_UNDONE;
+                if (progress < 0) {
+                    return STATE_MINUS;
+                } else {
+                    return STATE_UNDONE;
+                }
             }
         }
     }
@@ -153,8 +179,8 @@ public class NonperiodicCare extends Care {
         return succeeded;
     }
 
-    public int getGivenUp() {
-        return givenUp;
+    public int getFailed() {
+        return failed;
     }
 
     public int getPunishment() {

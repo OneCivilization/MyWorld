@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="GridColorPicker">
+        <attr name="colors" format="reference" />
+        <attr name="pickedImage" format="reference" />
+        <attr name="lockedImage" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="HalfRingProgressBar">
+        <attr name="percentageTextColor" format="color" />
+        <attr name="percentageTextSize" format="dimension" />
+        <attr name="progressTextColor" format="color" />
+        <attr name="progressTextSize" format="dimension" />
+        <attr name="title_text" format="string" />
+        <attr name="title_text_color" format="color" />
+        <attr name="title_text_size" format="dimension" />
+        <attr name="unreachedColor" format="color" />
+        <attr name="reachedColor" format="color" />
+        <attr name="minusColor" format="color" />
+        <attr name="exceededColor" format="color" />
+        <attr name="falseColor" format="color" />
+        <attr name="ringWidth" format="dimension" />
+        <attr name="radius" format="dimension" />
+        <attr name="progress" format="integer" />
+        <attr name="max" format="integer" />
+    </declare-styleable>
+
+</resources>

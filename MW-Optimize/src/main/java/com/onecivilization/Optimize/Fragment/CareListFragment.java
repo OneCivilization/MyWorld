@@ -1,8 +1,10 @@
 package com.onecivilization.Optimize.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -101,7 +104,7 @@ public class CareListFragment extends Fragment {
                     });
                     break;
                 case Care.NONPERIODIC:
-                    NonperiodicCare careItem = (NonperiodicCare) care;
+                    final NonperiodicCare careItem = (NonperiodicCare) care;
                     int Progress = careItem.getProgress();
                     String sign;
                     if (Progress > 0) {
@@ -110,12 +113,17 @@ public class CareListFragment extends Fragment {
                         sign = "";
                     } else {
                         sign = "- ";
+                        Progress = -Progress;
                     }
-                    progress.setText(sign + careItem.getProgress());
+                    progress.setText(sign + Progress);
                     goal.setText(getString(R.string.goal) + careItem.getGoal());
                     switch (careItem.getState()) {
-                        case Care.STATE_UNDONE:
+                        case Care.STATE_NONE:
                             statusImageButton.setImageResource(R.drawable.state_nonperiodic);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_false));
+                            break;
+                        case Care.STATE_UNDONE:
+                            statusImageButton.setImageResource(R.drawable.state_false);
                             container.setBackgroundColor(getResources().getColor(R.color.state_false));
                             break;
                         case Care.STATE_DONE:
@@ -127,6 +135,60 @@ public class CareListFragment extends Fragment {
                             container.setBackgroundColor(getResources().getColor(R.color.state_warning));
                             break;
                     }
+                    statusImageButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final View signInView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_sign_in, null);
+                            new AlertDialog.Builder(getActivity())
+                                    .setTitle(R.string.sign_in)
+                                    .setView(signInView)
+                                    .setNegativeButton(R.string.cancel, null)
+                                    .setPositiveButton(R.string.confirm_, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            RadioGroup recordTag = (RadioGroup) signInView.findViewById(R.id.record_tag);
+                                            switch (recordTag.getCheckedRadioButtonId()) {
+                                                case R.id.succeeded:
+                                                    careItem.addRecord(true, getActivity());
+                                                    break;
+                                                case R.id.failed:
+                                                    careItem.addRecord(false, getActivity());
+                                                    break;
+                                            }
+                                            switch (careItem.getState()) {
+                                                case Care.STATE_NONE:
+                                                    statusImageButton.setImageResource(R.drawable.state_nonperiodic);
+                                                    container.setBackgroundColor(getResources().getColor(R.color.state_false));
+                                                    break;
+                                                case Care.STATE_UNDONE:
+                                                    statusImageButton.setImageResource(R.drawable.state_false);
+                                                    container.setBackgroundColor(getResources().getColor(R.color.state_false));
+                                                    break;
+                                                case Care.STATE_DONE:
+                                                    statusImageButton.setImageResource(R.drawable.state_true);
+                                                    container.setBackgroundColor(getResources().getColor(R.color.state_true));
+                                                    break;
+                                                case Care.STATE_MINUS:
+                                                    statusImageButton.setImageResource(R.drawable.state_false);
+                                                    container.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                                                    break;
+                                            }
+                                            int Progress = careItem.getProgress();
+                                            String sign;
+                                            if (Progress > 0) {
+                                                sign = "+ ";
+                                            } else if (Progress == 0) {
+                                                sign = "";
+                                            } else {
+                                                sign = "- ";
+                                                Progress = -Progress;
+                                            }
+                                            progress.setText(sign + Progress);
+                                            dialog.dismiss();
+                                        }
+                                    }).create().show();
+                        }
+                    });
                     break;
             }
             itemView.setOnClickListener(new View.OnClickListener() {

@@ -10,7 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.onecivilization.Optimize.CustomView.GridColorPickerView;
+import com.onecivilization.Optimize.CustomView.GridColorPicker;
 import com.onecivilization.Optimize.Database.DataManager;
 import com.onecivilization.Optimize.Model.TextCare;
 import com.onecivilization.Optimize.R;
@@ -29,7 +29,7 @@ public class TextCarePropertiesFragment extends Fragment {
     private TextView createdTimeTextView;
     private TextView existedTimeTextView;
     private ToggleButton stateButton;
-    private GridColorPickerView colorPicker;
+    private GridColorPicker colorPicker;
     private TextCare textCare;
     private long achievedTime = 0L;
 
@@ -46,7 +46,7 @@ public class TextCarePropertiesFragment extends Fragment {
         createdTimeTextView = (TextView) view.findViewById(R.id.created_time);
         existedTimeTextView = (TextView) view.findViewById(R.id.existed_time);
         stateButton = (ToggleButton) view.findViewById(R.id.status_toggle_button);
-        colorPicker = (GridColorPickerView) view.findViewById(R.id.color_picker);
+        colorPicker = (GridColorPicker) view.findViewById(R.id.color_picker);
         createdTimeTextView.setText(SimpleDateFormat.getDateInstance(DateFormat.LONG, AppManager.LOCALE).format(new Date(textCare.getCreateTime())));
         Calendar calendar = Calendar.getInstance();
         int dayNow = calendar.get(Calendar.DAY_OF_YEAR);

@@ -53,8 +53,17 @@
     <string name="lasted_time">Lasted time：</string>
     <string name="achieved_at">Achieved at：</string>
     <string name="archived_at">Archived at：</string>
-    <string name="goal">Goal：</string>
-    <string name="punishment">Punishment：</string>
+    <string name="goal">Goal:</string>
+    <string name="punishment">Punishment:</string>
+    <string name="progress">Progress</string>
+    <string name="records">Records</string>
+    <string name="progress_bar_title">Progress</string>
+    <string name="succeeded">succeeded：</string>
+    <string name="failed">failed：</string>
+    <string name="sign_in">Sign in</string>
+    <string name="succeeded_">Succeeded</string>
+    <string name="failed_">Failed</string>
+    <string name="confirm_">Confirm</string>
 
 </resources>
  
