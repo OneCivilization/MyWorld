@@ -16,7 +16,9 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.onecivilization.Optimize.Database.DataManager;
+import com.onecivilization.Optimize.Fragment.BlankFragment;
 import com.onecivilization.Optimize.Fragment.HistoryDescriptionFragment;
+import com.onecivilization.Optimize.Fragment.HistoryNonperiodicCarePropertiesFragment;
 import com.onecivilization.Optimize.Fragment.HistoryTextCarePropertiesFragment;
 import com.onecivilization.Optimize.Model.Care;
 import com.onecivilization.Optimize.R;
@@ -134,6 +136,10 @@ public class HistoryCareDetailsActivity extends BaseActivity {
                     switch (position) {
                         case 0:
                             return new HistoryDescriptionFragment();
+                        case 1:
+                            return new HistoryNonperiodicCarePropertiesFragment();
+                        case 2:
+                            return new BlankFragment();
                     }
                     break;
             }
@@ -146,7 +152,7 @@ public class HistoryCareDetailsActivity extends BaseActivity {
                 case Care.TEXT:
                     return 2;
                 case Care.NONPERIODIC:
-                    return 1;
+                    return 3;
             }
             return 0;
         }
@@ -166,6 +172,10 @@ public class HistoryCareDetailsActivity extends BaseActivity {
                     switch (position) {
                         case 0:
                             return care.getDescriptionTitle();
+                        case 1:
+                            return getString(R.string.properties);
+                        case 2:
+                            return getString(R.string.records);
                     }
                     break;
             }

@@ -104,6 +104,8 @@ public class CareListFragment extends Fragment {
                     });
                     break;
                 case Care.NONPERIODIC:
+                    progress.setVisibility(View.VISIBLE);
+                    goal.setVisibility(View.VISIBLE);
                     final NonperiodicCare careItem = (NonperiodicCare) care;
                     int Progress = careItem.getProgress();
                     String sign;
@@ -133,6 +135,10 @@ public class CareListFragment extends Fragment {
                         case Care.STATE_MINUS:
                             statusImageButton.setImageResource(R.drawable.state_false);
                             container.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                            break;
+                        case Care.STATE_ACHIEVED:
+                            statusImageButton.setImageResource(R.drawable.state_true);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
                             break;
                     }
                     statusImageButton.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +177,10 @@ public class CareListFragment extends Fragment {
                                                 case Care.STATE_MINUS:
                                                     statusImageButton.setImageResource(R.drawable.state_false);
                                                     container.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                                                    break;
+                                                case Care.STATE_ACHIEVED:
+                                                    statusImageButton.setImageResource(R.drawable.state_true);
+                                                    container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
                                                     break;
                                             }
                                             int Progress = careItem.getProgress();

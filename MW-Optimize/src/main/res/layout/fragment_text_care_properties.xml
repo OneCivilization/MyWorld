@@ -37,7 +37,7 @@
                 android:layout_marginTop="7dp">
 
                 <TextView
-                    android:text="@string/existed_time"
+                    android:text="@string/today_is"
                     android:textSize="18sp" />
 
                 <TextView

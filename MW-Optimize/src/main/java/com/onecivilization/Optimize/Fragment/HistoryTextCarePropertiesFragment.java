@@ -44,7 +44,7 @@ public class HistoryTextCarePropertiesFragment extends Fragment {
         lastedTimeTextView = (TextView) view.findViewById(R.id.lasted_time);
         colorTextView = (TextView) view.findViewById(R.id.color_text_view);
         archivedTextView = (TextView) view.findViewById(R.id.archived_time);
-        archivedTextView.setText(getString(R.string.archived_at) + SimpleDateFormat.getDateInstance(DateFormat.LONG, AppManager.LOCALE).format(new Date(textCare.getArchivedTime())));
+        archivedTextView.setText(SimpleDateFormat.getDateInstance(DateFormat.LONG, AppManager.LOCALE).format(new Date(textCare.getArchivedTime())));
         createdTimeTextView.setText(SimpleDateFormat.getDateInstance(DateFormat.LONG, AppManager.LOCALE).format(new Date(textCare.getCreateTime())));
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(textCare.getCreateTime());

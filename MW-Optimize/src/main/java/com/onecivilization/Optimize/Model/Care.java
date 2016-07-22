@@ -17,6 +17,7 @@ public abstract class Care {
     public static final int STATE_UNDONE = 2;
     public static final int STATE_MINUS = 3;
     public static final int STATE_LOCKED = 4;
+    public static final int STATE_ACHIEVED = 5;
 
     protected String title = "";
     protected String descriptionTitle = "";

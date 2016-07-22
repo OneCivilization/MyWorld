@@ -57,8 +57,8 @@
     <string name="lasted_time">持续时间：</string>
     <string name="achieved_at">达成于：</string>
     <string name="archived_at">归档于：</string>
-    <string name="goal">目标:</string>
-    <string name="punishment">惩罚:</string>
+    <string name="goal">目标：</string>
+    <string name="punishment">惩罚：</string>
     <string name="progress">进度</string>
     <string name="records">记录</string>
     <string name="progress_bar_title">当前进度</string>
@@ -68,6 +68,11 @@
     <string name="succeeded_">达成</string>
     <string name="failed_">失败</string>
     <string name="confirm_">确定</string>
+    <string name="today_is">今天是：</string>
+    <string name="progress_">进度：</string>
+    <string name="succeeded__">达成：</string>
+    <string name="failed__">失败：</string>
+    <string name="percentage">完成度：</string>
 
 </resources>
  

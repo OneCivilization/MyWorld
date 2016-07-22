@@ -51,6 +51,22 @@
                 android:layout_marginTop="7dp">
 
                 <TextView
+                    android:text="@string/archived_at"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/archived_time"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_marginBottom="7dp"
+                android:layout_marginTop="7dp">
+
+                <TextView
                     android:text="@string/lasted_time"
                     android:textSize="18sp" />
 
@@ -82,14 +98,6 @@
                 android:layout_height="match_parent"
                 android:background="#555555" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/archived_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="7dp"
-            android:gravity="right|center_vertical" />
 
     </LinearLayout>
 

@@ -78,6 +78,9 @@ public class NonperiodicCare extends Care {
         } else {
             failed++;
             progress = progress - punishment;
+            if (progress < goal) {
+                achievedTime = 0L;
+            }
         }
         records.add(new Record(System.currentTimeMillis(), tag));
         DataManager.getInstance(context).addRecord(createTime, records.getLast(), false);
@@ -132,16 +135,17 @@ public class NonperiodicCare extends Care {
         }
     }
 
-    public double getPercentage() {
-        return (double) progress / goal * 100;
+    public float getPercentage() {
+        return (float) progress / goal * 100;
     }
 
     public int getState() {
+        if (achievedTime != 0L) return STATE_ACHIEVED;
         if (records.isEmpty()) {
             return STATE_NONE;
         } else {
             Date date = new Date();
-            long today = new Date(date.getYear(), date.getMonth(), date.getDay()).getTime();
+            long today = new Date(date.getYear(), date.getMonth(), date.getDate()).getTime();
             ListIterator<Record> iterator = records.listIterator(records.size());
             int progressToday = 0;
             Record record;

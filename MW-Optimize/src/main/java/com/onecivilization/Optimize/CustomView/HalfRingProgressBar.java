@@ -51,18 +51,18 @@ public class HalfRingProgressBar extends View {
         try {
             radius = typedArray.getDimensionPixelSize(R.styleable.HalfRingProgressBar_radius,
                     (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 120, getResources().getDisplayMetrics()));
-            percentageTextColor = typedArray.getColor(R.styleable.HalfRingProgressBar_percentageTextColor, Color.BLACK);
+            percentageTextColor = typedArray.getColor(R.styleable.HalfRingProgressBar_percentageTextColor, 0xff43ba08);
             percentageTextSize = typedArray.getDimensionPixelSize(R.styleable.HalfRingProgressBar_percentageTextSize, radius / 3);
-            progressTextColor = typedArray.getColor(R.styleable.HalfRingProgressBar_progressTextColor, Color.GRAY);
+            progressTextColor = typedArray.getColor(R.styleable.HalfRingProgressBar_progressTextColor, 0xff399f07);
             progressTextSize = typedArray.getDimensionPixelSize(R.styleable.HalfRingProgressBar_progressTextSize, radius / 7);
             titleText = typedArray.getString(R.styleable.HalfRingProgressBar_title_text);
             if (titleText == null) titleText = "PROGRESS";
-            titleTextColor = typedArray.getColor(R.styleable.HalfRingProgressBar_title_text_color, Color.BLACK);
+            titleTextColor = typedArray.getColor(R.styleable.HalfRingProgressBar_title_text_color, 0xff399f07);
             titleTextSize = typedArray.getDimensionPixelSize(R.styleable.HalfRingProgressBar_title_text_size, radius / 4);
-            unreachedColor = typedArray.getColor(R.styleable.HalfRingProgressBar_unreachedColor, Color.GRAY);
-            reachedColor = typedArray.getColor(R.styleable.HalfRingProgressBar_reachedColor, 0xff25d713);
+            unreachedColor = typedArray.getColor(R.styleable.HalfRingProgressBar_unreachedColor, 0xffbcc9cc);
+            reachedColor = typedArray.getColor(R.styleable.HalfRingProgressBar_reachedColor, 0xff43ba08);
             minusColor = typedArray.getColor(R.styleable.HalfRingProgressBar_minusColor, Color.RED);
-            exceededColor = typedArray.getColor(R.styleable.HalfRingProgressBar_exceededColor, 0xFFD9A729);
+            exceededColor = typedArray.getColor(R.styleable.HalfRingProgressBar_exceededColor, 0xFF5b0091);
             falseColor = typedArray.getColor(R.styleable.HalfRingProgressBar_falseColor, 0xFF000000);
             ringWidth = typedArray.getDimensionPixelSize(R.styleable.HalfRingProgressBar_ringWidth, radius / 8);
             progress = typedArray.getInt(R.styleable.HalfRingProgressBar_progress, 0);

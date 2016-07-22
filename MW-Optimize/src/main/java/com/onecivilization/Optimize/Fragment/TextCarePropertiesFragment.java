@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by CGZ on 2016/7/15.
@@ -57,7 +58,13 @@ public class TextCarePropertiesFragment extends Fragment {
         int monthCreated = calendar.get(Calendar.MONTH);
         int dayCreated = calendar.get(Calendar.DAY_OF_YEAR);
         int days = (int) (new Date(yearNow, monthNow, dayNow).getTime() - new Date(yearCreated, monthCreated, dayCreated).getTime()) / 86400000;
-        existedTimeTextView.setText(days + "  " + getString(R.string.days));
+        final String existedTime;
+        if (AppManager.LOCALE.equals(Locale.CHINESE)) {
+            existedTime = "第 " + (days + 1) + " 天";
+        } else {
+            existedTime = "Day " + (days + 1);
+        }
+        existedTimeTextView.setText(existedTime);
         if (textCare.isAchieved()) {
             colorPicker.setSelection(8);
         } else {
