@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +16,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.onecivilization.Optimize.Database.DataManager;
-import com.onecivilization.Optimize.Fragment.BlankFragment;
 import com.onecivilization.Optimize.Fragment.CareProgressFragment;
+import com.onecivilization.Optimize.Fragment.CareRecordsFragment;
 import com.onecivilization.Optimize.Fragment.DescriptionFragment;
 import com.onecivilization.Optimize.Fragment.TextCarePropertiesFragment;
 import com.onecivilization.Optimize.Model.Care;
@@ -39,6 +39,10 @@ public class CareDetailsActivity extends BaseActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.container);
         careItemTitle = (EditText) findViewById(R.id.care_item_title);
+    }
+
+    public void refreshFragments(){
+        viewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -135,7 +139,7 @@ public class CareDetailsActivity extends BaseActivity {
         return false;
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -159,7 +163,7 @@ public class CareDetailsActivity extends BaseActivity {
                         case 1:
                             return new CareProgressFragment();
                         case 2:
-                            return new BlankFragment();
+                            return new CareRecordsFragment();
                     }
                     break;
             }
@@ -200,6 +204,11 @@ public class CareDetailsActivity extends BaseActivity {
                     break;
             }
             return null;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
 

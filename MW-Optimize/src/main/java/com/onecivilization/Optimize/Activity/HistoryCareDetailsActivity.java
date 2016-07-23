@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.onecivilization.Optimize.Database.DataManager;
-import com.onecivilization.Optimize.Fragment.BlankFragment;
+import com.onecivilization.Optimize.Fragment.HistoryCareRecordsFragment;
 import com.onecivilization.Optimize.Fragment.HistoryDescriptionFragment;
 import com.onecivilization.Optimize.Fragment.HistoryNonperiodicCarePropertiesFragment;
 import com.onecivilization.Optimize.Fragment.HistoryTextCarePropertiesFragment;
@@ -139,7 +139,7 @@ public class HistoryCareDetailsActivity extends BaseActivity {
                         case 1:
                             return new HistoryNonperiodicCarePropertiesFragment();
                         case 2:
-                            return new BlankFragment();
+                            return new HistoryCareRecordsFragment();
                     }
                     break;
             }

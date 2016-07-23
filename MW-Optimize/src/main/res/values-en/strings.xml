@@ -69,6 +69,7 @@
     <string name="succeeded__">Succeeded：</string>
     <string name="failed__">Failed：</string>
     <string name="percentage">Percentage：</string>
+    <string name="calendar_view">Calendar View</string>
 
 </resources>
  

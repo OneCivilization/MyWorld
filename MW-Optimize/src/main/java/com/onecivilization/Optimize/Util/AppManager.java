@@ -64,6 +64,11 @@ public class AppManager {
                 }
                 break;
             case DEFAULT_LANGUAGE:
+                if (config.locale.getLanguage().equals("zh")) {
+                    config.locale = Locale.CHINESE;
+                } else {
+                    config.locale = Locale.ENGLISH;
+                }
                 break;
         }
         LOCALE = config.locale;

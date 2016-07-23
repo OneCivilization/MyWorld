@@ -26,4 +26,12 @@
         <attr name="max" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="RecordsCalendar">
+        <attr name="dayColor" format="color" />
+        <attr name="todayColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="trueColor" format="color" />
+        <attr name="falseColor" />
+    </declare-styleable>
+
 </resources>

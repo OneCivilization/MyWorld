@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.onecivilization.Optimize.Activity.CareDetailsActivity;
 import com.onecivilization.Optimize.CustomView.HalfRingProgressBar;
 import com.onecivilization.Optimize.Database.DataManager;
 import com.onecivilization.Optimize.Model.NonperiodicCare;
@@ -109,6 +110,7 @@ public class CareProgressFragment extends Fragment {
                                 progressBar.setProgress(care.getProgress());
                                 succeededTextView.setText(getString(R.string.succeeded) + care.getSucceeded());
                                 failedTextView.setText(getString(R.string.failed) + care.getFailed());
+                                ((CareDetailsActivity) getActivity()).refreshFragments();
                                 dialog.dismiss();
                             }
                         }).create().show();

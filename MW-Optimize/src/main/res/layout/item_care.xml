@@ -59,7 +59,7 @@
                     android:paddingLeft="8dp"
                     android:text="准时睡觉起床"
                     android:textColor="#262626"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView

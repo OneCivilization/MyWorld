@@ -73,6 +73,7 @@
     <string name="succeeded__">达成：</string>
     <string name="failed__">失败：</string>
     <string name="percentage">完成度：</string>
+    <string name="calendar_view">日历视图</string>
 
 </resources>
  

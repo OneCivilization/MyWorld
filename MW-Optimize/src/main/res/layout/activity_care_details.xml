@@ -31,6 +31,8 @@
                 android:background="@drawable/side_nav_bar"
                 android:fitsSystemWindows="true"
                 android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:paddingTop="46dp"
                 android:textColor="#c0ffffff"
                 android:textSize="30sp"
@@ -42,7 +44,7 @@
                 android:layout_height="94dp"
                 android:gravity="top"
                 app:layout_collapseMode="pin"
-                app:title="@string/details"
+                app:title=" "
                 app:titleMarginTop="16dp"
                 app:titleTextAppearance="@style/myToolbarTextStyle" />
 
