@@ -69,7 +69,11 @@
     <string name="succeeded__">Succeeded：</string>
     <string name="failed__">Failed：</string>
     <string name="percentage">Percentage：</string>
-    <string name="calendar_view">Calendar View</string>
+    <string name="calendar_view">Calendar</string>
+    <string name="no_record_selected">You haven\'t selected any record</string>
+    <string name="modified">Modified：</string>
+    <string name="care_has_not_been_created">The Care Item hasn\'t been created at this time</string>
+    <string name="day_has_not_come_yet">That day has not come yet</string>
 
 </resources>
  

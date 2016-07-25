@@ -39,6 +39,9 @@ public class RecordsCalendar extends LinearLayout {
     private int thisYear;
     private int thisMonth;
     private int today;
+    private int createYear;
+    private int createMonth;
+    private int createDay;
     private int todayLocation;
     private int firstDayLocation;
     private int monthLength;
@@ -66,7 +69,7 @@ public class RecordsCalendar extends LinearLayout {
             dayColor = typedArray.getColor(R.styleable.RecordsCalendar_dayColor, 0xff527ecb);
             todayColor = typedArray.getColor(R.styleable.RecordsCalendar_todayColor, 0xff0046c6);
             backgroundColor = typedArray.getColor(R.styleable.RecordsCalendar_backgroundColor, 0xffd0e1ed);
-            trueColor = typedArray.getColor(R.styleable.RecordsCalendar_trueColor, 0x7f1dbd0c);
+            trueColor = typedArray.getColor(R.styleable.RecordsCalendar_trueColor, 0x811dbd0c);
             falseColor = typedArray.getColor(R.styleable.RecordsCalendar_falseColor, 0x50ff0000);
         } finally {
             typedArray.recycle();
@@ -151,6 +154,19 @@ public class RecordsCalendar extends LinearLayout {
         showRecords();
     }
 
+    public void setCreateTime(long createTime) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(createTime);
+        createYear = calendar.get(Calendar.YEAR);
+        createMonth = calendar.get(Calendar.MONTH);
+        createDay = calendar.get(Calendar.DAY_OF_MONTH);
+        for (int i = firstDayLocation; i < firstDayLocation + monthLength; i++) {
+            if (createYear == currentYear && createMonth == currentMonth && (i - firstDayLocation + 1) == createDay) {
+                buttons[i].setBackgroundColor(0xbf00a3e8);
+            }
+        }
+    }
+
     public void setRecords(LinkedList<Record> records, int punishment) {
         this.records = records;
         this.punishment = punishment;
@@ -170,27 +186,53 @@ public class RecordsCalendar extends LinearLayout {
             }
         }
         Record record;
+        int location;
         int[] progress = new int[31];
+        for (int i = 0; i < 31; i++) {
+            progress[i] = Integer.MAX_VALUE;
+        }
         while (iterator.hasNext()) {
             record = iterator.next();
             if (record.time < latestTimeThisMonth) {
                 calendar.setTimeInMillis(record.time);
+                location = calendar.get(Calendar.DAY_OF_MONTH) - 1;
+                if (progress[location] == Integer.MAX_VALUE) {
+                    progress[location] = 0;
+                }
                 if (record.tag) {
-                    progress[calendar.get(Calendar.DAY_OF_MONTH) - 1]++;
+                    progress[location]++;
                 } else {
-                    progress[calendar.get(Calendar.DAY_OF_MONTH) - 1] -= punishment;
+                    progress[location] -= punishment;
                 }
             } else {
                 break;
             }
         }
         for (int i = 0; i < 31; i++) {
-            if (progress[i] > 0) {
-                buttons[firstDayLocation + i].setBackgroundColor(trueColor + 0x10000000 * (progress[i] - 1));
+            if (progress[i] > 0 && progress[i] != Integer.MAX_VALUE) {
+                buttons[firstDayLocation + i].setBackgroundColor(trueColor + 0x3f000000 * ((progress[i] > 3 ? 3 : progress[i]) - 1));
             } else if (progress[i] < 0) {
-                buttons[firstDayLocation + i].setBackgroundColor(falseColor - 0x10000000 * (progress[i] + 1));
+                buttons[firstDayLocation + i].setBackgroundColor(falseColor - 0x3f000000 * ((progress[i] < -3 ? -3 : progress[i]) + 1));
+            } else if (progress[i] == 0) {
+                buttons[firstDayLocation + i].setBackgroundColor(0x70888888);
             }
+        }
+        if (currentYear == createYear && currentMonth == createMonth) {
+            buttons[firstDayLocation + createDay - 1].setBackgroundColor(0xbf00a3e8);
         }
     }
 
+    public void setOnDateClickedListener(OnClickListener onClickListener) {
+        for (int i = 7; i < 49; i++) {
+            buttons[i].setOnClickListener(onClickListener);
+        }
+    }
+
+    public int getCurrentYear() {
+        return currentYear;
+    }
+
+    public int getCurrentMonth() {
+        return currentMonth;
+    }
 }

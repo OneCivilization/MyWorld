@@ -30,6 +30,54 @@
             android:layout_marginTop="7dp">
 
             <TextView
+                android:text="@string/achieved_at"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/achieved_time"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:text="@string/archived_at"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/archived_time"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:text="@string/lasted_time"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/lasted_time"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="7dp">
+
+            <TextView
                 android:text="@string/percentage"
                 android:textSize="18sp" />
 
@@ -101,54 +149,6 @@
                 android:id="@+id/punishment"
                 android:gravity="center"
                 android:textColor="#919191"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </TableRow>
-
-        <TableRow
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="7dp">
-
-            <TextView
-                android:text="@string/achieved_at"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/achieved_time"
-                android:gravity="center"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </TableRow>
-
-        <TableRow
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="7dp">
-
-            <TextView
-                android:text="@string/archived_at"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/archived_time"
-                android:gravity="center"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </TableRow>
-
-        <TableRow
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="7dp">
-
-            <TextView
-                android:text="@string/lasted_time"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/lasted_time"
-                android:gravity="center"
-                android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </TableRow>

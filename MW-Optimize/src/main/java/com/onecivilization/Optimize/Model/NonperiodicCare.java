@@ -1,7 +1,5 @@
 package com.onecivilization.Optimize.Model;
 
-import android.content.Context;
-
 import com.onecivilization.Optimize.Database.DataManager;
 
 import java.util.Date;
@@ -12,8 +10,6 @@ import java.util.ListIterator;
  * Created by CGZ on 2016/7/8.
  */
 public class NonperiodicCare extends Care {
-
-    public static final double MODIFY_RATE = 0.1;
 
     private int goal = 1;
     private int progress = 0;
@@ -64,11 +60,7 @@ public class NonperiodicCare extends Care {
         }
     }
 
-    public boolean isModifiable() {
-        return (modified <= goal * MODIFY_RATE);
-    }
-
-    public void addRecord(boolean tag, Context context) {
+    public void addRecord(boolean tag) {
         if (tag) {
             succeeded++;
             progress++;
@@ -83,56 +75,80 @@ public class NonperiodicCare extends Care {
             }
         }
         records.add(new Record(System.currentTimeMillis(), tag));
-        DataManager.getInstance(context).addRecord(createTime, records.getLast(), false);
-        DataManager.getInstance(context).updateCareItem(this);
+        DataManager.getInstance(null).addRecord(createTime, records.getLast(), false);
+        DataManager.getInstance(null).updateCareItem(this);
     }
 
     public boolean insertRecord(long time, boolean tag) {
-        if (isModifiable() && time <= System.currentTimeMillis() && time >= createTime) {
-            for (int i = records.size() - 1; i >= 0; i--) {
-                if (records.get(i).time < time) {
-                    records.add(i + 1, new Record(time, tag));
+        Record record = new Record(time, tag);
+        if (records.isEmpty() || time < records.getFirst().time) {
+            records.add(0, record);
+        } else {
+            ListIterator<Record> iterator = records.listIterator(records.size());
+            while (iterator.hasPrevious()) {
+                if (iterator.previous().time < time) {
+                    iterator.next();
+                    iterator.add(record);
                     break;
                 }
             }
-            modified++;
-            return true;
+        }
+        if (record.tag) {
+            succeeded++;
+            progress++;
+        } else {
+            failed++;
+            progress -= punishment;
+        }
+        if (progress == goal && record.tag) {
+            achievedTime = System.currentTimeMillis();
+        } else if (progress < goal) {
+            achievedTime = 0L;
+        }
+        modified++;
+        DataManager.getInstance(null).addRecord(createTime, record, false);
+        DataManager.getInstance(null).updateCareItem(this);
+        return true;
+    }
+
+    public boolean deleteRecord(long time) {
+        ListIterator<Record> iterator = records.listIterator();
+        Record record;
+        int i = -1, position = -1;
+        while (iterator.hasNext()) {
+            record = iterator.next();
+            i++;
+            if (record.time == time) {
+                position = i;
+                break;
+            }
+        }
+        if (position != -1) {
+            return deleteRecord(position);
         } else {
             return false;
         }
     }
 
     public boolean deleteRecord(int position) {
-        if (isModifiable()) {
-            Record record = records.get(position);
-            if (record.tag) {
-                succeeded--;
-                progress--;
-            } else {
-                failed--;
-                progress = progress + punishment;
-            }
-            modified++;
-            return true;
+        Record record = records.get(position);
+        if (record.tag) {
+            succeeded--;
+            progress--;
         } else {
-            return false;
+            failed--;
+            progress = progress + punishment;
         }
-    }
-
-    public boolean changeRecord(int position, long time, boolean tag) {
-        if (isModifiable() && time <= System.currentTimeMillis() && time >= createTime) {
-            records.remove(position);
-            for (int i = records.size() - 1; i >= 0; i--) {
-                if (records.get(i).time < time) {
-                    records.add(i + 1, new Record(time, tag));
-                    break;
-                }
-            }
-            modified++;
-            return true;
-        } else {
-            return false;
+        if (progress == goal && !record.tag) {
+            achievedTime = System.currentTimeMillis();
+        } else if (progress < goal) {
+            achievedTime = 0L;
         }
+        modified++;
+        DataManager.getInstance(null).deleteRecord(createTime, record, false);
+        DataManager.getInstance(null).updateCareItem(this);
+        records.remove(position);
+        return true;
     }
 
     public float getPercentage() {
@@ -160,6 +176,7 @@ public class NonperiodicCare extends Care {
             if (progressToday > 0) {
                 return STATE_DONE;
             } else if (progressToday == 0) {
+                if (progress < 0) return STATE_MINUS;
                 return STATE_NONE;
             } else {
                 if (progress < 0) {

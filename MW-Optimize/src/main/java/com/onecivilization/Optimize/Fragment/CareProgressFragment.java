@@ -101,15 +101,12 @@ public class CareProgressFragment extends Fragment {
                                 RadioGroup recordTag = (RadioGroup) signInView.findViewById(R.id.record_tag);
                                 switch (recordTag.getCheckedRadioButtonId()) {
                                     case R.id.succeeded:
-                                        care.addRecord(true, getActivity());
+                                        care.addRecord(true);
                                         break;
                                     case R.id.failed:
-                                        care.addRecord(false, getActivity());
+                                        care.addRecord(false);
                                         break;
                                 }
-                                progressBar.setProgress(care.getProgress());
-                                succeededTextView.setText(getString(R.string.succeeded) + care.getSucceeded());
-                                failedTextView.setText(getString(R.string.failed) + care.getFailed());
                                 ((CareDetailsActivity) getActivity()).refreshFragments();
                                 dialog.dismiss();
                             }

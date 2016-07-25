@@ -155,10 +155,10 @@ public class CareListFragment extends Fragment {
                                             RadioGroup recordTag = (RadioGroup) signInView.findViewById(R.id.record_tag);
                                             switch (recordTag.getCheckedRadioButtonId()) {
                                                 case R.id.succeeded:
-                                                    careItem.addRecord(true, getActivity());
+                                                    careItem.addRecord(true);
                                                     break;
                                                 case R.id.failed:
-                                                    careItem.addRecord(false, getActivity());
+                                                    careItem.addRecord(false);
                                                     break;
                                             }
                                             switch (careItem.getState()) {

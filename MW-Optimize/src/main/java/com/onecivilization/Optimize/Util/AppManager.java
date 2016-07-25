@@ -66,8 +66,12 @@ public class AppManager {
             case DEFAULT_LANGUAGE:
                 if (config.locale.getLanguage().equals("zh")) {
                     config.locale = Locale.CHINESE;
+                    resources.updateConfiguration(config, resources.getDisplayMetrics());
+                    PreferenceManager.getDefaultSharedPreferences(activities.get(0)).edit().putInt("Language", CHINESE).apply();
                 } else {
                     config.locale = Locale.ENGLISH;
+                    resources.updateConfiguration(config, resources.getDisplayMetrics());
+                    PreferenceManager.getDefaultSharedPreferences(activities.get(0)).edit().putInt("Language", ENGLISH).apply();
                 }
                 break;
         }

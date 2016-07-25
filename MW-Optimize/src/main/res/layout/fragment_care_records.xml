@@ -11,15 +11,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/calendar"
-            android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/calendar_view"
-            android:textColor="#ff000000"
-            android:textSize="20sp" />
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/calendar"
+                android:gravity="center_vertical"
+                android:text="@string/calendar_view"
+                android:textColor="#ff000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/modified"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="13sp" />
+
+        </LinearLayout>
 
         <com.onecivilization.Optimize.CustomView.RecordsCalendar
             android:id="@+id/records_calendar"
