@@ -8,13 +8,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/MW-Optimize" />
+            <option value="$PROJECT_DIR$/MyOptimize" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/MW-Optimize" />
+            <option value="$PROJECT_DIR$/MyOptimize" />
           </set>
         </option>
       </GradleProjectSettings>

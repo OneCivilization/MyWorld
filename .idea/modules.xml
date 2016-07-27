@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MW-Optimize/MW-Optimize.iml" filepath="$PROJECT_DIR$/MW-Optimize/MW-Optimize.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyOptimize/MW-Optimize.iml" filepath="$PROJECT_DIR$/MyOptimize/MW-Optimize.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyOptimize/MyOptimize.iml" filepath="$PROJECT_DIR$/MyOptimize/MyOptimize.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyWorld.iml" filepath="$PROJECT_DIR$/MyWorld.iml" />
       <module fileurl="file://$PROJECT_DIR$/MW-Optimize/mw-优化.iml" filepath="$PROJECT_DIR$/MW-Optimize/mw-优化.iml" />
     </modules>

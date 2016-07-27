@@ -1,0 +1,88 @@
+<resources>
+
+    <string name="app_name">My Optimize</string>
+
+    <string name="care">注意点</string>
+    <string name="problem">问题</string>
+    <string name="exit_warning">再按一次退出</string>
+    <string name="giving_up_modifies">再按一次放弃修改返回</string>
+    <string name="create_new_care_item">创建注意点</string>
+    <string name="title">标题</string>
+    <string name="description">描述</string>
+    <string name="care_type">类型：</string>
+    <string name="color">颜色：</string>
+    <string name="create">创建</string>
+    <string name="empty_title_warning">标题不能为空！</string>
+    <string name="confirm">确定</string>
+
+    <string name="home">主页</string>
+    <string name="archive">已归档</string>
+    <string name="options">选项</string>
+    <string name="settings">设置</string>
+    <string name="help">帮助</string>
+    <string name="share">分享</string>
+    <string name="feedback">反馈</string>
+    <string name="about">关于</string>
+
+    <string name="sort">排序</string>
+    <string name="tips">Tips</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="edit_description">编辑描述</string>
+    <string name="save_changes">保存更改</string>
+    <string name="care_item_details">注意点详情</string>
+    <string name="delete">删除</string>
+    <string name="details">详情</string>
+    <string name="properties">属性</string>
+    <string name="created_at">创建于：</string>
+    <string name="existed_time">已经过：</string>
+    <string name="achieved">已达成</string>
+    <string name="unachieved">未达成</string>
+    <string name="days">天</string>
+    <string name="delete_warning">您确定要删除吗？</string>
+    <string name="cancel">取消</string>
+    <string name="edit">编辑</string>
+    <string name="edit_description_title">编辑描述标题</string>
+    <string name="save">保存</string>
+    <string name="do_archive">归档</string>
+    <string name="archive_warning">该注意点尚未达成，您确定要放弃并归档吗？</string>
+    <string name="archive_confirm">您确定要归档吗？</string>
+    <string name="give_up_confirm">你真的要放弃吗？</string>
+    <string name="yes">是的</string>
+    <string name="unarchive_warning">您确定要取消归档吗？</string>
+    <string name="unarchive_tip">欢迎回来！这次可不要放弃了呦~</string>
+    <string name="ok">好的</string>
+    <string name="lasted_time">持续时间：</string>
+    <string name="achieved_at">达成于：</string>
+    <string name="archived_at">归档于：</string>
+    <string name="goal">目标：</string>
+    <string name="punishment">惩罚：</string>
+    <string name="progress">进度</string>
+    <string name="records">记录</string>
+    <string name="progress_bar_title">当前进度</string>
+    <string name="succeeded">达成：</string>
+    <string name="failed">失败：</string>
+    <string name="sign_in">打卡</string>
+    <string name="succeeded_">达成</string>
+    <string name="failed_">失败</string>
+    <string name="confirm_">确定</string>
+    <string name="today_is">今天是：</string>
+    <string name="progress_">进度：</string>
+    <string name="succeeded__">达成：</string>
+    <string name="failed__">失败：</string>
+    <string name="percentage">完成度：</string>
+    <string name="calendar_view">日历</string>
+    <string name="no_record_selected">您没有选中任何记录</string>
+    <string name="modified">修改：</string>
+    <string name="care_has_not_been_created">此时注意点尚未被创建</string>
+    <string name="day_has_not_come_yet">现在还没有到这天</string>
+    <string name="care_item_has_been_archived">注意点此时已归档</string>
+    <string name="period_length">周期：</string>
+    <string name="every">每</string>
+    <string name="signed_in">已签到</string>
+    <string name="signed_out">已取消签到</string>
+
+</resources>
+ 

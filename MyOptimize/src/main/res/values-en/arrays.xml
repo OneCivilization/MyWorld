@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="care_item_types">
+        <item>Pure text</item>
+        <item>Non-periodic</item>
+        <item>Periodic</item>
+        <item>Periodic with sub-items</item>
+        <item>Periodic with sign-time limitation</item>
+        <item>Complex</item>
+    </string-array>
+
+    <string-array name="period_units">
+        <item>Year</item>
+        <item>Month</item>
+        <item>Week</item>
+        <item>Day</item>
+    </string-array>
+
+</resources>
