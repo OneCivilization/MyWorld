@@ -107,21 +107,23 @@ public class PeriodicCare extends NonperiodicCare {
     }
 
     private void initRecord() {
-        long start = periodStartTime + periodTime * getPeriodCount();
-        if (records.isEmpty()) {
-            addRecord(false);
-        } else if (records.getLast().time < start) {
-            long lastRecordTime = periodStartTime + records.size() * periodTime;
-            int lostPeriodCount = getPeriodCount() + 1 - records.size();
-            for (int i = 0; i < lostPeriodCount; i++) {
-                addRecord(lastRecordTime);
-                lastRecordTime += periodTime;
+        if (archivedTime == 0) {
+            long start = periodStartTime + periodTime * getPeriodCount();
+            if (records.isEmpty()) {
+                addRecord(false);
+            } else if (records.getLast().time < start) {
+                long lastRecordTime = periodStartTime + records.size() * periodTime;
+                int lostPeriodCount = getPeriodCount() + 1 - records.size();
+                for (int i = 0; i < lostPeriodCount; i++) {
+                    addDefaultFalseRecord(lastRecordTime);
+                    lastRecordTime += periodTime;
+                }
+                DataManager.getInstance().updateCareItem(this);
             }
-            DataManager.getInstance().updateCareItem(this);
         }
     }
 
-    public void addRecord(long time) {
+    public void addDefaultFalseRecord(long time) {
         failed++;
         progress = progress - punishment;
         if (progress < goal) {

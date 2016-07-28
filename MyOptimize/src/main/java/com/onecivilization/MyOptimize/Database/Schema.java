@@ -22,6 +22,8 @@ public class Schema {
 
         public static final String NAME = "records";
         public static final String HISTORY_NAME = "records_history";
+        public static final String SUB_NAME = "sub_records";
+        public static final String HISTORY_SUB_NAME = "sub_records_history";
         public static final String CREATE_STATEMENT = CREATE_TABLE + NAME + "(" +
                 Cols.CARE_ITEM_ID + INTEGER + "," +
                 Cols.TIME + INTEGER + "," +
@@ -30,6 +32,20 @@ public class Schema {
                 FOREIGN_KEY + Cols.CARE_ITEM_ID + REFERENCES + CareItemTable.NAME + "(" + CareItemTable.Cols.CREATE_TIME + ")" +
                 ")";
         public static final String HISTORY_CREATE_STATEMENT = CREATE_TABLE + HISTORY_NAME + "(" +
+                Cols.CARE_ITEM_ID + INTEGER + "," +
+                Cols.TIME + INTEGER + "," +
+                Cols.TAG + INTEGER + "," +
+                PRIMARY_KEY_ + "(" + Cols.CARE_ITEM_ID + "," + Cols.TIME + "," + Cols.TAG + ")" + "," +
+                FOREIGN_KEY + Cols.CARE_ITEM_ID + REFERENCES + CareItemTable.HISTORY_NAME + "(" + CareItemTable.Cols.CREATE_TIME + ")" +
+                ")";
+        public static final String SUB_CREATE_STATEMENT = CREATE_TABLE + SUB_NAME + "(" +
+                Cols.CARE_ITEM_ID + INTEGER + "," +
+                Cols.TIME + INTEGER + "," +
+                Cols.TAG + INTEGER + "," +
+                PRIMARY_KEY_ + "(" + Cols.CARE_ITEM_ID + "," + Cols.TIME + "," + Cols.TAG + ")" + "," +
+                FOREIGN_KEY + Cols.CARE_ITEM_ID + REFERENCES + CareItemTable.NAME + "(" + CareItemTable.Cols.CREATE_TIME + ")" +
+                ")";
+        public static final String HISTORY_SUB_CREATE_STATEMENT = CREATE_TABLE + HISTORY_SUB_NAME + "(" +
                 Cols.CARE_ITEM_ID + INTEGER + "," +
                 Cols.TIME + INTEGER + "," +
                 Cols.TAG + INTEGER + "," +
@@ -89,8 +105,7 @@ public class Schema {
                 Cols.MODIFIED + INTEGER + "," +
                 Cols.PERIOD_UNIT + INTEGER + "," +
                 Cols.PERIOD_LENGTH + INTEGER + "," +
-                Cols.SUB_GOAL + INTEGER + "," +
-                Cols.SUB_PROGRESS + INTEGER +
+                Cols.SUB_GOAL + INTEGER +
                 ")";
         public static final String HISTORY_CREATE_STATEMENT = CREATE_TABLE + HISTORY_NAME + "(" +
                 Cols.CREATE_TIME + INTEGER + PRIMARY_KEY + "," +
@@ -107,8 +122,7 @@ public class Schema {
                 Cols.MODIFIED + INTEGER + "," +
                 Cols.PERIOD_UNIT + INTEGER + "," +
                 Cols.PERIOD_LENGTH + INTEGER + "," +
-                Cols.SUB_GOAL + INTEGER + "," +
-                Cols.SUB_PROGRESS + INTEGER +
+                Cols.SUB_GOAL + INTEGER +
                 ")";
 
         public static final class Cols {
@@ -127,7 +141,6 @@ public class Schema {
             public static final String PERIOD_UNIT = "periodUnit";
             public static final String PERIOD_LENGTH = "periodLength";
             public static final String SUB_GOAL = "subGoal";
-            public static final String SUB_PROGRESS = "subProgress";
 
             public static final String ARCHIVED_TIME = "archivedTime";
         }

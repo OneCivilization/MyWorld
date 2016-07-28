@@ -15,12 +15,14 @@ import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.onecivilization.MyOptimize.Activity.CareDetailsActivity;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Model.Care;
 import com.onecivilization.MyOptimize.Model.NonperiodicCare;
 import com.onecivilization.MyOptimize.Model.PeriodicCare;
+import com.onecivilization.MyOptimize.Model.SubPeriodicCare;
 import com.onecivilization.MyOptimize.Model.TextCare;
 import com.onecivilization.MyOptimize.R;
 
@@ -76,6 +78,7 @@ public class CareListFragment extends Fragment {
             title.setText(care.getTitle());
             switch (care.getType()) {
                 case Care.TEXT:
+                    statusTextView.setVisibility(View.GONE);
                     progress.setVisibility(View.GONE);
                     goal.setVisibility(View.GONE);
                     timeLimitation.setVisibility(View.GONE);
@@ -104,8 +107,10 @@ public class CareListFragment extends Fragment {
                             DataManager.getInstance().updateCareItem(care);
                         }
                     });
+                    statusImageButton.setOnLongClickListener(null);
                     break;
                 case Care.NONPERIODIC:
+                    statusTextView.setVisibility(View.GONE);
                     progress.setVisibility(View.VISIBLE);
                     goal.setVisibility(View.VISIBLE);
                     timeLimitation.setVisibility(View.GONE);
@@ -138,8 +143,10 @@ public class CareListFragment extends Fragment {
                                     }).create().show();
                         }
                     });
+                    statusImageButton.setOnLongClickListener(null);
                     break;
                 case Care.PERIODIC:
+                    statusTextView.setVisibility(View.GONE);
                     progress.setVisibility(View.VISIBLE);
                     goal.setVisibility(View.VISIBLE);
                     timeLimitation.setVisibility(View.VISIBLE);
@@ -156,6 +163,37 @@ public class CareListFragment extends Fragment {
                                 careItem1.addRecord();
                             }
                             refreshCareState(care);
+                        }
+                    });
+                    statusImageButton.setOnLongClickListener(null);
+                    break;
+                case Care.SUB_PERIODIC:
+                    statusTextView.setVisibility(View.VISIBLE);
+                    progress.setVisibility(View.VISIBLE);
+                    goal.setVisibility(View.VISIBLE);
+                    timeLimitation.setVisibility(View.VISIBLE);
+                    final SubPeriodicCare careItem2 = (SubPeriodicCare) care;
+                    goal.setText(getString(R.string.goal) + careItem2.getGoal());
+                    timeLimitation.setText(careItem2.getPeriodText());
+                    refreshCareState(care);
+                    statusImageButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            careItem2.addSubRecord();
+                            Toast.makeText(getActivity(), R.string.signed_in, Toast.LENGTH_SHORT).show();
+                            refreshCareState(care);
+                        }
+                    });
+                    statusImageButton.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            if (!careItem2.deleteSubRecord()) {
+                                Toast.makeText(getActivity(), R.string.sub_progress_zero, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), R.string.signed_out, Toast.LENGTH_SHORT).show();
+                                refreshCareState(care);
+                            }
+                            return true;
                         }
                     });
                     break;
@@ -217,7 +255,28 @@ public class CareListFragment extends Fragment {
                             container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
                             break;
                         case Care.STATE_ACHIEVED_UNDONE:
-                            statusImageButton.setImageResource(R.drawable.state_false);
+                            statusImageButton.setImageResource(R.drawable.state_unachieved);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_true));
+                            break;
+                    }
+                    break;
+                case Care.SUB_PERIODIC:
+                    SubPeriodicCare careItem2 = (SubPeriodicCare) care;
+                    statusTextView.setText(careItem2.getSubProgressText());
+                    progress.setText(careItem2.getProgressText());
+                    statusImageButton.setImageResource(0);
+                    switch (careItem2.getState()) {
+                        case Care.STATE_UNDONE:
+                            container.setBackgroundColor(getResources().getColor(R.color.state_false));
+                            break;
+                        case Care.STATE_MINUS:
+                            container.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                            break;
+                        case Care.STATE_ACHIEVED:
+                            container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
+                            break;
+                        case Care.STATE_DONE:
+                        case Care.STATE_ACHIEVED_UNDONE:
                             container.setBackgroundColor(getResources().getColor(R.color.state_true));
                             break;
                     }

@@ -106,6 +106,7 @@ public class HistoryCareListFragment extends Fragment {
                     }
                     break;
                 case Care.PERIODIC:
+                case Care.SUB_PERIODIC:
                     PeriodicCare careItem1 = (PeriodicCare) care;
                     int percentage1 = (int) careItem1.getPercentage();
                     progress.setText(percentage1 + "%");

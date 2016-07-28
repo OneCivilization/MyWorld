@@ -14,6 +14,7 @@ import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Model.Care;
 import com.onecivilization.MyOptimize.Model.NonperiodicCare;
 import com.onecivilization.MyOptimize.Model.PeriodicCare;
+import com.onecivilization.MyOptimize.Model.SubPeriodicCare;
 import com.onecivilization.MyOptimize.R;
 import com.onecivilization.MyOptimize.Util.AppManager;
 
@@ -109,6 +110,16 @@ public class HistoryNonperiodicCarePropertiesFragment extends Fragment {
             tableRow.setVisibility(View.VISIBLE);
             TextView periodTextView = (TextView) view.findViewById(R.id.period);
             periodTextView.setText(((PeriodicCare) care).getPeriodLengthText());
+        }
+        if (care.getType() == Care.SUB_PERIODIC) {
+            TableRow tableRow1 = (TableRow) view.findViewById(R.id.period_row);
+            TableRow tableRow2 = (TableRow) view.findViewById(R.id.sub_goal_row);
+            tableRow1.setVisibility(View.VISIBLE);
+            tableRow2.setVisibility(View.VISIBLE);
+            TextView periodTextView = (TextView) view.findViewById(R.id.period);
+            TextView subGoalTextView = (TextView) view.findViewById(R.id.sub_goal);
+            periodTextView.setText(((SubPeriodicCare) care).getPeriodLengthText());
+            subGoalTextView.setText(String.valueOf(((SubPeriodicCare) care).getSubGoal()));
         }
         return view;
     }

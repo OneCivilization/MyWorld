@@ -21,6 +21,7 @@ import com.onecivilization.MyOptimize.Fragment.NonperiodicCareProgressFragment;
 import com.onecivilization.MyOptimize.Fragment.NonperiodicCareRecordsFragment;
 import com.onecivilization.MyOptimize.Fragment.PeriodicCareProgressFragment;
 import com.onecivilization.MyOptimize.Fragment.PeriodicCareRecordsFragment;
+import com.onecivilization.MyOptimize.Fragment.SubPeriodicCareProgressFragment;
 import com.onecivilization.MyOptimize.Fragment.TextCarePropertiesFragment;
 import com.onecivilization.MyOptimize.Model.Care;
 import com.onecivilization.MyOptimize.R;
@@ -178,6 +179,16 @@ public class CareDetailsActivity extends BaseActivity {
                             return new PeriodicCareRecordsFragment();
                     }
                     break;
+                case Care.SUB_PERIODIC:
+                    switch (position) {
+                        case 0:
+                            return new DescriptionFragment();
+                        case 1:
+                            return new SubPeriodicCareProgressFragment();
+                        case 2:
+                            return new PeriodicCareRecordsFragment();
+                    }
+                    break;
             }
             return null;
         }
@@ -189,6 +200,7 @@ public class CareDetailsActivity extends BaseActivity {
                     return 2;
                 case Care.NONPERIODIC:
                 case Care.PERIODIC:
+                case Care.SUB_PERIODIC:
                     return 3;
             }
             return 0;
@@ -207,6 +219,7 @@ public class CareDetailsActivity extends BaseActivity {
                     break;
                 case Care.NONPERIODIC:
                 case Care.PERIODIC:
+                case Care.SUB_PERIODIC:
                     switch (position) {
                         case 0:
                             return care.getDescriptionTitle();

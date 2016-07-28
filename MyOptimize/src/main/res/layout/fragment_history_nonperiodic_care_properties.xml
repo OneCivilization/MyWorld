@@ -92,6 +92,24 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/sub_goal_row"
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="7dp"
+            android:visibility="gone">
+
+            <TextView
+                android:text="@string/sub_goal"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/sub_goal"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
             android:layout_marginBottom="7dp"
             android:layout_marginTop="7dp">
 

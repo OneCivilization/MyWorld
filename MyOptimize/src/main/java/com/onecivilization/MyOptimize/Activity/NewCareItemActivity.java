@@ -22,11 +22,13 @@ import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Fragment.BlankFragment;
 import com.onecivilization.MyOptimize.Fragment.NewNonperiodicCareFragment;
 import com.onecivilization.MyOptimize.Fragment.NewPeriodicCareFragment;
+import com.onecivilization.MyOptimize.Fragment.NewSubPeriodicCareFragment;
 import com.onecivilization.MyOptimize.Fragment.NewTextCareFragment;
 import com.onecivilization.MyOptimize.Interface.NewCareFragment;
 import com.onecivilization.MyOptimize.Model.Care;
 import com.onecivilization.MyOptimize.Model.NonperiodicCare;
 import com.onecivilization.MyOptimize.Model.PeriodicCare;
+import com.onecivilization.MyOptimize.Model.SubPeriodicCare;
 import com.onecivilization.MyOptimize.Model.TextCare;
 import com.onecivilization.MyOptimize.R;
 
@@ -103,6 +105,9 @@ public class NewCareItemActivity extends BaseActivity {
                     case 2:
                         replaceFragment(new NewPeriodicCareFragment());
                         break;
+                    case 3:
+                        replaceFragment(new NewSubPeriodicCareFragment());
+                        break;
                     default:
                         replaceFragment(new BlankFragment());
                         Toast.makeText(NewCareItemActivity.this, position + "", Toast.LENGTH_SHORT).show();
@@ -133,22 +138,26 @@ public class NewCareItemActivity extends BaseActivity {
                     dataManager.addCareItem(new TextCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                             descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
                             System.currentTimeMillis(), result.getInt("color")));
-                    finish();
                     break;
                 case Care.NONPERIODIC:
                     dataManager.addCareItem(new NonperiodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                             descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
                             System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1)));
-                    finish();
                     break;
                 case Care.PERIODIC:
                     dataManager.addCareItem(new PeriodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                             descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
                             System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1),
                             result.getInt("periodUnit", PeriodicCare.DAY), result.getInt("periodLength", 1)));
-                    finish();
+                    break;
+                case Care.SUB_PERIODIC:
+                    dataManager.addCareItem(new SubPeriodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
+                            descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
+                            System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1),
+                            result.getInt("periodUnit", PeriodicCare.DAY), result.getInt("periodLength", 1), result.getInt("subGoal", 2)));
                     break;
             }
+            finish();
         }
     }
 

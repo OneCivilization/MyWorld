@@ -16,9 +16,11 @@ import android.widget.Toast;
 
 import com.onecivilization.MyOptimize.CustomView.RecordsCalendar;
 import com.onecivilization.MyOptimize.Database.DataManager;
+import com.onecivilization.MyOptimize.Model.Care;
 import com.onecivilization.MyOptimize.Model.PeriodicCare;
 import com.onecivilization.MyOptimize.Model.Record;
 import com.onecivilization.MyOptimize.Model.RecordsSortHelper;
+import com.onecivilization.MyOptimize.Model.SubPeriodicCare;
 import com.onecivilization.MyOptimize.R;
 import com.onecivilization.MyOptimize.Util.AppManager;
 
@@ -36,7 +38,6 @@ public class PeriodicCareRecordsFragment extends Fragment {
     private PeriodicCare care;
     private RecordsCalendar recordsCalendar;
     private RecordsSortHelper recordsSortHelper;
-    private TextView modifiedText;
     private RecyclerView recordsList;
 
     @Override
@@ -48,14 +49,15 @@ public class PeriodicCareRecordsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        recordsSortHelper = new RecordsSortHelper(care.getRecords());
         View view = inflater.inflate(R.layout.fragment_care_records, container, false);
-        modifiedText = (TextView) view.findViewById(R.id.modified);
-        if (care.getModified() != 0) {
-            modifiedText.setText(getString(R.string.modified) + care.getModified());
-        }
         recordsCalendar = (RecordsCalendar) view.findViewById(R.id.records_calendar);
-        recordsCalendar.setRecords(care.getRecords(), care.getPunishment());
+        if (care.getType() == Care.SUB_PERIODIC) {
+            recordsCalendar.setRecords(((SubPeriodicCare) care).getSubRecords(), 0);
+            recordsSortHelper = new RecordsSortHelper(((SubPeriodicCare) care).getSubRecords());
+        } else {
+            recordsCalendar.setRecords(care.getRecords(), care.getPunishment());
+            recordsSortHelper = new RecordsSortHelper(care.getRecords());
+        }
         recordsCalendar.setCreateTime(care.getCreateTime());
         recordsCalendar.setOnDateClickedListener(new View.OnClickListener() {
             @Override

@@ -6,7 +6,7 @@
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:orientation="vertical"
-    tools:context=".Fragment.NewNonperiodicCareFragment">
+    tools:context=".Fragment.NewPeriodicCareFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

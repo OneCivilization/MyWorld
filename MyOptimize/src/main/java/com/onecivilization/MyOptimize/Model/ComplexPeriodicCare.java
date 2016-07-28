@@ -10,8 +10,8 @@ public class ComplexPeriodicCare extends SubPeriodicCare {
 
     protected ArrayList<TimePair> timePairs = new ArrayList<>();
 
-    public ComplexPeriodicCare(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int order, long createTime, int goal, int punishment, int periodUnit, int periodLength, int subGoal, int subProgress, ArrayList<TimePair> timePairs) {
-        super(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime, goal, punishment, periodUnit, periodLength, subGoal, subProgress);
+    public ComplexPeriodicCare(String title, String descriptionTitle, String description, long descriptionLastEditedTime, int order, long createTime, int goal, int punishment, int periodUnit, int periodLength, int subGoal, ArrayList<TimePair> timePairs) {
+        super(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime, goal, punishment, periodUnit, periodLength, subGoal);
         this.timePairs = timePairs;
     }
 

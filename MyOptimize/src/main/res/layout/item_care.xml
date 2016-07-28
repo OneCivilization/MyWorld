@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="#ffffff"
-                android:textSize="28sp"
+                android:textSize="23sp"
                 android:visibility="gone" />
 
         </FrameLayout>

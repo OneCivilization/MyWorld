@@ -16,9 +16,11 @@ import android.widget.Toast;
 
 import com.onecivilization.MyOptimize.CustomView.RecordsCalendar;
 import com.onecivilization.MyOptimize.Database.DataManager;
+import com.onecivilization.MyOptimize.Model.Care;
 import com.onecivilization.MyOptimize.Model.NonperiodicCare;
 import com.onecivilization.MyOptimize.Model.Record;
 import com.onecivilization.MyOptimize.Model.RecordsSortHelper;
+import com.onecivilization.MyOptimize.Model.SubPeriodicCare;
 import com.onecivilization.MyOptimize.R;
 import com.onecivilization.MyOptimize.Util.AppManager;
 
@@ -48,13 +50,18 @@ public class HistoryCareRecordsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        recordsSortHelper = new RecordsSortHelper(care.getRecords());
         View view = inflater.inflate(R.layout.fragment_care_records, container, false);
         recordsCalendar = (RecordsCalendar) view.findViewById(R.id.records_calendar);
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTimeInMillis(care.getRecords().getLast().time);
         recordsCalendar.setTime(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
-        recordsCalendar.setRecords(care.getRecords(), care.getPunishment());
+        if (care.getType() == Care.SUB_PERIODIC) {
+            recordsCalendar.setRecords(((SubPeriodicCare) care).getSubRecords(), 0);
+            recordsSortHelper = new RecordsSortHelper(((SubPeriodicCare) care).getSubRecords());
+        } else {
+            recordsCalendar.setRecords(care.getRecords(), care.getPunishment());
+            recordsSortHelper = new RecordsSortHelper(care.getRecords());
+        }
         recordsCalendar.setCreateTime(care.getCreateTime());
         recordsCalendar.setOnDateClickedListener(new View.OnClickListener() {
             @Override

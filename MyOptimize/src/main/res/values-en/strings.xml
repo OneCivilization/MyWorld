@@ -79,6 +79,9 @@
     <string name="every">Every</string>
     <string name="signed_in">Signed in</string>
     <string name="signed_out">Signed out</string>
+    <string name="sub_goal">Sub-Goal：</string>
+    <string name="sub_progress_zero">Sub-progress is 0</string>
+    <string name="sub_progress">Sub：</string>
 
 </resources>
  

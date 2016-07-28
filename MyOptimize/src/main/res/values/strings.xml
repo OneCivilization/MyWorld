@@ -83,6 +83,9 @@
     <string name="every">每</string>
     <string name="signed_in">已签到</string>
     <string name="signed_out">已取消签到</string>
+    <string name="sub_goal">子目标：</string>
+    <string name="sub_progress_zero">子进度为0</string>
+    <string name="sub_progress">子进度：</string>
 
 </resources>
  
