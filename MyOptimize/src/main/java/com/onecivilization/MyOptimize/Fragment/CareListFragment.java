@@ -2,6 +2,7 @@ package com.onecivilization.MyOptimize.Fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -20,10 +21,12 @@ import android.widget.Toast;
 import com.onecivilization.MyOptimize.Activity.CareDetailsActivity;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Model.Care;
+import com.onecivilization.MyOptimize.Model.ComplexPeriodicCare;
 import com.onecivilization.MyOptimize.Model.NonperiodicCare;
 import com.onecivilization.MyOptimize.Model.PeriodicCare;
 import com.onecivilization.MyOptimize.Model.SubPeriodicCare;
 import com.onecivilization.MyOptimize.Model.TextCare;
+import com.onecivilization.MyOptimize.Model.TimeLimitedPeriodicCare;
 import com.onecivilization.MyOptimize.R;
 
 import java.util.List;
@@ -197,6 +200,57 @@ public class CareListFragment extends Fragment {
                         }
                     });
                     break;
+                case Care.TIMELIMITED_PERIODIC:
+                    statusTextView.setVisibility(View.GONE);
+                    progress.setVisibility(View.VISIBLE);
+                    goal.setVisibility(View.VISIBLE);
+                    timeLimitation.setVisibility(View.VISIBLE);
+                    final TimeLimitedPeriodicCare careItem3 = (TimeLimitedPeriodicCare) care;
+                    goal.setText(getString(R.string.goal) + careItem3.getGoal());
+                    timeLimitation.setText(careItem3.getPeriodText());
+                    refreshCareState(care);
+                    statusImageButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (careItem3.isLocked()) {
+                                Toast.makeText(getActivity(), R.string.current_time_out_of_limitation, Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (careItem3.isSigned()) {
+                                    careItem3.deleteRecord();
+                                } else {
+                                    careItem3.addRecord();
+                                }
+                                refreshCareState(care);
+                            }
+                        }
+                    });
+                    statusImageButton.setOnLongClickListener(null);
+                    break;
+                case Care.COMPLEX_PERIODIC:
+                    statusTextView.setVisibility(View.VISIBLE);
+                    progress.setVisibility(View.VISIBLE);
+                    goal.setVisibility(View.VISIBLE);
+                    timeLimitation.setVisibility(View.VISIBLE);
+                    final ComplexPeriodicCare careItem4 = (ComplexPeriodicCare) care;
+                    goal.setText(getString(R.string.goal) + careItem4.getGoal());
+                    timeLimitation.setText(careItem4.getPeriodText());
+                    refreshCareState(care);
+                    statusImageButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (careItem4.isLocked()) {
+                                Toast.makeText(getActivity(), R.string.current_time_out_of_limitation, Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (careItem4.isSigned()) {
+                                    careItem4.deleteSubRecord();
+                                } else {
+                                    careItem4.addSubRecord();
+                                }
+                                refreshCareState(care);
+                            }
+                        }
+                    });
+                    break;
             }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -279,6 +333,61 @@ public class CareListFragment extends Fragment {
                         case Care.STATE_ACHIEVED_UNDONE:
                             container.setBackgroundColor(getResources().getColor(R.color.state_true));
                             break;
+                    }
+                    break;
+                case Care.TIMELIMITED_PERIODIC:
+                    TimeLimitedPeriodicCare careItem3 = (TimeLimitedPeriodicCare) care;
+                    progress.setText(careItem3.getProgressText());
+                    switch (careItem3.getState()) {
+                        case Care.STATE_UNDONE:
+                            statusImageButton.setImageResource(R.drawable.state_unachieved);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_false));
+                            break;
+                        case Care.STATE_DONE:
+                            statusImageButton.setImageResource(R.drawable.state_true);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_true));
+                            break;
+                        case Care.STATE_MINUS:
+                            statusImageButton.setImageResource(R.drawable.state_false);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                            break;
+                        case Care.STATE_ACHIEVED:
+                            statusImageButton.setImageResource(R.drawable.state_true);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
+                            break;
+                        case Care.STATE_ACHIEVED_UNDONE:
+                            statusImageButton.setImageResource(R.drawable.state_unachieved);
+                            container.setBackgroundColor(getResources().getColor(R.color.state_true));
+                            break;
+                    }
+                    if (careItem3.isLocked()) {
+                        statusImageButton.setImageResource(R.drawable.state_locked);
+                    }
+                    break;
+                case Care.COMPLEX_PERIODIC:
+                    ComplexPeriodicCare careItem4 = (ComplexPeriodicCare) care;
+                    statusTextView.setText(careItem4.getSubProgressText());
+                    progress.setText(careItem4.getProgressText());
+                    statusImageButton.setImageResource(0);
+                    switch (careItem4.getState()) {
+                        case Care.STATE_UNDONE:
+                            container.setBackgroundColor(getResources().getColor(R.color.state_false));
+                            break;
+                        case Care.STATE_MINUS:
+                            container.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                            break;
+                        case Care.STATE_ACHIEVED:
+                            container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
+                            break;
+                        case Care.STATE_DONE:
+                        case Care.STATE_ACHIEVED_UNDONE:
+                            container.setBackgroundColor(getResources().getColor(R.color.state_true));
+                            break;
+                    }
+                    if (careItem4.isLocked()) {
+                        statusTextView.setTextColor(Color.GRAY);
+                    } else {
+                        statusTextView.setTextColor(0xffffffff);
                     }
                     break;
             }

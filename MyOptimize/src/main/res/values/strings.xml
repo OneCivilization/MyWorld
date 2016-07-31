@@ -86,6 +86,11 @@
     <string name="sub_goal">子目标：</string>
     <string name="sub_progress_zero">子进度为0</string>
     <string name="sub_progress">子进度：</string>
+    <string name="sign_time_limitation">签到时间限制：</string>
+    <string name="end_time_less_than_start_time"><![CDATA[结束时间 <= 开始时间]]></string>
+    <string name="current_time_out_of_limitation">当前时间不在签到时间范围内</string>
+    <string name="everyday">每天</string>
+    <string name="sign_time_limitation_">签到时间限制</string>
 
 </resources>
  

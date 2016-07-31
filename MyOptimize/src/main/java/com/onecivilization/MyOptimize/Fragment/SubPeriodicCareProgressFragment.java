@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.onecivilization.MyOptimize.Activity.CareDetailsActivity;
 import com.onecivilization.MyOptimize.CustomView.HalfRingProgressBar;
 import com.onecivilization.MyOptimize.Database.DataManager;
+import com.onecivilization.MyOptimize.Model.Care;
+import com.onecivilization.MyOptimize.Model.ComplexPeriodicCare;
 import com.onecivilization.MyOptimize.Model.SubPeriodicCare;
 import com.onecivilization.MyOptimize.R;
 import com.onecivilization.MyOptimize.Util.AppManager;
@@ -104,26 +106,44 @@ public class SubPeriodicCareProgressFragment extends Fragment {
                 }
             }
         });
-        progressBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                care.addSubRecord();
-                Toast.makeText(getActivity(), R.string.signed_in, Toast.LENGTH_SHORT).show();
-                ((CareDetailsActivity) getActivity()).refreshFragments();
-            }
-        });
-        progressBar.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (!care.deleteSubRecord()) {
-                    Toast.makeText(getActivity(), R.string.sub_progress_zero, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), R.string.signed_out, Toast.LENGTH_SHORT).show();
+        if (care.getType() == Care.SUB_PERIODIC) {
+            progressBar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    care.addSubRecord();
+                    Toast.makeText(getActivity(), R.string.signed_in, Toast.LENGTH_SHORT).show();
                     ((CareDetailsActivity) getActivity()).refreshFragments();
                 }
-                return true;
-            }
-        });
+            });
+            progressBar.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (!care.deleteSubRecord()) {
+                        Toast.makeText(getActivity(), R.string.sub_progress_zero, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), R.string.signed_out, Toast.LENGTH_SHORT).show();
+                        ((CareDetailsActivity) getActivity()).refreshFragments();
+                    }
+                    return true;
+                }
+            });
+        } else {
+            progressBar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (((ComplexPeriodicCare) care).isLocked()) {
+                        Toast.makeText(getActivity(), R.string.current_time_out_of_limitation, Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (care.isSigned()) {
+                            care.deleteSubRecord();
+                        } else {
+                            care.addSubRecord();
+                        }
+                    }
+                    ((CareDetailsActivity) getActivity()).refreshFragments();
+                }
+            });
+        }
         return view;
     }
 }

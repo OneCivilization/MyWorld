@@ -7,15 +7,20 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.onecivilization.MyOptimize.Database.Schema.CareItemTable;
 import com.onecivilization.MyOptimize.Database.Schema.RecordTable;
+import com.onecivilization.MyOptimize.Database.Schema.TimePairTable;
 import com.onecivilization.MyOptimize.Model.Care;
+import com.onecivilization.MyOptimize.Model.ComplexPeriodicCare;
 import com.onecivilization.MyOptimize.Model.NonperiodicCare;
 import com.onecivilization.MyOptimize.Model.PeriodicCare;
 import com.onecivilization.MyOptimize.Model.Problem;
 import com.onecivilization.MyOptimize.Model.Record;
 import com.onecivilization.MyOptimize.Model.SubPeriodicCare;
 import com.onecivilization.MyOptimize.Model.TextCare;
+import com.onecivilization.MyOptimize.Model.TimeLimitedPeriodicCare;
+import com.onecivilization.MyOptimize.Model.TimePair;
 import com.onecivilization.MyOptimize.Util.AppManager;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -153,6 +158,63 @@ public class DataManager {
         return records;
     }
 
+    public void addTimePair(long careItemId, TimePair timePair, boolean isHistory) {
+        ContentValues values = new ContentValues();
+        String timePairTableName = isHistory ? TimePairTable.HISTORY_NAME : TimePairTable.NAME;
+        values.put(TimePairTable.Cols.CARE_ITEM_ID, careItemId);
+        values.put(TimePairTable.Cols.START_MINUTES, timePair.startMinutes);
+        values.put(TimePairTable.Cols.END_MINUTES, timePair.endMinutes);
+        db.insert(timePairTableName, null, values);
+    }
+
+    public TimePair getTimePair(long careItemId, boolean isHistory) {
+        String timePairTableName = isHistory ? TimePairTable.HISTORY_NAME : TimePairTable.NAME;
+        Cursor cursor = db.rawQuery("select * from " + timePairTableName + " where "
+                + TimePairTable.Cols.CARE_ITEM_ID + "=" + careItemId, null);
+        if (cursor.moveToFirst()) {
+            int startMinutes = cursor.getInt(cursor.getColumnIndex(TimePairTable.Cols.START_MINUTES));
+            int endMinutes = cursor.getInt(cursor.getColumnIndex(TimePairTable.Cols.END_MINUTES));
+            cursor.close();
+            return new TimePair(startMinutes, endMinutes);
+        }
+        cursor.close();
+        return null;
+    }
+
+    public void addTimePairs(long careItemId, ArrayList<TimePair> timePairs, boolean isHistory) {
+        ContentValues values = new ContentValues();
+        String timePairTableName = isHistory ? TimePairTable.HISTORY_NAME : TimePairTable.NAME;
+        for (TimePair timePair : timePairs) {
+            values.put(TimePairTable.Cols.CARE_ITEM_ID, careItemId);
+            values.put(TimePairTable.Cols.START_MINUTES, timePair.startMinutes);
+            values.put(TimePairTable.Cols.END_MINUTES, timePair.endMinutes);
+            db.insert(timePairTableName, null, values);
+            values.clear();
+        }
+    }
+
+    public ArrayList<TimePair> getTimePairs(long careItemId, boolean isHistory) {
+        ArrayList<TimePair> timePairs = new ArrayList<>();
+        String timePairTableName = isHistory ? TimePairTable.HISTORY_NAME : TimePairTable.NAME;
+        int startMinutes, endMinutes;
+        Cursor cursor = db.rawQuery("select * from " + timePairTableName + " where "
+                + TimePairTable.Cols.CARE_ITEM_ID + "=" + careItemId, null);
+        if (cursor.moveToFirst()) {
+            do {
+                startMinutes = cursor.getInt(cursor.getColumnIndex(TimePairTable.Cols.START_MINUTES));
+                endMinutes = cursor.getInt(cursor.getColumnIndex(TimePairTable.Cols.END_MINUTES));
+                timePairs.add(new TimePair(startMinutes, endMinutes));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return timePairs;
+    }
+
+    public void deleteTimePairs(long careItemId, boolean isHistory) {
+        String timePairTableName = isHistory ? TimePairTable.HISTORY_NAME : TimePairTable.NAME;
+        db.delete(timePairTableName, TimePairTable.Cols.CARE_ITEM_ID + "=" + careItemId, null);
+    }
+
     public void loadCareList() {
         careList = new LinkedList<>();
         Cursor cursor = db.rawQuery("select * from " + CareItemTable.NAME + " order by " + CareItemTable.Cols.ORDER, null);
@@ -200,6 +262,30 @@ public class DataManager {
                         LinkedList<Record> subRecords = getSubRecordList(createTime, false);
                         careList.add(new SubPeriodicCare(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime, achievedTime,
                                 goal2, punishment2, modified2, records2, periodUnit2, periodLength2, subGoal, subRecords));
+                        break;
+                    case Care.TIMELIMITED_PERIODIC:
+                        int goal3 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.GOAL));
+                        int punishment3 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PUNISHMENT));
+                        int modified3 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.MODIFIED));
+                        int periodUnit3 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PERIOD_UNIT));
+                        int periodLength3 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PERIOD_LENGTH));
+                        LinkedList<Record> records3 = getRecordList(createTime, false);
+                        TimePair timePair = getTimePair(createTime, false);
+                        careList.add(new TimeLimitedPeriodicCare(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime, achievedTime,
+                                goal3, punishment3, modified3, records3, periodUnit3, periodLength3, timePair));
+                        break;
+                    case Care.COMPLEX_PERIODIC:
+                        int goal4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.GOAL));
+                        int punishment4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PUNISHMENT));
+                        int modified4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.MODIFIED));
+                        int periodUnit4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PERIOD_UNIT));
+                        int periodLength4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PERIOD_LENGTH));
+                        int subGoal4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.SUB_GOAL));
+                        LinkedList<Record> records4 = getRecordList(createTime, false);
+                        LinkedList<Record> subRecords4 = getSubRecordList(createTime, false);
+                        ArrayList<TimePair> timePairs = getTimePairs(createTime, false);
+                        careList.add(new ComplexPeriodicCare(title, descriptionTitle, description, descriptionLastEditedTime, order, createTime, achievedTime,
+                                goal4, punishment4, modified4, records4, periodUnit4, periodLength4, subGoal4, subRecords4, timePairs));
                         break;
                 }
             } while (cursor.moveToNext());
@@ -254,6 +340,30 @@ public class DataManager {
                         LinkedList<Record> subRecords = getSubRecordList(createTime, true);
                         historyCareList.add(new SubPeriodicCare(title, descriptionTitle, description, descriptionLastEditedTime, 0, createTime, achievedTime, archivedTime,
                                 goal2, punishment2, modified2, records2, periodUnit2, periodLength2, subGoal, subRecords));
+                        break;
+                    case Care.TIMELIMITED_PERIODIC:
+                        int goal3 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.GOAL));
+                        int punishment3 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PUNISHMENT));
+                        int modified3 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.MODIFIED));
+                        int periodUnit3 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PERIOD_UNIT));
+                        int periodLength3 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PERIOD_LENGTH));
+                        LinkedList<Record> records3 = getRecordList(createTime, true);
+                        TimePair timePair = getTimePair(createTime, true);
+                        historyCareList.add(new TimeLimitedPeriodicCare(title, descriptionTitle, description, descriptionLastEditedTime, 0, createTime, achievedTime, archivedTime,
+                                goal3, punishment3, modified3, records3, periodUnit3, periodLength3, timePair));
+                        break;
+                    case Care.COMPLEX_PERIODIC:
+                        int goal4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.GOAL));
+                        int punishment4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PUNISHMENT));
+                        int modified4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.MODIFIED));
+                        int periodUnit4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PERIOD_UNIT));
+                        int periodLength4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.PERIOD_LENGTH));
+                        int subGoal4 = cursor.getInt(cursor.getColumnIndex(CareItemTable.Cols.SUB_GOAL));
+                        LinkedList<Record> records4 = getRecordList(createTime, true);
+                        LinkedList<Record> subRecords4 = getSubRecordList(createTime, true);
+                        ArrayList<TimePair> timePairs = getTimePairs(createTime, true);
+                        careList.add(new ComplexPeriodicCare(title, descriptionTitle, description, descriptionLastEditedTime, 0, createTime, achievedTime, archivedTime,
+                                goal4, punishment4, modified4, records4, periodUnit4, periodLength4, subGoal4, subRecords4, timePairs));
                         break;
                 }
             } while (cursor.moveToNext());
@@ -321,6 +431,28 @@ public class DataManager {
                     addRecords(care2.getCreateTime(), care2.getRecords(), false);
                     addSubRecords(care2.getCreateTime(), care2.getSubRecords(), false);
                     break;
+                case Care.TIMELIMITED_PERIODIC:
+                    TimeLimitedPeriodicCare care3 = (TimeLimitedPeriodicCare) careItem;
+                    values.put(CareItemTable.Cols.GOAL, care3.getGoal());
+                    values.put(CareItemTable.Cols.PUNISHMENT, care3.getPunishment());
+                    values.put(CareItemTable.Cols.MODIFIED, care3.getModified());
+                    values.put(CareItemTable.Cols.PERIOD_UNIT, care3.getPeriodUnit());
+                    values.put(CareItemTable.Cols.PERIOD_LENGTH, care3.getPeriodLength());
+                    addRecords(care3.getCreateTime(), care3.getRecords(), false);
+                    addTimePair(care3.getCreateTime(), care3.getTimePair(), false);
+                    break;
+                case Care.COMPLEX_PERIODIC:
+                    ComplexPeriodicCare care4 = (ComplexPeriodicCare) careItem;
+                    values.put(CareItemTable.Cols.GOAL, care4.getGoal());
+                    values.put(CareItemTable.Cols.PUNISHMENT, care4.getPunishment());
+                    values.put(CareItemTable.Cols.MODIFIED, care4.getModified());
+                    values.put(CareItemTable.Cols.PERIOD_UNIT, care4.getPeriodUnit());
+                    values.put(CareItemTable.Cols.PERIOD_LENGTH, care4.getPeriodLength());
+                    values.put(CareItemTable.Cols.SUB_GOAL, care4.getSubGoal());
+                    addRecords(care4.getCreateTime(), care4.getRecords(), false);
+                    addSubRecords(care4.getCreateTime(), care4.getSubRecords(), false);
+                    addTimePairs(care4.getCreateTime(), care4.getTimePairs(), false);
+                    break;
             }
             db.insert(CareItemTable.NAME, null, values);
             careList.add(careItem);
@@ -347,6 +479,8 @@ public class DataManager {
                 case Care.NONPERIODIC:
                 case Care.PERIODIC:
                 case Care.SUB_PERIODIC:
+                case Care.TIMELIMITED_PERIODIC:
+                case Care.COMPLEX_PERIODIC:
                     values.put(CareItemTable.Cols.MODIFIED, ((NonperiodicCare) careItem).getModified());
                     break;
             }
@@ -373,6 +507,15 @@ public class DataManager {
                     deleteRecords(care.getCreateTime(), false);
                     deleteSubRecords(care.getCreateTime(), false);
                     break;
+                case Care.TIMELIMITED_PERIODIC:
+                    deleteRecords(care.getCreateTime(), false);
+                    deleteTimePairs(care.getCreateTime(), false);
+                    break;
+                case Care.COMPLEX_PERIODIC:
+                    deleteRecords(care.getCreateTime(), false);
+                    deleteSubRecords(care.getCreateTime(), false);
+                    deleteTimePairs(care.getCreateTime(), false);
+                    break;
             }
             db.delete(CareItemTable.NAME, CareItemTable.Cols.CREATE_TIME + "=" + care.getCreateTime(), null);
             careList.remove(position);
@@ -397,6 +540,10 @@ public class DataManager {
                 case Care.SUB_PERIODIC:
                     deleteRecords(care.getCreateTime(), true);
                     deleteSubRecords(care.getCreateTime(), true);
+                    break;
+                case Care.TIMELIMITED_PERIODIC:
+                    deleteRecords(care.getCreateTime(), true);
+                    deleteTimePairs(care.getCreateTime(), true);
                     break;
             }
             db.delete(CareItemTable.HISTORY_NAME, CareItemTable.Cols.CREATE_TIME + "=" + care.getCreateTime(), null);
@@ -455,6 +602,33 @@ public class DataManager {
                     addSubRecords(care2.getCreateTime(), care2.getSubRecords(), true);
                     deleteRecords(care2.getCreateTime(), false);
                     deleteSubRecords(care2.getCreateTime(), false);
+                    break;
+                case Care.TIMELIMITED_PERIODIC:
+                    TimeLimitedPeriodicCare care3 = (TimeLimitedPeriodicCare) careItem;
+                    values.put(CareItemTable.Cols.GOAL, care3.getGoal());
+                    values.put(CareItemTable.Cols.PUNISHMENT, care3.getPunishment());
+                    values.put(CareItemTable.Cols.MODIFIED, care3.getModified());
+                    values.put(CareItemTable.Cols.PERIOD_UNIT, care3.getPeriodUnit());
+                    values.put(CareItemTable.Cols.PERIOD_LENGTH, care3.getPeriodLength());
+                    addRecords(care3.getCreateTime(), care3.getRecords(), true);
+                    deleteRecords(care3.getCreateTime(), false);
+                    addTimePair(care3.getCreateTime(), care3.getTimePair(), true);
+                    deleteTimePairs(care3.getCreateTime(), false);
+                    break;
+                case Care.COMPLEX_PERIODIC:
+                    ComplexPeriodicCare care4 = (ComplexPeriodicCare) careItem;
+                    values.put(CareItemTable.Cols.GOAL, care4.getGoal());
+                    values.put(CareItemTable.Cols.PUNISHMENT, care4.getPunishment());
+                    values.put(CareItemTable.Cols.MODIFIED, care4.getModified());
+                    values.put(CareItemTable.Cols.PERIOD_UNIT, care4.getPeriodUnit());
+                    values.put(CareItemTable.Cols.PERIOD_LENGTH, care4.getPeriodLength());
+                    values.put(CareItemTable.Cols.SUB_GOAL, care4.getSubGoal());
+                    addRecords(care4.getCreateTime(), care4.getRecords(), true);
+                    addSubRecords(care4.getCreateTime(), care4.getSubRecords(), true);
+                    addTimePairs(care4.getCreateTime(), care4.getTimePairs(), true);
+                    deleteRecords(care4.getCreateTime(), false);
+                    deleteSubRecords(care4.getCreateTime(), false);
+                    deleteRecords(care4.getCreateTime(), false);
                     break;
             }
             db.insert(CareItemTable.HISTORY_NAME, null, values);

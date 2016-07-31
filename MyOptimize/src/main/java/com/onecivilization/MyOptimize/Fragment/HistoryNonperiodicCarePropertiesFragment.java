@@ -105,20 +105,16 @@ public class HistoryNonperiodicCarePropertiesFragment extends Fragment {
             int days = (int) (new Date(yearArchived, monthArchived, dayArchived).getTime() - new Date(yearCreated, monthCreated, dayCreated).getTime()) / 86400000;
             lastedTimeTextView.setText(days + "  " + getString(R.string.days));
         }
-        if (care.getType() == Care.PERIODIC) {
+        if (care.getType() == Care.PERIODIC || care.getType() == Care.SUB_PERIODIC || care.getType() == Care.TIMELIMITED_PERIODIC || care.getType() == Care.COMPLEX_PERIODIC) {
             TableRow tableRow = (TableRow) view.findViewById(R.id.period_row);
             tableRow.setVisibility(View.VISIBLE);
             TextView periodTextView = (TextView) view.findViewById(R.id.period);
             periodTextView.setText(((PeriodicCare) care).getPeriodLengthText());
         }
-        if (care.getType() == Care.SUB_PERIODIC) {
-            TableRow tableRow1 = (TableRow) view.findViewById(R.id.period_row);
+        if (care.getType() == Care.SUB_PERIODIC || care.getType() == Care.COMPLEX_PERIODIC) {
             TableRow tableRow2 = (TableRow) view.findViewById(R.id.sub_goal_row);
-            tableRow1.setVisibility(View.VISIBLE);
             tableRow2.setVisibility(View.VISIBLE);
-            TextView periodTextView = (TextView) view.findViewById(R.id.period);
             TextView subGoalTextView = (TextView) view.findViewById(R.id.sub_goal);
-            periodTextView.setText(((SubPeriodicCare) care).getPeriodLengthText());
             subGoalTextView.setText(String.valueOf(((SubPeriodicCare) care).getSubGoal()));
         }
         return view;

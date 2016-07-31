@@ -8,6 +8,16 @@ public class TimePair {
     public int startMinutes = 0;
     public int endMinutes = 0;
 
+    public TimePair(int startMinutes, int endMinutes) {
+        this.startMinutes = startMinutes;
+        this.endMinutes = endMinutes;
+    }
+
+    public TimePair(int startHour, int startMinute, int endHour, int endMinute) {
+        startMinutes = startHour * 60 + startMinute;
+        endMinutes = endHour * 60 + endMinute;
+    }
+
     public int getStartHour() {
         return startMinutes / 60;
     }

@@ -12,7 +12,9 @@ import android.widget.Toast;
 import com.onecivilization.MyOptimize.Activity.CareDetailsActivity;
 import com.onecivilization.MyOptimize.CustomView.HalfRingProgressBar;
 import com.onecivilization.MyOptimize.Database.DataManager;
+import com.onecivilization.MyOptimize.Model.Care;
 import com.onecivilization.MyOptimize.Model.PeriodicCare;
+import com.onecivilization.MyOptimize.Model.TimeLimitedPeriodicCare;
 import com.onecivilization.MyOptimize.R;
 import com.onecivilization.MyOptimize.Util.AppManager;
 
@@ -104,19 +106,40 @@ public class PeriodicCareProgressFragment extends Fragment {
                 }
             }
         });
-        progressBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (care.isSigned()) {
-                    care.deleteRecord();
-                    Toast.makeText(getActivity(), R.string.signed_out, Toast.LENGTH_SHORT).show();
-                } else {
-                    care.addRecord();
-                    Toast.makeText(getActivity(), R.string.signed_in, Toast.LENGTH_SHORT).show();
+        if (care.getType() == Care.TIMELIMITED_PERIODIC) {
+            progressBar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (((TimeLimitedPeriodicCare) care).isLocked()) {
+                        Toast.makeText(getActivity(), R.string.current_time_out_of_limitation, Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (care.isSigned()) {
+                            care.deleteRecord();
+                            Toast.makeText(getActivity(), R.string.signed_out, Toast.LENGTH_SHORT).show();
+                        } else {
+                            care.addRecord();
+                            Toast.makeText(getActivity(), R.string.signed_in, Toast.LENGTH_SHORT).show();
+                        }
+                        ((CareDetailsActivity) getActivity()).refreshFragments();
+                    }
                 }
-                ((CareDetailsActivity) getActivity()).refreshFragments();
-            }
-        });
+            });
+        } else {
+            progressBar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (care.isSigned()) {
+                        care.deleteRecord();
+                        Toast.makeText(getActivity(), R.string.signed_out, Toast.LENGTH_SHORT).show();
+                    } else {
+                        care.addRecord();
+                        Toast.makeText(getActivity(), R.string.signed_in, Toast.LENGTH_SHORT).show();
+                    }
+                    ((CareDetailsActivity) getActivity()).refreshFragments();
+                }
+            });
+        }
+
         return view;
     }
 }

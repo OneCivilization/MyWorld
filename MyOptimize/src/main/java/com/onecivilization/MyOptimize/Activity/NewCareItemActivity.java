@@ -19,18 +19,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.onecivilization.MyOptimize.Database.DataManager;
-import com.onecivilization.MyOptimize.Fragment.BlankFragment;
+import com.onecivilization.MyOptimize.Fragment.NewComplexPeriodicCareFragment;
 import com.onecivilization.MyOptimize.Fragment.NewNonperiodicCareFragment;
 import com.onecivilization.MyOptimize.Fragment.NewPeriodicCareFragment;
 import com.onecivilization.MyOptimize.Fragment.NewSubPeriodicCareFragment;
 import com.onecivilization.MyOptimize.Fragment.NewTextCareFragment;
+import com.onecivilization.MyOptimize.Fragment.NewTimeLimitedPeriodicCareFragment;
 import com.onecivilization.MyOptimize.Interface.NewCareFragment;
 import com.onecivilization.MyOptimize.Model.Care;
+import com.onecivilization.MyOptimize.Model.ComplexPeriodicCare;
 import com.onecivilization.MyOptimize.Model.NonperiodicCare;
 import com.onecivilization.MyOptimize.Model.PeriodicCare;
 import com.onecivilization.MyOptimize.Model.SubPeriodicCare;
 import com.onecivilization.MyOptimize.Model.TextCare;
+import com.onecivilization.MyOptimize.Model.TimeLimitedPeriodicCare;
+import com.onecivilization.MyOptimize.Model.TimePair;
 import com.onecivilization.MyOptimize.R;
+
+import java.util.ArrayList;
 
 public class NewCareItemActivity extends BaseActivity {
 
@@ -108,9 +114,12 @@ public class NewCareItemActivity extends BaseActivity {
                     case 3:
                         replaceFragment(new NewSubPeriodicCareFragment());
                         break;
-                    default:
-                        replaceFragment(new BlankFragment());
-                        Toast.makeText(NewCareItemActivity.this, position + "", Toast.LENGTH_SHORT).show();
+                    case 4:
+                        replaceFragment(new NewTimeLimitedPeriodicCareFragment());
+                        break;
+                    case 5:
+                        replaceFragment(new NewComplexPeriodicCareFragment());
+                        break;
                 }
             }
             @Override
@@ -155,6 +164,33 @@ public class NewCareItemActivity extends BaseActivity {
                             descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
                             System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1),
                             result.getInt("periodUnit", PeriodicCare.DAY), result.getInt("periodLength", 1), result.getInt("subGoal", 2)));
+                    break;
+                case Care.TIMELIMITED_PERIODIC:
+                    if (result.getBoolean("isValid")) {
+                        dataManager.addCareItem(new TimeLimitedPeriodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
+                                descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
+                                System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1),
+                                result.getInt("periodUnit", PeriodicCare.DAY), result.getInt("periodLength", 1),
+                                new TimePair(result.getInt("startHour"), result.getInt("startMinute"), result.getInt("endHour"), result.getInt("endMinute"))));
+                    } else {
+                        Toast.makeText(this, R.string.end_time_less_than_start_time, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    break;
+                case Care.COMPLEX_PERIODIC:
+                    if (result.getBoolean("isValid")) {
+                        ArrayList<TimePair> timePairs = new ArrayList<>();
+                        for (int i = 1; i <= result.getInt("subGoal"); i++) {
+                            timePairs.add(new TimePair(result.getInt("startMinutes" + i), result.getInt("endMinutes" + i)));
+                        }
+                        dataManager.addCareItem(new ComplexPeriodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
+                                descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
+                                System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1),
+                                result.getInt("periodUnit", PeriodicCare.DAY), result.getInt("periodLength", 1), result.getInt("subGoal", 2), timePairs));
+                    } else {
+                        Toast.makeText(this, getString(R.string.end_time_less_than_start_time) + "（" + result.getInt("invalidPosition") + "）", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     break;
             }
             finish();

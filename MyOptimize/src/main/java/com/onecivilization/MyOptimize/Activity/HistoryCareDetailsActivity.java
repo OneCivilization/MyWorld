@@ -135,6 +135,8 @@ public class HistoryCareDetailsActivity extends BaseActivity {
                 case Care.NONPERIODIC:
                 case Care.PERIODIC:
                 case Care.SUB_PERIODIC:
+                case Care.TIMELIMITED_PERIODIC:
+                case Care.COMPLEX_PERIODIC:
                     switch (position) {
                         case 0:
                             return new HistoryDescriptionFragment();
@@ -156,6 +158,8 @@ public class HistoryCareDetailsActivity extends BaseActivity {
                 case Care.NONPERIODIC:
                 case Care.PERIODIC:
                 case Care.SUB_PERIODIC:
+                case Care.TIMELIMITED_PERIODIC:
+                case Care.COMPLEX_PERIODIC:
                     return 3;
             }
             return 0;
@@ -175,6 +179,8 @@ public class HistoryCareDetailsActivity extends BaseActivity {
                 case Care.NONPERIODIC:
                 case Care.PERIODIC:
                 case Care.SUB_PERIODIC:
+                case Care.TIMELIMITED_PERIODIC:
+                case Care.COMPLEX_PERIODIC:
                     switch (position) {
                         case 0:
                             return care.getDescriptionTitle();

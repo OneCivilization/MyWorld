@@ -82,6 +82,11 @@
     <string name="sub_goal">Sub-Goal：</string>
     <string name="sub_progress_zero">Sub-progress is 0</string>
     <string name="sub_progress">Sub：</string>
+    <string name="sign_time_limitation">Sign-time limitation：</string>
+    <string name="end_time_less_than_start_time"><![CDATA[End time <= start time]]></string>
+    <string name="current_time_out_of_limitation">The current time is out of sign-time limitation</string>
+    <string name="everyday">Everyday</string>
+    <string name="sign_time_limitation_">Sign-time limitation</string>
 
 </resources>
  

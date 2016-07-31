@@ -170,6 +170,7 @@ public class CareDetailsActivity extends BaseActivity {
                     }
                     break;
                 case Care.PERIODIC:
+                case Care.TIMELIMITED_PERIODIC:
                     switch (position) {
                         case 0:
                             return new DescriptionFragment();
@@ -180,6 +181,7 @@ public class CareDetailsActivity extends BaseActivity {
                     }
                     break;
                 case Care.SUB_PERIODIC:
+                case Care.COMPLEX_PERIODIC:
                     switch (position) {
                         case 0:
                             return new DescriptionFragment();
@@ -201,6 +203,8 @@ public class CareDetailsActivity extends BaseActivity {
                 case Care.NONPERIODIC:
                 case Care.PERIODIC:
                 case Care.SUB_PERIODIC:
+                case Care.TIMELIMITED_PERIODIC:
+                case Care.COMPLEX_PERIODIC:
                     return 3;
             }
             return 0;
@@ -220,6 +224,8 @@ public class CareDetailsActivity extends BaseActivity {
                 case Care.NONPERIODIC:
                 case Care.PERIODIC:
                 case Care.SUB_PERIODIC:
+                case Care.TIMELIMITED_PERIODIC:
+                case Care.COMPLEX_PERIODIC:
                     switch (position) {
                         case 0:
                             return care.getDescriptionTitle();
