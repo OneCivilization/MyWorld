@@ -93,7 +93,7 @@ public class Schema {
         public static final String CREATE_STATEMENT = CREATE_TABLE + NAME + "(" +
                 Cols.CREATE_TIME + INTEGER + PRIMARY_KEY + "," +
                 Cols.TYPE + INTEGER + NOT_NULL + "," +
-                Cols.ORDER + INTEGER + UNIQUE + "," +
+                Cols.ORDER + INTEGER + "," +
                 Cols.TITLE + TEXT + NOT_NULL + "," +
                 Cols.DESCRIPTION_TITLE + TEXT + "," +
                 Cols.DESCRIPTION + TEXT + "," +

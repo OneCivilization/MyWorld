@@ -21,8 +21,12 @@ import com.onecivilization.MyOptimize.Model.TimePair;
 import com.onecivilization.MyOptimize.Util.AppManager;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by CGZ on 2016/7/10.
@@ -362,7 +366,7 @@ public class DataManager {
                         LinkedList<Record> records4 = getRecordList(createTime, true);
                         LinkedList<Record> subRecords4 = getSubRecordList(createTime, true);
                         ArrayList<TimePair> timePairs = getTimePairs(createTime, true);
-                        careList.add(new ComplexPeriodicCare(title, descriptionTitle, description, descriptionLastEditedTime, 0, createTime, achievedTime, archivedTime,
+                        historyCareList.add(new ComplexPeriodicCare(title, descriptionTitle, description, descriptionLastEditedTime, 0, createTime, achievedTime, archivedTime,
                                 goal4, punishment4, modified4, records4, periodUnit4, periodLength4, subGoal4, subRecords4, timePairs));
                         break;
                 }
@@ -650,6 +654,54 @@ public class DataManager {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void swapCareItem(int fromPosition, int toPosition) {
+        Collections.swap(careList, fromPosition, toPosition);
+        ListIterator<Care> iterator;
+        int order;
+        if (fromPosition < toPosition) {
+            iterator = careList.listIterator(fromPosition);
+            order = iterator.next().decreaseOrder();
+            iterator.next().setOrder(order);
+        } else {
+            iterator = careList.listIterator(toPosition);
+            order = iterator.next().decreaseOrder();
+            iterator.next().setOrder(order);
+        }
+        updateCareItem(iterator.previous());
+        updateCareItem(iterator.previous());
+    }
+
+    public long getNextRefreshTime() {
+        GregorianCalendar calendar = new GregorianCalendar();
+        long currentTime = calendar.getTimeInMillis();
+        calendar = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        long today = calendar.getTimeInMillis(), nextRefreshTime = today + 86400000, temp = 0;
+        for (Care care : getCareList()) {
+            if (care.getType() == Care.TIMELIMITED_PERIODIC) {
+                temp = ((TimeLimitedPeriodicCare) care).getTimePair().startMinutes * 60000 + today;
+                if (temp > currentTime && temp < nextRefreshTime) {
+                    nextRefreshTime = temp;
+                }
+                temp = ((TimeLimitedPeriodicCare) care).getTimePair().endMinutes * 60000 + 60000 + today;
+                if (temp > currentTime && temp < nextRefreshTime) {
+                    nextRefreshTime = temp;
+                }
+            } else if (care.getType() == Care.COMPLEX_PERIODIC) {
+                for (TimePair timePair : ((ComplexPeriodicCare) care).getTimePairs()) {
+                    temp = timePair.startMinutes * 60000 + today;
+                    if (temp > currentTime && temp < nextRefreshTime) {
+                        nextRefreshTime = temp;
+                    }
+                    temp = timePair.endMinutes * 60000 + 60000 + today;
+                    if (temp > currentTime && temp < nextRefreshTime) {
+                        nextRefreshTime = temp;
+                    }
+                }
+            }
+        }
+        return nextRefreshTime;
     }
 
     public void loadProblemList() {

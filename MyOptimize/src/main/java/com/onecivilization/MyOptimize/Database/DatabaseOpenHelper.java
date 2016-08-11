@@ -16,7 +16,7 @@ import java.io.File;
  */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
-    private static final int VERSION = 6;
+    private static final int VERSION = 7;
     private static final String DATABASE_NAME = "MyOptimize.db";
 
     public DatabaseOpenHelper(Context context) {

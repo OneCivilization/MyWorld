@@ -9,7 +9,7 @@ import com.onecivilization.MyOptimize.Util.AppManager;
 /**
  * Created by CGZ on 2016/7/11.
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

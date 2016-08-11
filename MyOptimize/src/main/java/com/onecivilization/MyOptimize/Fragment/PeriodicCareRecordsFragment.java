@@ -51,7 +51,7 @@ public class PeriodicCareRecordsFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_care_records, container, false);
         recordsCalendar = (RecordsCalendar) view.findViewById(R.id.records_calendar);
-        if (care.getType() == Care.SUB_PERIODIC) {
+        if (care.getType() == Care.SUB_PERIODIC || care.getType() == Care.COMPLEX_PERIODIC) {
             recordsCalendar.setRecords(((SubPeriodicCare) care).getSubRecords(), 0);
             recordsSortHelper = new RecordsSortHelper(((SubPeriodicCare) care).getSubRecords());
         } else {

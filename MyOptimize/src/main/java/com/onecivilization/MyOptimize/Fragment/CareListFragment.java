@@ -1,14 +1,17 @@
 package com.onecivilization.MyOptimize.Fragment;
 
+import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,12 +44,39 @@ public class CareListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cares, container, false);
+        final View view = inflater.inflate(R.layout.fragment_cares, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.care_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyAdapter(DataManager.getInstance().getCareList());
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0);
+            }
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+                Vibrator vibrator = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
+                vibrator.vibrate(15);
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+                DataManager.getInstance().swapCareItem(fromPosition, toPosition);
+                adapter.notifyItemMoved(fromPosition, toPosition);
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         return view;
     }
 
@@ -175,6 +205,7 @@ public class CareListFragment extends Fragment {
                     progress.setVisibility(View.VISIBLE);
                     goal.setVisibility(View.VISIBLE);
                     timeLimitation.setVisibility(View.VISIBLE);
+                    statusTextView.setTextColor(0xffffffff);
                     final SubPeriodicCare careItem2 = (SubPeriodicCare) care;
                     goal.setText(getString(R.string.goal) + careItem2.getGoal());
                     timeLimitation.setText(careItem2.getPeriodText());
@@ -241,7 +272,7 @@ public class CareListFragment extends Fragment {
                             if (careItem4.isLocked()) {
                                 Toast.makeText(getActivity(), R.string.current_time_out_of_limitation, Toast.LENGTH_SHORT).show();
                             } else {
-                                if (careItem4.isSigned()) {
+                                if (careItem4.isSubSigned()) {
                                     careItem4.deleteSubRecord();
                                 } else {
                                     careItem4.addSubRecord();
@@ -310,7 +341,7 @@ public class CareListFragment extends Fragment {
                             break;
                         case Care.STATE_ACHIEVED_UNDONE:
                             statusImageButton.setImageResource(R.drawable.state_unachieved);
-                            container.setBackgroundColor(getResources().getColor(R.color.state_true));
+                            container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
                             break;
                     }
                     break;
@@ -327,10 +358,10 @@ public class CareListFragment extends Fragment {
                             container.setBackgroundColor(getResources().getColor(R.color.state_warning));
                             break;
                         case Care.STATE_ACHIEVED:
+                        case Care.STATE_ACHIEVED_UNDONE:
                             container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
                             break;
                         case Care.STATE_DONE:
-                        case Care.STATE_ACHIEVED_UNDONE:
                             container.setBackgroundColor(getResources().getColor(R.color.state_true));
                             break;
                     }
@@ -357,7 +388,7 @@ public class CareListFragment extends Fragment {
                             break;
                         case Care.STATE_ACHIEVED_UNDONE:
                             statusImageButton.setImageResource(R.drawable.state_unachieved);
-                            container.setBackgroundColor(getResources().getColor(R.color.state_true));
+                            container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
                             break;
                     }
                     if (careItem3.isLocked()) {
@@ -377,10 +408,10 @@ public class CareListFragment extends Fragment {
                             container.setBackgroundColor(getResources().getColor(R.color.state_warning));
                             break;
                         case Care.STATE_ACHIEVED:
+                        case Care.STATE_ACHIEVED_UNDONE:
                             container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
                             break;
                         case Care.STATE_DONE:
-                        case Care.STATE_ACHIEVED_UNDONE:
                             container.setBackgroundColor(getResources().getColor(R.color.state_true));
                             break;
                     }

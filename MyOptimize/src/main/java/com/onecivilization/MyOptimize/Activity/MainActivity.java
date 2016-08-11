@@ -1,6 +1,12 @@
 package com.onecivilization.MyOptimize.Activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Fragment.BlankFragment;
 import com.onecivilization.MyOptimize.Fragment.CareListFragment;
 import com.onecivilization.MyOptimize.Fragment.HistoryCareListFragment;
@@ -35,6 +42,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private int navigationPosition = 0;
+    private AlarmManager alarmManager;
+    private RefreshBroadcastReceiver refreshBroadcastReceiver;
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -43,6 +52,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         viewPager = (ViewPager) findViewById(R.id.container);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+    }
+
+    private void addRefreshTask() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, DataManager.getInstance().getNextRefreshTime(),
+                    PendingIntent.getBroadcast(this, 0, new Intent("com.onecivilization.myoptimize.refreshCareList"), 0));
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, DataManager.getInstance().getNextRefreshTime(),
+                    PendingIntent.getBroadcast(this, 0, new Intent("com.onecivilization.myoptimize.refreshCareList"), 0));
+        }
     }
 
     @Override
@@ -79,7 +98,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
+        refreshBroadcastReceiver = new RefreshBroadcastReceiver();
+        registerReceiver(refreshBroadcastReceiver, new IntentFilter("com.onecivilization.myoptimize.refreshCareList"));
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addRefreshTask();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        alarmManager.cancel(PendingIntent.getBroadcast(this, 0, new Intent("com.onecivilization.myoptimize.refreshCareList"), 0));
+        System.gc();
     }
 
     @Override
@@ -91,6 +125,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             lastBackPressedTime = now;
             Toast.makeText(this, R.string.exit_warning, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(refreshBroadcastReceiver);
     }
 
     @Override
@@ -187,6 +227,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         @Override
         public int getItemPosition(Object object) {
             return POSITION_NONE;
+        }
+    }
+
+    public class RefreshBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            viewPager.getAdapter().notifyDataSetChanged();
+            addRefreshTask();
         }
     }
 

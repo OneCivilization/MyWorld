@@ -32,8 +32,7 @@ public class ComplexPeriodicCare extends SubPeriodicCare {
         this.timePairs = timePairs;
     }
 
-    @Override
-    public boolean isSigned() {
+    public boolean isSubSigned() {
         isLocked();
         if (subRecords.isEmpty()) return false;
         return subRecords.getLast().time >= lastStartTime;
@@ -43,7 +42,7 @@ public class ComplexPeriodicCare extends SubPeriodicCare {
         boolean isLocked = true;
         GregorianCalendar calendar = new GregorianCalendar();
         calendar = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        int currentTime = (int) (System.currentTimeMillis() - calendar.getTimeInMillis()) / 60000, i = 0;
+        int currentTime = (int) (System.currentTimeMillis() - calendar.getTimeInMillis()) / 60000;
         for (TimePair timePair : timePairs) {
             if (currentTime >= timePair.startMinutes && currentTime <= timePair.endMinutes) {
                 isLocked = false;

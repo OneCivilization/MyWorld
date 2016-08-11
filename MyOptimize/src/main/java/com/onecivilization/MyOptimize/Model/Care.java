@@ -84,6 +84,16 @@ public abstract class Care {
         this.order = order;
     }
 
+    public int increaseOrder() {
+        order++;
+        return order - 1;
+    }
+
+    public int decreaseOrder() {
+        order--;
+        return order + 1;
+    }
+
     public long getAchievedTime() {
         return achievedTime;
     }

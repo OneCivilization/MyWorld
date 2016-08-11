@@ -1,6 +1,7 @@
 package com.onecivilization.MyOptimize.Activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -50,6 +51,9 @@ public class DescriptionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description);
         findViews();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
         Intent data = getIntent();
         description_title.setText(data.getStringExtra("descriptionTitle"));
         description_content_text = data.getStringExtra("descriptionContent");

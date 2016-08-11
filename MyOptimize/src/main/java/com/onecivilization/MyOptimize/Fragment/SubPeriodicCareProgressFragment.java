@@ -139,8 +139,8 @@ public class SubPeriodicCareProgressFragment extends Fragment {
                         } else {
                             care.addSubRecord();
                         }
+                        ((CareDetailsActivity) getActivity()).refreshFragments();
                     }
-                    ((CareDetailsActivity) getActivity()).refreshFragments();
                 }
             });
         }

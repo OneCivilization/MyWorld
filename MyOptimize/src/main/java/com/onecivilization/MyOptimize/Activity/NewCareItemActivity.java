@@ -75,6 +75,9 @@ public class NewCareItemActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_care_item);
         findViews();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
 
         fragmentManager = getSupportFragmentManager();
         NewPeriodicCareFragment temp = new NewPeriodicCareFragment();
