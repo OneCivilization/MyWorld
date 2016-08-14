@@ -1,5 +1,6 @@
 package com.onecivilization.MyOptimize.Util;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -82,6 +83,9 @@ public class AppManager extends Application {
                 break;
         }
         LOCALE = config.locale;
+        for (Activity activity : activities) {
+            activity.recreate();
+        }
     }
 
     @Override

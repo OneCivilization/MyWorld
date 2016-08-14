@@ -20,6 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            app:navigationIcon="@drawable/close"
             app:title="@string/create_new_care_item"
             app:titleMarginStart="20dp" />
     </android.support.design.widget.AppBarLayout>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/new_care_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".Activity.SettingsLanguageActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="2dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:navigationIcon="@drawable/close"
+            app:title="@string/language"
+            app:titleMarginStart="20dp" />
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/chinese_simplified"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/china"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="15dp"
+                android:paddingRight="13dp"
+                android:paddingTop="15dp"
+                android:text="@string/chinese_simplified"
+                android:textColor="#3e3e3e"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/divider_color" />
+
+            <TextView
+                android:id="@+id/english_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/us"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="15dp"
+                android:paddingRight="13dp"
+                android:paddingTop="15dp"
+                android:text="@string/english_us"
+                android:textColor="#3e3e3e"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/divider_color" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

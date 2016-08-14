@@ -87,6 +87,14 @@
     <string name="current_time_out_of_limitation">The current time is out of sign-time limitation</string>
     <string name="everyday">Everyday</string>
     <string name="sign_time_limitation_">Sign-time limitation</string>
+    <string name="care_item_auto_sort">Sort care items by status</string>
+    <string name="backup">Backup</string>
+    <string name="language">Language</string>
+    <string name="chinese_simplified">Chinese Simplified</string>
+    <string name="english_us">English (United States)</string>
+    <string name="backup_confirm">Are you sure you want to backup?</string>
+    <string name="backed_up_at">Backed up at</string>
+    <string name="recover">Recover</string>
 
 </resources>
  

@@ -61,7 +61,6 @@ public class NewCareItemActivity extends BaseActivity {
         typeChooser = (Spinner) findViewById(R.id.type_chooser);
         createButton = (Button) findViewById(R.id.create_button);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

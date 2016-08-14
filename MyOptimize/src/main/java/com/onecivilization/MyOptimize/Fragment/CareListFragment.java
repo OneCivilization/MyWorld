@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,8 +32,10 @@ import com.onecivilization.MyOptimize.Model.SubPeriodicCare;
 import com.onecivilization.MyOptimize.Model.TextCare;
 import com.onecivilization.MyOptimize.Model.TimeLimitedPeriodicCare;
 import com.onecivilization.MyOptimize.R;
+import com.onecivilization.MyOptimize.Util.AppManager;
 
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by CGZ on 2016/7/10.
@@ -75,6 +78,11 @@ public class CareListFragment extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             }
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+                return !PreferenceManager.getDefaultSharedPreferences(AppManager.getContext()).getBoolean("careItemAutoSort", true);
+            }
         });
         itemTouchHelper.attachToRecyclerView(recyclerView);
         return view;
@@ -83,7 +91,32 @@ public class CareListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        adapter.setCareList(DataManager.getInstance().getCareList());
         adapter.notifyDataSetChanged();
+    }
+
+    public void notifyItemStateChanged(int careItemPosition, Care careItem) {
+        if (PreferenceManager.getDefaultSharedPreferences(AppManager.getContext()).getBoolean("careItemAutoSort", true)) {
+            ListIterator<Care> iterator = adapter.careList.listIterator();
+            while (iterator.hasNext()) {
+                if (iterator.next().getState() >= careItem.getState() && iterator.previousIndex() != careItemPosition) {
+                    int toPosition = iterator.previousIndex();
+                    if (toPosition > careItemPosition) {
+                        adapter.careList.add(toPosition, careItem);
+                        adapter.careList.remove(careItemPosition);
+                        adapter.notifyItemMoved(careItemPosition, toPosition - 1);
+                    } else {
+                        adapter.careList.add(toPosition, careItem);
+                        adapter.careList.remove(careItemPosition + 1);
+                        adapter.notifyItemMoved(careItemPosition, toPosition);
+                    }
+                    return;
+                }
+            }
+            adapter.careList.remove(careItemPosition);
+            adapter.careList.add(careItem);
+            adapter.notifyItemMoved(careItemPosition, adapter.careList.size() - 1);
+        }
     }
 
     private class MyViewHolder extends RecyclerView.ViewHolder {
@@ -138,6 +171,7 @@ public class CareListFragment extends Fragment {
                                 container.setBackgroundColor(getResources().getColor(R.color.state_achieved));
                             }
                             DataManager.getInstance().updateCareItem(care);
+                            notifyItemStateChanged(getAdapterPosition(), care);
                         }
                     });
                     statusImageButton.setOnLongClickListener(null);
@@ -171,6 +205,7 @@ public class CareListFragment extends Fragment {
                                                     break;
                                             }
                                             refreshCareState(careItem);
+                                            notifyItemStateChanged(getAdapterPosition(), care);
                                             dialog.dismiss();
                                         }
                                     }).create().show();
@@ -196,6 +231,7 @@ public class CareListFragment extends Fragment {
                                 careItem1.addRecord();
                             }
                             refreshCareState(care);
+                            notifyItemStateChanged(getAdapterPosition(), care);
                         }
                     });
                     statusImageButton.setOnLongClickListener(null);
@@ -216,6 +252,7 @@ public class CareListFragment extends Fragment {
                             careItem2.addSubRecord();
                             Toast.makeText(getActivity(), R.string.signed_in, Toast.LENGTH_SHORT).show();
                             refreshCareState(care);
+                            notifyItemStateChanged(getAdapterPosition(), care);
                         }
                     });
                     statusImageButton.setOnLongClickListener(new View.OnLongClickListener() {
@@ -226,6 +263,7 @@ public class CareListFragment extends Fragment {
                             } else {
                                 Toast.makeText(getActivity(), R.string.signed_out, Toast.LENGTH_SHORT).show();
                                 refreshCareState(care);
+                                notifyItemStateChanged(getAdapterPosition(), care);
                             }
                             return true;
                         }
@@ -252,6 +290,7 @@ public class CareListFragment extends Fragment {
                                     careItem3.addRecord();
                                 }
                                 refreshCareState(care);
+                                notifyItemStateChanged(getAdapterPosition(), care);
                             }
                         }
                     });
@@ -278,6 +317,7 @@ public class CareListFragment extends Fragment {
                                     careItem4.addSubRecord();
                                 }
                                 refreshCareState(care);
+                                notifyItemStateChanged(getAdapterPosition(), care);
                             }
                         }
                     });
@@ -447,6 +487,10 @@ public class CareListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return careList.size();
+        }
+
+        public void setCareList(List<Care> careList) {
+            this.careList = careList;
         }
     }
 

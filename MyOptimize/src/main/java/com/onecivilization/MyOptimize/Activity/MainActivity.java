@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -30,7 +29,6 @@ import com.onecivilization.MyOptimize.Fragment.BlankFragment;
 import com.onecivilization.MyOptimize.Fragment.CareListFragment;
 import com.onecivilization.MyOptimize.Fragment.HistoryCareListFragment;
 import com.onecivilization.MyOptimize.R;
-import com.onecivilization.MyOptimize.Util.AppManager;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -135,22 +133,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_sort:
-                if (PreferenceManager.getDefaultSharedPreferences(this).getInt("Language", AppManager.DEFAULT_LANGUAGE) == AppManager.CHINESE) {
-                    AppManager.setLanguage(AppManager.ENGLISH);
-                } else {
-                    AppManager.setLanguage(AppManager.CHINESE);
-                }
-                AppManager.finishAllOtherActivities();
-                recreate();
-                return true;
             case R.id.action_tips:
                 return true;
         }
@@ -172,6 +161,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 navigationPosition = 1;
                 viewPager.getAdapter().notifyDataSetChanged();
                 fab.setVisibility(View.GONE);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.nav_settings:
+                startActivity(new Intent(this,SettingsActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
         }

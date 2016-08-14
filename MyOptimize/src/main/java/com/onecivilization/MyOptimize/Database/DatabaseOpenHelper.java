@@ -41,9 +41,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         switch (oldVersion) {
             default:
-                File database = new File("/data/data/com.onecivilization.Optimize/databases/MyOptimize.db");
+                File database = new File("/data/data/com.onecivilization.MyOptimize/databases/MyOptimize.db");
                 database.delete();
-                File dbLog = new File("/data/data/com.onecivilization.Optimize/databases/MyOptimize.db-journal");
+                File dbLog = new File("/data/data/com.onecivilization.MyOptimize/databases/MyOptimize.db-journal");
                 dbLog.delete();
         }
     }

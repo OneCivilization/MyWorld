@@ -33,4 +33,10 @@ public class TextCare extends Care {
     public void setColor(int color) {
         this.color = color;
     }
+
+    @Override
+    public int getState() {
+        if (isAchieved()) return STATE_ACHIEVED;
+        return STATE_NONE;
+    }
 }

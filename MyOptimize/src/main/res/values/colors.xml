@@ -29,4 +29,6 @@
 
     <color name="calendar_cell_background">#ffd0e1ed</color>
 
+    <color name="divider_color">#919598</color>
+
 </resources>

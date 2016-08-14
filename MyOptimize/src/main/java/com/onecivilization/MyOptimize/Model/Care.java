@@ -12,13 +12,12 @@ public abstract class Care {
     public static final int TIMELIMITED_PERIODIC = 5;
     public static final int COMPLEX_PERIODIC = 6;
 
-    public static final int STATE_NONE = 0;
-    public static final int STATE_DONE = 1;
-    public static final int STATE_UNDONE = 2;
-    public static final int STATE_MINUS = 3;
-    public static final int STATE_ACHIEVED = 4;
-    public static final int STATE_ACHIEVED_UNDONE = 5;
-    public static final int STATE_LOCKED = 6;
+    public static final int STATE_MINUS = 0;
+    public static final int STATE_UNDONE = 1;
+    public static final int STATE_NONE = 2;
+    public static final int STATE_DONE = 3;
+    public static final int STATE_ACHIEVED_UNDONE = 4;
+    public static final int STATE_ACHIEVED = 5;
 
     protected String title = "";
     protected String descriptionTitle = "";
@@ -137,5 +136,7 @@ public abstract class Care {
     public int getType() {
         return type;
     }
+
+    public abstract int getState();
 
 }

@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+import android.preference.PreferenceManager;
 
 import com.onecivilization.MyOptimize.Database.Schema.CareItemTable;
 import com.onecivilization.MyOptimize.Database.Schema.RecordTable;
@@ -20,13 +22,24 @@ import com.onecivilization.MyOptimize.Model.TimeLimitedPeriodicCare;
 import com.onecivilization.MyOptimize.Model.TimePair;
 import com.onecivilization.MyOptimize.Util.AppManager;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by CGZ on 2016/7/10.
@@ -34,6 +47,7 @@ import java.util.ListIterator;
 public class DataManager {
 
     private static DataManager dataManager;
+    public final String APP_DIRECTORY = "/My Optimize";
     private SQLiteDatabase db;
     private List<Care> careList;
     private List<Care> historyCareList;
@@ -295,6 +309,18 @@ public class DataManager {
             } while (cursor.moveToNext());
         }
         cursor.close();
+        if (PreferenceManager.getDefaultSharedPreferences(AppManager.getContext()).getBoolean("careItemAutoSort", true)) {
+            sortCareList();
+        }
+    }
+
+    public void sortCareList() {
+        Collections.sort(careList, new Comparator<Care>() {
+            @Override
+            public int compare(Care lhs, Care rhs) {
+                return lhs.getState() - rhs.getState();
+            }
+        });
     }
 
     public void loadHistoryCareList() {
@@ -459,6 +485,17 @@ public class DataManager {
                     break;
             }
             db.insert(CareItemTable.NAME, null, values);
+            if (PreferenceManager.getDefaultSharedPreferences(AppManager.getContext()).getBoolean("careItemAutoSort", true)) {
+                ListIterator<Care> iterator = careList.listIterator();
+                while (iterator.hasNext()) {
+                    if (iterator.next().getState() >= careItem.getState()) {
+                        iterator.previous();
+                        iterator.add(careItem);
+                        return true;
+                    }
+                }
+
+            }
             careList.add(careItem);
             return true;
         } catch (Exception e) {
@@ -719,7 +756,91 @@ public class DataManager {
         return problemList;
     }
 
-    public void setProblemList(List<Problem> ProblemList) {
-        problemList = ProblemList;
+    public ArrayList<File> getBackupList() {
+        File backupDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + APP_DIRECTORY + "/Backup");
+        File[] files = backupDirectory.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String filename) {
+                return filename.endsWith(".backup");
+            }
+        });
+        ArrayList<File> backups = new ArrayList<>();
+        if (files != null) {
+            for (File file : files) {
+                backups.add(file);
+            }
+            Collections.sort(backups, new Comparator<File>() {
+                @Override
+                public int compare(File lhs, File rhs) {
+                    return (rhs.lastModified() - lhs.lastModified()) > 0 ? 1 : -1;
+                }
+            });
+        }
+        return backups;
+    }
+
+    public File backup() {
+        try {
+            //if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) return false;
+            File backupDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + APP_DIRECTORY + "/Backup");
+            if (!backupDirectory.exists()) {
+                backupDirectory.mkdir();
+            }
+            GregorianCalendar calendar = new GregorianCalendar();
+            String fileName = backupDirectory.getAbsolutePath() + String.format("/%d%02d%02d%02d%02d%02d.backup", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
+                    calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
+            ZipOutputStream zipOutputStream = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
+            writeZipFile("/data/data/com.onecivilization.MyOptimize/databases/MyOptimize.db", zipOutputStream);
+            writeZipFile("/data/data/com.onecivilization.MyOptimize/databases/MyOptimize.db-journal", zipOutputStream);
+            writeZipFile("/data/data/com.onecivilization.MyOptimize/shared_prefs/com.onecivilization.MyOptimize_preferences.xml", zipOutputStream);
+            zipOutputStream.close();
+            return new File(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void recover(File backup) {
+        try {
+            BufferedOutputStream bufferedOutputStream;
+            ZipInputStream zipInputStream = new ZipInputStream(new BufferedInputStream(new FileInputStream(backup)));
+            ZipEntry entry;
+            byte[] buffer = new byte[10240];
+            int bufferLength;
+            while ((entry = zipInputStream.getNextEntry()) != null) {
+                if (entry.getName().contains(".db")) {
+                    bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("/data/data/com.onecivilization.MyOptimize/databases/" + entry.getName()));
+                } else {
+                    bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("/data/data/com.onecivilization.MyOptimize/shared_prefs/" + entry.getName()));
+                }
+                while ((bufferLength = zipInputStream.read(buffer)) != -1) {
+                    bufferedOutputStream.write(buffer, 0, bufferLength);
+                }
+                bufferedOutputStream.close();
+                zipInputStream.closeEntry();
+            }
+            zipInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeZipFile(String fileName, ZipOutputStream zipOutputStream) {
+        try {
+            String[] tokens = fileName.split("/");
+            ZipEntry zipEntry = new ZipEntry(tokens[tokens.length - 1]);
+            zipOutputStream.putNextEntry(zipEntry);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(fileName));
+            byte[] buffer = new byte[10240];
+            int bufferLength = 0;
+            while ((bufferLength = bufferedInputStream.read(buffer)) != -1) {
+                zipOutputStream.write(buffer, 0, bufferLength);
+            }
+            zipOutputStream.closeEntry();
+            bufferedInputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

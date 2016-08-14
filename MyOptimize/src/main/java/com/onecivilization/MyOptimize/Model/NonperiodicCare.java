@@ -157,6 +157,7 @@ public class NonperiodicCare extends Care {
         return (float) progress / goal * 100;
     }
 
+    @Override
     public int getState() {
         if (achievedTime != 0L) return STATE_ACHIEVED;
         if (records.isEmpty()) {

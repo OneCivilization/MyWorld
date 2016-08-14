@@ -3,6 +3,7 @@
     package="com.onecivilization.MyOptimize">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Util.AppManager"
@@ -30,6 +31,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.HistoryCareDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SettingsLanguageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SettingsBackupActivity"
             android:screenOrientation="portrait" />
     </application>
 

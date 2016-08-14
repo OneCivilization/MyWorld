@@ -91,6 +91,14 @@
     <string name="current_time_out_of_limitation">当前时间不在签到时间范围内</string>
     <string name="everyday">每天</string>
     <string name="sign_time_limitation_">签到时间限制</string>
+    <string name="care_item_auto_sort">注意点按状态自动排序</string>
+    <string name="backup">备份</string>
+    <string name="language">语言</string>
+    <string name="chinese_simplified">简体中文</string>
+    <string name="english_us">English (United States)</string>
+    <string name="backup_confirm">您确定要备份吗？</string>
+    <string name="backed_up_at">备份于</string>
+    <string name="recover">恢复</string>
 
 </resources>
  
