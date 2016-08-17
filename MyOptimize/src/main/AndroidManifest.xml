@@ -41,6 +41,15 @@
         <activity
             android:name=".Activity.SettingsBackupActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.NewProblemItemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ProblemDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.HistoryProblemDetailsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

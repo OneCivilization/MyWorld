@@ -27,7 +27,6 @@
     <string name="sort">排序</string>
     <string name="tips">Tips</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="edit_description">编辑描述</string>
@@ -99,6 +98,19 @@
     <string name="backup_confirm">您确定要备份吗？</string>
     <string name="backed_up_at">备份于</string>
     <string name="recover">恢复</string>
+    <string name="create_new_problem_item">创建问题</string>
+    <string name="rank">等级：</string>
+    <string name="problem_item_auto_sort">问题按等级自动排序</string>
+    <string name="archive_warning_problem">该问题尚未解决，您确定要放弃并归档吗？</string>
+    <string name="description_">描述  ------------------------------------------------------</string>
+    <string name="analysis">分析</string>
+    <string name="analysis_">分析  ------------------------------------------------------</string>
+    <string name="solution_">解决  ------------------------------------------------------</string>
+    <string name="solution">解决</string>
+    <string name="status">状态：</string>
+    <string name="solved">已解决</string>
+    <string name="solving">解决中</string>
+    <string name="solved_at">解决于：</string>
 
 </resources>
  

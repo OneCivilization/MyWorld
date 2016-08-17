@@ -19,7 +19,6 @@
     <string name="help">Help</string>
     <string name="share">Share</string>
     <string name="about">About</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="create_new_care_item">Create new care item</string>
@@ -95,6 +94,19 @@
     <string name="backup_confirm">Are you sure you want to backup?</string>
     <string name="backed_up_at">Backed up at</string>
     <string name="recover">Recover</string>
+    <string name="create_new_problem_item">Create new problem item</string>
+    <string name="rank">Rank：</string>
+    <string name="problem_item_auto_sort">Sort problem item by rank</string>
+    <string name="archive_warning_problem">The problem hasn\'t been solved yet, are you sure you want to give up and archive it?</string>
+    <string name="analysis">Analysis</string>
+    <string name="description_">Description    ------------------------------------------------------</string>
+    <string name="analysis_">Analysis  ------------------------------------------------------</string>
+    <string name="solution_">Solution  ------------------------------------------------------</string>
+    <string name="solution">Solution</string>
+    <string name="status">Status：</string>
+    <string name="solved">Solved</string>
+    <string name="solving">Solving</string>
+    <string name="solved_at">Solved at：</string>
 
 </resources>
  

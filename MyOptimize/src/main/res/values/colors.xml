@@ -26,6 +26,7 @@
     <color name="state_false">#ff8800</color>
     <color name="state_warning">#ff4444</color>
     <color name="state_achieved">#72c352</color>
+    <color name="state_extra_high">#8347db</color>
 
     <color name="calendar_cell_background">#ffd0e1ed</color>
 

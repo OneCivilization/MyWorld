@@ -23,12 +23,14 @@ public class SettingsActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private Switch careItemAutoSortSwitch;
+    private Switch problemItemAutoSortSwitch;
     private TextView backupTextView;
     private TextView languageTextView;
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        careItemAutoSortSwitch = (Switch) findViewById(R.id.switch_button);
+        careItemAutoSortSwitch = (Switch) findViewById(R.id.care_auto_sort_switch);
+        problemItemAutoSortSwitch = (Switch) findViewById(R.id.problem_auto_sort_switch);
         backupTextView = (TextView) findViewById(R.id.backup);
         languageTextView = (TextView) findViewById(R.id.language);
     }
@@ -50,7 +52,23 @@ public class SettingsActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 PreferenceManager.getDefaultSharedPreferences(AppManager.getContext()).edit().putBoolean("careItemAutoSort", isChecked).apply();
-                DataManager.getInstance().loadCareList();
+                if (isChecked) {
+                    DataManager.getInstance().sortCareListByState();
+                } else {
+                    DataManager.getInstance().sortCareListByOrder();
+                }
+            }
+        });
+        problemItemAutoSortSwitch.setChecked(PreferenceManager.getDefaultSharedPreferences(AppManager.getContext()).getBoolean("problemItemAutoSort", true));
+        problemItemAutoSortSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                PreferenceManager.getDefaultSharedPreferences(AppManager.getContext()).edit().putBoolean("problemItemAutoSort", isChecked).apply();
+                if (isChecked) {
+                    DataManager.getInstance().sortProblemListByRank();
+                } else {
+                    DataManager.getInstance().sortProblemListByOrder();
+                }
             }
         });
         backupTextView.setOnClickListener(new View.OnClickListener() {

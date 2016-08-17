@@ -25,9 +25,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.onecivilization.MyOptimize.Database.DataManager;
-import com.onecivilization.MyOptimize.Fragment.BlankFragment;
 import com.onecivilization.MyOptimize.Fragment.CareListFragment;
 import com.onecivilization.MyOptimize.Fragment.HistoryCareListFragment;
+import com.onecivilization.MyOptimize.Fragment.HistoryProblemListFragment;
+import com.onecivilization.MyOptimize.Fragment.ProblemListFragment;
 import com.onecivilization.MyOptimize.R;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -90,7 +91,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         startActivity(new Intent(MainActivity.this, NewCareItemActivity.class));
                         break;
                     case 1:
-                        Toast.makeText(MainActivity.this, R.string.problem, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, NewProblemItemActivity.class));
                         break;
                 }
             }
@@ -185,7 +186,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         case 0:
                             return new CareListFragment();
                         case 1:
-                            return new BlankFragment();
+                            return new ProblemListFragment();
                     }
                     break;
                 case 1:
@@ -193,7 +194,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         case 0:
                             return new HistoryCareListFragment();
                         case 1:
-                            return new BlankFragment();
+                            return new HistoryProblemListFragment();
                     }
                     break;
             }

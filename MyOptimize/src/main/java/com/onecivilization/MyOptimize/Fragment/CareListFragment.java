@@ -91,7 +91,6 @@ public class CareListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        adapter.setCareList(DataManager.getInstance().getCareList());
         adapter.notifyDataSetChanged();
     }
 
@@ -487,10 +486,6 @@ public class CareListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return careList.size();
-        }
-
-        public void setCareList(List<Care> careList) {
-            this.careList = careList;
         }
     }
 

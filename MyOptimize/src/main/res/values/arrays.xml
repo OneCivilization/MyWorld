@@ -17,4 +17,11 @@
         <item>天</item>
     </string-array>
 
+    <string-array name="problem_item_ranks">
+        <item>低</item>
+        <item>中</item>
+        <item>高</item>
+        <item>极高</item>
+    </string-array>
+
 </resources>

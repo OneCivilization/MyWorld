@@ -36,7 +36,7 @@
             android:paddingRight="10dp">
 
             <Switch
-                android:id="@+id/switch_button"
+                android:id="@+id/care_auto_sort_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="15dp"
@@ -44,6 +44,23 @@
                 android:paddingRight="6dp"
                 android:paddingTop="15dp"
                 android:text="@string/care_item_auto_sort"
+                android:textColor="#3e3e3e"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/divider_color" />
+
+            <Switch
+                android:id="@+id/problem_auto_sort_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="15dp"
+                android:text="@string/problem_item_auto_sort"
                 android:textColor="#3e3e3e"
                 android:textSize="18sp" />
 

@@ -17,4 +17,11 @@
         <item>Day</item>
     </string-array>
 
+    <string-array name="problem_item_ranks">
+        <item>Low</item>
+        <item>Normal</item>
+        <item>High</item>
+        <item>Extra High</item>
+    </string-array>
+
 </resources>

@@ -154,9 +154,9 @@ public class Schema {
                 Cols.CREATE_TIME + INTEGER + PRIMARY_KEY + "," +
                 Cols.TITLE + TEXT + NOT_NULL + "," +
                 Cols.DESCRIPTION + TEXT + "," +
-                Cols.CAUSE + TEXT + "," +
+                Cols.ANALYSIS + TEXT + "," +
                 Cols.SOLUTION + TEXT + "," +
-                Cols.PRIORITY + INTEGER + "," +
+                Cols.RANK + INTEGER + "," +
                 Cols.ORDER + INTEGER + "," +
                 Cols.SOLVED_TIME + INTEGER +
                 ")";
@@ -164,25 +164,25 @@ public class Schema {
                 Cols.CREATE_TIME + INTEGER + PRIMARY_KEY + "," +
                 Cols.TITLE + TEXT + NOT_NULL + "," +
                 Cols.DESCRIPTION + TEXT + "," +
-                Cols.CAUSE + TEXT + "," +
+                Cols.ANALYSIS + TEXT + "," +
                 Cols.SOLUTION + TEXT + "," +
-                Cols.PRIORITY + INTEGER + "," +
+                Cols.RANK + INTEGER + "," +
                 Cols.SOLVED_TIME + INTEGER + "," +
-                Cols.ARCHIVED_TIME + INTEGER + "," +
-                Cols.CATEGORY + TEXT +
+                Cols.ARCHIVED_TIME + INTEGER +
+                //Cols.CATEGORY + TEXT +
                 ")";
 
         public static final class Cols {
             public static final String TITLE = "title";
             public static final String DESCRIPTION = "description";
-            public static final String CAUSE = "cause";
+            public static final String ANALYSIS = "analysis";
             public static final String SOLUTION = "solution";
-            public static final String PRIORITY = "priority";
-            public static final String ORDER = "'order'";
+            public static final String RANK = "rank";
+            public static final String ORDER = "order_";
             public static final String CREATE_TIME = "createTime";
             public static final String SOLVED_TIME = "solvedTime";
 
-            public static final String CATEGORY = "category";
+            //public static final String CATEGORY = "category";
             public static final String ARCHIVED_TIME = "archivedTime";
         }
     }

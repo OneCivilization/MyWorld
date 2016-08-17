@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 
 import com.onecivilization.MyOptimize.Database.Schema.CareItemTable;
+import com.onecivilization.MyOptimize.Database.Schema.ProblemItemTable;
 import com.onecivilization.MyOptimize.Database.Schema.RecordTable;
 import com.onecivilization.MyOptimize.Database.Schema.TimePairTable;
 import com.onecivilization.MyOptimize.Model.Care;
@@ -310,15 +311,24 @@ public class DataManager {
         }
         cursor.close();
         if (PreferenceManager.getDefaultSharedPreferences(AppManager.getContext()).getBoolean("careItemAutoSort", true)) {
-            sortCareList();
+            sortCareListByState();
         }
     }
 
-    public void sortCareList() {
+    public void sortCareListByState() {
         Collections.sort(careList, new Comparator<Care>() {
             @Override
             public int compare(Care lhs, Care rhs) {
                 return lhs.getState() - rhs.getState();
+            }
+        });
+    }
+
+    public void sortCareListByOrder() {
+        Collections.sort(careList, new Comparator<Care>() {
+            @Override
+            public int compare(Care lhs, Care rhs) {
+                return lhs.getOrder() - rhs.getOrder();
             }
         });
     }
@@ -416,7 +426,14 @@ public class DataManager {
     }
 
     public int getMaxCareOrder() {
-        return getCareList().size() == 0 ? 0 : ((LinkedList<Care>) careList).getLast().getOrder();
+        if (getCareList().size() == 0) return 0;
+        int maxOrder = 0;
+        for (Care care : careList) {
+            if (care.getOrder() > maxOrder) {
+                maxOrder = care.getOrder();
+            }
+        }
+        return maxOrder;
     }
 
     public boolean addCareItem(Care careItem) {
@@ -741,19 +758,208 @@ public class DataManager {
         return nextRefreshTime;
     }
 
+    public int getMaxProblemOrder() {
+        if (getProblemList().size() == 0) return 0;
+        int maxOrder = 0;
+        for (Problem problem : problemList) {
+            if (problem.getOrder() > maxOrder) {
+                maxOrder = problem.getOrder();
+            }
+        }
+        return maxOrder;
+    }
+
     public void loadProblemList() {
+        problemList = new LinkedList<>();
+        Cursor cursor = db.rawQuery("select * from " + ProblemItemTable.NAME + " order by " + ProblemItemTable.Cols.ORDER, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String title = cursor.getString(cursor.getColumnIndex(ProblemItemTable.Cols.TITLE));
+                String description = cursor.getString(cursor.getColumnIndex(ProblemItemTable.Cols.DESCRIPTION));
+                String analysis = cursor.getString(cursor.getColumnIndex(ProblemItemTable.Cols.ANALYSIS));
+                String solution = cursor.getString(cursor.getColumnIndex(ProblemItemTable.Cols.SOLUTION));
+                int rank = cursor.getInt(cursor.getColumnIndex(ProblemItemTable.Cols.RANK));
+                int order = cursor.getInt(cursor.getColumnIndex(ProblemItemTable.Cols.ORDER));
+                long createTime = cursor.getLong(cursor.getColumnIndex(ProblemItemTable.Cols.CREATE_TIME));
+                long solvedTime = cursor.getLong(cursor.getColumnIndex(ProblemItemTable.Cols.SOLVED_TIME));
+                problemList.add(new Problem(title, description, analysis, solution, rank, order, createTime, solvedTime));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        if (PreferenceManager.getDefaultSharedPreferences(AppManager.getContext()).getBoolean("problemItemAutoSort", true)) {
+            sortProblemListByRank();
+        }
+    }
+
+    public void loadHistoryProblemList() {
+        historyProblemList = new LinkedList<>();
+        Cursor cursor = db.rawQuery("select * from " + ProblemItemTable.HISTORY_NAME + " order by " + ProblemItemTable.Cols.ARCHIVED_TIME + " desc", null);
+        if (cursor.moveToFirst()) {
+            do {
+                String title = cursor.getString(cursor.getColumnIndex(ProblemItemTable.Cols.TITLE));
+                String description = cursor.getString(cursor.getColumnIndex(ProblemItemTable.Cols.DESCRIPTION));
+                String analysis = cursor.getString(cursor.getColumnIndex(ProblemItemTable.Cols.ANALYSIS));
+                String solution = cursor.getString(cursor.getColumnIndex(ProblemItemTable.Cols.SOLUTION));
+                int rank = cursor.getInt(cursor.getColumnIndex(ProblemItemTable.Cols.RANK));
+                long createTime = cursor.getLong(cursor.getColumnIndex(ProblemItemTable.Cols.CREATE_TIME));
+                long solvedTime = cursor.getLong(cursor.getColumnIndex(ProblemItemTable.Cols.SOLVED_TIME));
+                long archivedTime = cursor.getLong(cursor.getColumnIndex(ProblemItemTable.Cols.ARCHIVED_TIME));
+                historyProblemList.add(new Problem(title, description, analysis, solution, rank, createTime, solvedTime, archivedTime));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
     }
 
     public boolean addProblemItem(Problem problemItem) {
-        return false;
+        try {
+            ContentValues values = new ContentValues();
+            values.put(ProblemItemTable.Cols.TITLE, problemItem.getTitle());
+            values.put(ProblemItemTable.Cols.DESCRIPTION, problemItem.getDescription());
+            values.put(ProblemItemTable.Cols.ANALYSIS, problemItem.getAnalysis());
+            values.put(ProblemItemTable.Cols.SOLUTION, problemItem.getSolution());
+            values.put(ProblemItemTable.Cols.CREATE_TIME, problemItem.getCreateTime());
+            values.put(ProblemItemTable.Cols.SOLVED_TIME, problemItem.getSolvedTime());
+            values.put(ProblemItemTable.Cols.RANK, problemItem.getRank());
+            values.put(ProblemItemTable.Cols.ORDER, problemItem.getOrder());
+            db.insert(ProblemItemTable.NAME, null, values);
+            if (PreferenceManager.getDefaultSharedPreferences(AppManager.getContext()).getBoolean("problemItemAutoSort", true)) {
+                ListIterator<Problem> iterator = problemList.listIterator();
+                while (iterator.hasNext()) {
+                    if (iterator.next().getRankOrder() <= problemItem.getRankOrder()) {
+                        iterator.previous();
+                        iterator.add(problemItem);
+                        return true;
+                    }
+                }
+
+            }
+            problemList.add(problemItem);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public boolean deleteProblemItem(Problem problemItem) {
-        return false;
+    public boolean updateProblemItem(Problem problemItem) {
+        try {
+            ContentValues values = new ContentValues();
+            values.put(ProblemItemTable.Cols.TITLE, problemItem.getTitle());
+            values.put(ProblemItemTable.Cols.DESCRIPTION, problemItem.getDescription());
+            values.put(ProblemItemTable.Cols.ANALYSIS, problemItem.getAnalysis());
+            values.put(ProblemItemTable.Cols.SOLUTION, problemItem.getAnalysis());
+            values.put(ProblemItemTable.Cols.SOLVED_TIME, problemItem.getSolvedTime());
+            values.put(ProblemItemTable.Cols.RANK, problemItem.getRank());
+            values.put(ProblemItemTable.Cols.ORDER, problemItem.getOrder());
+            db.update(ProblemItemTable.NAME, values, ProblemItemTable.Cols.CREATE_TIME + "=" + problemItem.getCreateTime(), null);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean deleteProblemItem(int position) {
+        try {
+            db.delete(ProblemItemTable.NAME, ProblemItemTable.Cols.CREATE_TIME + "=" + getProblemList().get(position).getCreateTime(), null);
+            problemList.remove(position);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
+    public boolean deleteHistoryProblemItem(int position) {
+        try {
+            db.delete(ProblemItemTable.HISTORY_NAME, ProblemItemTable.Cols.CREATE_TIME + "=" + getHistoryProblemList().get(position).getCreateTime(), null);
+            historyProblemList.remove(position);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean archiveProblemItem(int position) {
+        try {
+            Problem problemItem = getProblemList().get(position);
+            problemItem.setArchivedTime(System.currentTimeMillis());
+            getHistoryProblemList().add(0, problemItem);
+            ContentValues values = new ContentValues();
+            values.put(ProblemItemTable.Cols.TITLE, problemItem.getTitle());
+            values.put(ProblemItemTable.Cols.DESCRIPTION, problemItem.getDescription());
+            values.put(ProblemItemTable.Cols.ANALYSIS, problemItem.getAnalysis());
+            values.put(ProblemItemTable.Cols.SOLUTION, problemItem.getSolution());
+            values.put(ProblemItemTable.Cols.RANK, problemItem.getRank());
+            values.put(ProblemItemTable.Cols.CREATE_TIME, problemItem.getCreateTime());
+            values.put(ProblemItemTable.Cols.SOLVED_TIME, problemItem.getSolvedTime());
+            values.put(ProblemItemTable.Cols.ARCHIVED_TIME, problemItem.getArchivedTime());
+            db.insert(ProblemItemTable.HISTORY_NAME, null, values);
+            deleteProblemItem(position);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean unarchiveProblemItem(int position) {
+        try {
+            Problem problemItem = getHistoryProblemList().get(position);
+            problemItem.setArchivedTime(0L);
+            problemItem.setOrder(getMaxProblemOrder() + 1);
+            addProblemItem(problemItem);
+            deleteHistoryProblemItem(position);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public List<Problem> getProblemList() {
+        if (problemList == null) {
+            loadProblemList();
+        }
         return problemList;
+    }
+
+    public List<Problem> getHistoryProblemList() {
+        if (historyProblemList == null) {
+            loadHistoryProblemList();
+        }
+        return historyProblemList;
+    }
+
+    public void sortProblemListByRank() {
+        Collections.sort(problemList, new Comparator<Problem>() {
+            @Override
+            public int compare(Problem lhs, Problem rhs) {
+                return rhs.getRankOrder() - lhs.getRankOrder();
+            }
+        });
+    }
+
+    public void sortProblemListByOrder() {
+        Collections.sort(problemList, new Comparator<Problem>() {
+            @Override
+            public int compare(Problem lhs, Problem rhs) {
+                return lhs.getOrder() - rhs.getOrder();
+            }
+        });
+    }
+
+    public void swapProblemItem(int fromPosition, int toPosition) {
+        Collections.swap(problemList, fromPosition, toPosition);
+        ListIterator<Problem> iterator;
+        int order;
+        if (fromPosition < toPosition) {
+            iterator = problemList.listIterator(fromPosition);
+            order = iterator.next().decreaseOrder();
+            iterator.next().setOrder(order);
+        } else {
+            iterator = problemList.listIterator(toPosition);
+            order = iterator.next().decreaseOrder();
+            iterator.next().setOrder(order);
+        }
+        updateProblemItem(iterator.previous());
+        updateProblemItem(iterator.previous());
     }
 
     public ArrayList<File> getBackupList() {

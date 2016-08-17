@@ -1,5 +1,8 @@
 package com.onecivilization.MyOptimize.Model;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by CGZ on 2016/7/8.
  */
@@ -11,22 +14,72 @@ public class Problem {
     public static final int EXTRA_HIGH = 4;
     private String title = "";
     private String description = "";
-    private String cause = "";
+    private String analysis = "";
     private String solution = "";
-    private String category = "";
-    private int priority = 0;
+    private int rank = 0;
     private int order = 0;
-    private boolean isSolved = false;
-    private boolean isArchived = false;
     private long createTime = 0L;
     private long solvedTime = 0L;
+    private long archivedTime = 0L;
 
-    {
-        createTime = System.currentTimeMillis();
+    public Problem(String title, String description, int rank, int order, long createTime) {
+        this.title = title;
+        this.description = description;
+        this.rank = rank;
+        this.order = order;
+        this.createTime = createTime;
     }
 
-    public Problem(String title) {
+    public Problem(String title, String description, String analysis, String solution, int rank, int order, long createTime, long solvedTime) {
         this.title = title;
+        this.description = description;
+        this.analysis = analysis;
+        this.solution = solution;
+        this.rank = rank;
+        this.order = order;
+        this.createTime = createTime;
+        this.solvedTime = solvedTime;
+    }
+
+    public Problem(String title, String description, String analysis, String solution, int rank, long createTime, long solvedTime, long archivedTime) {
+        this.title = title;
+        this.description = description;
+        this.analysis = analysis;
+        this.solution = solution;
+        this.rank = rank;
+        this.order = 0;
+        this.createTime = createTime;
+        this.solvedTime = solvedTime;
+        this.archivedTime = archivedTime;
+    }
+
+    public int getExistedDays() {
+        Calendar calendar = Calendar.getInstance();
+        int dayNow = calendar.get(Calendar.DAY_OF_YEAR);
+        int monthNow = calendar.get(Calendar.MONTH);
+        int yearNow = calendar.get(Calendar.YEAR);
+        calendar.setTimeInMillis(createTime);
+        int yearCreated = calendar.get(Calendar.YEAR);
+        int monthCreated = calendar.get(Calendar.MONTH);
+        int dayCreated = calendar.get(Calendar.DAY_OF_YEAR);
+        int days = (int) (new Date(yearNow, monthNow, dayNow).getTime() - new Date(yearCreated, monthCreated, dayCreated).getTime()) / 86400000;
+        return days + 1;
+    }
+
+    public int getDays() {
+        Calendar calendar = Calendar.getInstance();
+        if (isSolved()) {
+            calendar.setTimeInMillis(solvedTime);
+        }
+        int dayNow = calendar.get(Calendar.DAY_OF_YEAR);
+        int monthNow = calendar.get(Calendar.MONTH);
+        int yearNow = calendar.get(Calendar.YEAR);
+        calendar.setTimeInMillis(createTime);
+        int yearCreated = calendar.get(Calendar.YEAR);
+        int monthCreated = calendar.get(Calendar.MONTH);
+        int dayCreated = calendar.get(Calendar.DAY_OF_YEAR);
+        int days = (int) (new Date(yearNow, monthNow, dayNow).getTime() - new Date(yearCreated, monthCreated, dayCreated).getTime()) / 86400000;
+        return days + 1;
     }
 
     public int getOrder() {
@@ -37,20 +90,9 @@ public class Problem {
         this.order = order;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getCause() {
-        return cause;
-    }
-
-    public void setCause(String cause) {
-        this.cause = cause;
+    public int decreaseOrder() {
+        order--;
+        return order + 1;
     }
 
     public String getDescription() {
@@ -69,28 +111,21 @@ public class Problem {
         this.createTime = createTime;
     }
 
-    public boolean isArchived() {
-        return isArchived;
-    }
-
-    public void setArchived(boolean archived) {
-        isArchived = archived;
-    }
-
     public boolean isSolved() {
-        return isSolved;
+        return solvedTime != 0;
     }
 
-    public void setSolved(boolean solved) {
-        isSolved = solved;
+    public int getRank() {
+        return rank;
     }
 
-    public int getPriority() {
-        return priority;
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public int getRankOrder() {
+        if (isSolved()) return 0;
+        return rank;
     }
 
     public String getSolution() {
@@ -115,5 +150,21 @@ public class Problem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAnalysis() {
+        return analysis;
+    }
+
+    public void setAnalysis(String analysis) {
+        this.analysis = analysis;
+    }
+
+    public long getArchivedTime() {
+        return archivedTime;
+    }
+
+    public void setArchivedTime(long archivedTime) {
+        this.archivedTime = archivedTime;
     }
 }

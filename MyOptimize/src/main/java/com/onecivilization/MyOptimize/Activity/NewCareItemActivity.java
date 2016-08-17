@@ -94,7 +94,7 @@ public class NewCareItemActivity extends BaseActivity {
             }
         });
 
-        typeChooser.setAdapter(new ArrayAdapter<String>(this, R.layout.item_type, getResources().getStringArray(R.array.care_item_types)));
+        typeChooser.setAdapter(new ArrayAdapter<>(this, R.layout.item_type, getResources().getStringArray(R.array.care_item_types)));
         typeChooser.setSelection(2);
         typeChooser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
