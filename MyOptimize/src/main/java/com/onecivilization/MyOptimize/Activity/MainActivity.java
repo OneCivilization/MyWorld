@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -149,6 +150,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.nav_home:
                 toolbar.setTitle(R.string.app_name);
@@ -166,6 +168,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 return true;
             case R.id.nav_settings:
                 startActivity(new Intent(this,SettingsActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.nav_help:
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.nav_share:
+                intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));
+                startActivity(Intent.createChooser(intent, null));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.nav_feedback:
+                intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:1996cgz@gmail.com"));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback：My Optimize");
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.nav_about:
+                startActivity(new Intent(this, AboutActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
         }

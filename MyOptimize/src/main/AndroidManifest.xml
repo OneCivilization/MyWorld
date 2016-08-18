@@ -50,6 +50,9 @@
         <activity
             android:name=".Activity.HistoryProblemDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.AboutActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -111,6 +111,17 @@
     <string name="solved">已解决</string>
     <string name="solving">解决中</string>
     <string name="solved_at">解决于：</string>
+    <string name="app_introduction"><![CDATA[  My Optimize 是一款用于帮助人们优化自己的App，主要功能为帮助人们达成自己想坚持的事情&帮助人们解决遇到的问题。更多请参阅：侧滑菜单->帮助]]></string>
+    <string name="app_version">版本：1.0.0</string>
+    <string name="introduction">介绍</string>
+    <string name="developer">开发者</string>
+    <string name="links">链接</string>
+    <string name="contact_developer">联系开发者</string>
+    <string name="help_translate">帮助翻译</string>
+    <string name="view_source_code">在Github上查看源代码</string>
+    <string name="support_developer">支持开发者</string>
+    <string name="rate_app">评分此应用</string>
+    <string name="share_text"><![CDATA[My Optimize 是一款用于帮助人们优化自己的App，主要功能为帮助人们达成自己想坚持的事情&帮助人们解决遇到的问题。欢迎使用：https://www.baidu.com]]></string>
 
 </resources>
  
