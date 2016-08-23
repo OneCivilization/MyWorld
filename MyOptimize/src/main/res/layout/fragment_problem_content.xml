@@ -8,11 +8,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,9 +52,9 @@
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="23dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/state_achieved" />
+                android:background="@color/state_true" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,19 +73,25 @@
                         android:gravity="center"
                         android:text="1/3"
                         android:textColor="#ffffffff"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ellipsize="none"
+                        android:layout_gravity="center_vertical"
                         android:paddingLeft="15dp"
-                        android:singleLine="true"
-                        android:text="@string/description_"
-                        android:textColor="@color/state_achieved"
+                        android:paddingRight="10dp"
+                        android:text="@string/description"
+                        android:textColor="@color/state_true"
                         android:textSize="20sp"
                         android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/state_true" />
                 </LinearLayout>
 
                 <com.onecivilization.MyOptimize.CustomView.MyEditText
@@ -111,19 +117,25 @@
                         android:gravity="center"
                         android:text="2/3"
                         android:textColor="#ffffffff"
-                        android:textSize="16sp" />
+                        android:textSize="13sp" />
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ellipsize="none"
+                        android:layout_gravity="center_vertical"
                         android:paddingLeft="15dp"
-                        android:singleLine="true"
-                        android:text="@string/analysis_"
-                        android:textColor="@color/state_achieved"
+                        android:paddingRight="10dp"
+                        android:text="@string/analysis"
+                        android:textColor="@color/state_true"
                         android:textSize="20sp"
                         android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/state_true" />
                 </LinearLayout>
 
                 <com.onecivilization.MyOptimize.CustomView.MyEditText
@@ -148,21 +160,26 @@
                         android:background="@drawable/hexagon"
                         android:gravity="center"
                         android:text="3/3"
-
                         android:textColor="#ffffffff"
-                        android:textSize="16sp" />
+                        android:textSize="13sp" />
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ellipsize="none"
+                        android:layout_gravity="center_vertical"
                         android:paddingLeft="15dp"
-                        android:singleLine="true"
-                        android:text="@string/solution_"
-                        android:textColor="@color/state_achieved"
+                        android:paddingRight="10dp"
+                        android:text="@string/solution"
+                        android:textColor="@color/state_true"
                         android:textSize="20sp"
                         android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/state_true" />
                 </LinearLayout>
 
                 <com.onecivilization.MyOptimize.CustomView.MyEditText
@@ -188,19 +205,15 @@
                         android:gravity="center"
                         android:text="END"
                         android:textColor="#ffffffff"
-                        android:textSize="13sp" />
+                        android:textSize="11sp" />
 
-                    <TextView
+                    <View
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
                         android:layout_weight="1"
-                        android:ellipsize="none"
-                        android:paddingLeft="15dp"
-                        android:singleLine="true"
-                        android:text="-------------------------------------------------------"
-                        android:textColor="@color/state_achieved"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:background="@color/state_true" />
                 </LinearLayout>
 
             </LinearLayout>

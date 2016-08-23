@@ -188,7 +188,7 @@ public class PeriodicCare extends NonperiodicCare {
     @Override
     public int getState() {
         if (isSigned()) {
-            if (achievedTime == 0L && progress + 1 != goal) {
+            if (achievedTime == 0L) {
                 return STATE_DONE;
             } else {
                 return STATE_ACHIEVED;

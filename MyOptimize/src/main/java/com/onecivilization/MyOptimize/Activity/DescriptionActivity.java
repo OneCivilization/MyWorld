@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.onecivilization.MyOptimize.CustomView.TipsDialog;
 import com.onecivilization.MyOptimize.R;
 import com.onecivilization.MyOptimize.Util.AppManager;
 
@@ -74,11 +75,12 @@ public class DescriptionActivity extends BaseActivity {
             case R.id.action_save_changes:
                 setResult();
                 finish();
-                return true;
+                break;
             case R.id.action_tips:
-                return true;
+                new TipsDialog(this, R.string.tips_description).show();
+                break;
         }
-        return false;
+        return true;
     }
 
     private void setResult() {

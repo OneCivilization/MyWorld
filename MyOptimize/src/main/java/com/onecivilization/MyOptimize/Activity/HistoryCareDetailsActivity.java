@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.onecivilization.MyOptimize.CustomView.TipsDialog;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Fragment.HistoryCareRecordsFragment;
 import com.onecivilization.MyOptimize.Fragment.HistoryDescriptionFragment;
@@ -82,9 +83,8 @@ public class HistoryCareDetailsActivity extends BaseActivity {
                         })
                         .setNegativeButton(R.string.cancel, null)
                         .create().show();
-                return true;
+                break;
             case R.id.action_unarchive:
-
                 if (care.isAchieved()) {
                     new AlertDialog.Builder(this)
                             .setTitle(R.string.unarchive_warning)
@@ -108,11 +108,12 @@ public class HistoryCareDetailsActivity extends BaseActivity {
                             })
                             .setNegativeButton(R.string.cancel, null).create().show();
                 }
-                return true;
+                break;
             case R.id.action_tips:
-                return true;
+                new TipsDialog(this, R.string.tips_history).show();
+                break;
         }
-        return false;
+        return true;
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

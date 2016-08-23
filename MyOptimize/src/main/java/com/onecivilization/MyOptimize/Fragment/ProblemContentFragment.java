@@ -60,46 +60,24 @@ public class ProblemContentFragment extends Fragment {
         descriptionEditText.setText(problemItem.getDescription());
         analysisEditText.setText(problemItem.getAnalysis());
         solutionEditText.setText(problemItem.getSolution());
+        switch (problemItem.getRank()) {
+            case Problem.LOW:
+                titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_true));
+                break;
+            case Problem.NORMAL:
+                titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_false));
+                break;
+            case Problem.HIGH:
+                titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                break;
+            case Problem.EXTRA_HIGH:
+                titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_extra_high));
+                break;
+        }
         if (isHistory) {
             setHistory();
-            switch (problemItem.getRank()) {
-                case Problem.LOW:
-                    titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_true));
-                    break;
-                case Problem.NORMAL:
-                    titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_false));
-                    break;
-                case Problem.HIGH:
-                    titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_warning));
-                    break;
-                case Problem.EXTRA_HIGH:
-                    titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_extra_high));
-                    break;
-            }
         }
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!isHistory) {
-            switch (problemItem.getRank()) {
-                case Problem.LOW:
-                    titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_true));
-                    break;
-                case Problem.NORMAL:
-                    titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_false));
-                    break;
-                case Problem.HIGH:
-                    titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_warning));
-                    break;
-                case Problem.EXTRA_HIGH:
-                    titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_extra_high));
-                    break;
-            }
-        }
-
     }
 
     @Override

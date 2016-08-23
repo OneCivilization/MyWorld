@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.onecivilization.MyOptimize.CustomView.TipsDialog;
 import com.onecivilization.MyOptimize.R;
 import com.onecivilization.MyOptimize.Util.AppManager;
 
@@ -80,11 +81,8 @@ public class SettingsLanguageActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_tips:
-                return true;
-        }
-        return false;
+        new TipsDialog(this, R.string.tips_settings_language).show();
+        return true;
     }
 
 }

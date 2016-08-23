@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.onecivilization.MyOptimize.CustomView.TipsDialog;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.R;
 import com.onecivilization.MyOptimize.Util.AppManager;
@@ -93,10 +94,7 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_tips:
-                return true;
-        }
-        return false;
+        new TipsDialog(this, R.string.tips_settings).show();
+        return true;
     }
 }

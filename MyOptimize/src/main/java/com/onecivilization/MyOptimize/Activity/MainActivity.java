@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.onecivilization.MyOptimize.CustomView.TipsDialog;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Fragment.CareListFragment;
 import com.onecivilization.MyOptimize.Fragment.HistoryCareListFragment;
@@ -69,6 +71,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
 
         setSupportActionBar(toolbar);
 
@@ -141,11 +146,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_tips:
-                return true;
+        switch (navigationPosition) {
+            case 0:
+                switch (viewPager.getCurrentItem()) {
+                    case 0:
+                        new TipsDialog(this, R.string.tips_main_1).show();
+                        break;
+                    case 1:
+                        new TipsDialog(this, R.string.tips_main_2).show();
+                        break;
+                }
+                break;
+            case 1:
+                switch (viewPager.getCurrentItem()) {
+                    case 0:
+                        new TipsDialog(this, R.string.tips_main_3).show();
+                        break;
+                    case 1:
+                        new TipsDialog(this, R.string.tips_main_4).show();
+                        break;
+                }
+                break;
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -171,6 +194,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_help:
+                startActivity(new Intent(this, HelpActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_share:
@@ -184,7 +208,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:1996cgz@gmail.com"));
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback：My Optimize");
-                startActivity(intent);
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(this, R.string.email_not_supported, Toast.LENGTH_SHORT).show();
+                }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_about:

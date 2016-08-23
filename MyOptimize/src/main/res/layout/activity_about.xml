@@ -216,6 +216,20 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/qq_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/qq_group"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="16dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="0dp"
+                android:text="加入用户QQ交流群"
+                android:textSize="15sp" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

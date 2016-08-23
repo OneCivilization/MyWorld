@@ -89,7 +89,7 @@
     <string name="care_item_auto_sort">Sort care items by status</string>
     <string name="backup">Backup</string>
     <string name="language">Language</string>
-    <string name="chinese_simplified">Chinese Simplified</string>
+    <string name="chinese_simplified">简体中文</string>
     <string name="english_us">English (United States)</string>
     <string name="backup_confirm">Are you sure you want to backup?</string>
     <string name="backed_up_at">Backed up at</string>
@@ -99,9 +99,6 @@
     <string name="problem_item_auto_sort">Sort problem item by rank</string>
     <string name="archive_warning_problem">The problem hasn\'t been solved yet, are you sure you want to give up and archive it?</string>
     <string name="analysis">Analysis</string>
-    <string name="description_">Description    ------------------------------------------------------</string>
-    <string name="analysis_">Analysis  ------------------------------------------------------</string>
-    <string name="solution_">Solution  ------------------------------------------------------</string>
     <string name="solution">Solution</string>
     <string name="status">Status：</string>
     <string name="solved">Solved</string>
@@ -116,8 +113,12 @@
     <string name="view_source_code">View source code on Github</string>
     <string name="support_developer">Support the developer</string>
     <string name="rate_app">Rate this app</string>
-    <string name="app_introduction"><![CDATA[  My Optimize is an app used for helping people optimize themselves.Its main function is to help people achieve the things that they want to persist & help people solve problems. For more information, please refer to：navigation drawer menu -> help]]></string>
+    <string name="app_introduction"><![CDATA[\t\tMy Optimize is an app used for helping people optimize themselves.Its main function is to help people achieve the things that they want to persist & help people solve problems. For more information, please refer to：navigation drawer menu -> help]]></string>
     <string name="share_text"><![CDATA[My Optimize is an app used for helping people optimize themselves.Its main function is to help people achieve the things that they want to persist & help people solve problems. Welcome to use：https://www.baidu.com]]></string>
+    <string name="email_not_supported">Your phone hasn\'t installed any Email-sending app, please send Email to 1996cgz@gmail.com manually</string>
+    <string name="alipay">Alipay：2391682070@qq.com</string>
+    <string name="close">Close</string>
+    <string name="rate_not_supported">Can\'t find any App Market application</string>
 
 </resources>
  

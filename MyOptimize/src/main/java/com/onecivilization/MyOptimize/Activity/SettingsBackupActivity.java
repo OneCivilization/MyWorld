@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.onecivilization.MyOptimize.CustomView.TipsDialog;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.R;
 import com.onecivilization.MyOptimize.Util.AppManager;
@@ -90,6 +91,7 @@ public class SettingsBackupActivity extends BaseActivity {
                         .create().show();
                 return true;
             case R.id.action_tips:
+                new TipsDialog(this, R.string.tips_settings_backup).show();
                 return true;
         }
         return false;

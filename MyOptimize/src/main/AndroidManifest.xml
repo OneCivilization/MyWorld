@@ -53,6 +53,9 @@
         <activity
             android:name=".Activity.AboutActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.HelpActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.onecivilization.MyOptimize.CustomView.TipsDialog;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Model.Problem;
 import com.onecivilization.MyOptimize.R;
@@ -98,6 +99,7 @@ public class NewProblemItemActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_tips:
+                new TipsDialog(this, R.string.tips_new_problem).show();
                 return true;
             case R.id.action_save_changes:
                 addProblemItem();

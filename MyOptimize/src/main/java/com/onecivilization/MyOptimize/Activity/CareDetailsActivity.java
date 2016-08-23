@@ -1,6 +1,8 @@
 package com.onecivilization.MyOptimize.Activity;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.onecivilization.MyOptimize.CustomView.TipsDialog;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Fragment.DescriptionFragment;
 import com.onecivilization.MyOptimize.Fragment.NonperiodicCareProgressFragment;
@@ -53,6 +56,9 @@ public class CareDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_care_details);
         findViews();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         care = DataManager.getInstance().getCareList().get(getIntent().getIntExtra("careItemPosition", -1));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -137,6 +143,16 @@ public class CareDetailsActivity extends BaseActivity {
                 }
                 return true;
             case R.id.action_tips:
+                switch (care.getType()) {
+                    case Care.TEXT:
+                        new TipsDialog(this, R.string.tips_text_care).show();
+                        break;
+                    case Care.NONPERIODIC:
+                        new TipsDialog(this, R.string.tips_nonperiodic_care).show();
+                        break;
+                    default:
+                        new TipsDialog(this, R.string.tips_periodic_care).show();
+                }
                 return true;
         }
         return false;

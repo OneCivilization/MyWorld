@@ -232,10 +232,10 @@ public class RecordsCalendar extends LinearLayout {
         }
         for (int i = 0; i < 31; i++) {
             if (progress[i] > 0 && progress[i] != Integer.MAX_VALUE) {
-                buttons[firstDayLocation + i].setBackgroundColor(trueColor + 0x3f000000 * ((progress[i] > 3 ? 3 : progress[i]) - 1));
-            } /*else if (progress[i] < 0) {
-                buttons[firstDayLocation + i].setBackgroundColor(falseColor - 0x3f000000 * ((progress[i] < -3 ? -3 : progress[i]) + 1));
-            }*/ else if (progress[i] == 0) {
+                buttons[firstDayLocation + i].setBackgroundColor(trueColor + 0x3f000000 * ((progress[i] >= 3 ? 3 : progress[i]) - 1));
+            } else if (progress[i] < 0) {
+                buttons[firstDayLocation + i].setBackgroundColor(falseColor - 0x3f000000 * ((progress[i] <= -3 ? -3 : progress[i]) + 1));
+            } else if (progress[i] == 0) {
                 buttons[firstDayLocation + i].setBackgroundColor(0x70888888);
             }
         }

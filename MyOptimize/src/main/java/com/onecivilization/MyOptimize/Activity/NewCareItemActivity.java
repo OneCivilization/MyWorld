@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.onecivilization.MyOptimize.CustomView.TipsDialog;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Fragment.NewComplexPeriodicCareFragment;
 import com.onecivilization.MyOptimize.Fragment.NewNonperiodicCareFragment;
@@ -74,9 +75,6 @@ public class NewCareItemActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_care_item);
         findViews();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-        }
 
         fragmentManager = getSupportFragmentManager();
         NewPeriodicCareFragment temp = new NewPeriodicCareFragment();
@@ -216,6 +214,7 @@ public class NewCareItemActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_tips:
+                new TipsDialog(this, R.string.tips_new_care).show();
                 return true;
             case R.id.action_save_changes:
                 addCareItem();

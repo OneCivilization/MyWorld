@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title=" " />
+            app:title="@string/details" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"

@@ -15,6 +15,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.onecivilization.MyOptimize.Activity.ProblemDetailsActivity;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Model.Problem;
 import com.onecivilization.MyOptimize.R;
@@ -81,33 +82,37 @@ public class ProblemPropertiesFragment extends Fragment {
         }
         rankChooser.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.item_type, getResources().getStringArray(R.array.problem_item_ranks)));
         rankChooser.setSelection(problemItem.getRank() - 1);
-        rankChooser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                problemItem.setRank(position + 1);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        if (!isHistory) {
+            rankChooser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    problemItem.setRank(position + 1);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    }
+                    switch (position) {
+                        case 0:
+                            view.setBackgroundColor(getResources().getColor(R.color.state_true));
+                            break;
+                        case 1:
+                            view.setBackgroundColor(getResources().getColor(R.color.state_false));
+                            break;
+                        case 2:
+                            view.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                            break;
+                        case 3:
+                            view.setBackgroundColor(getResources().getColor(R.color.state_extra_high));
+                            break;
+                    }
+                    ((ProblemDetailsActivity) getActivity()).refreshFragments();
                 }
-                switch (position) {
-                    case 0:
-                        view.setBackgroundColor(getResources().getColor(R.color.state_true));
-                        break;
-                    case 1:
-                        view.setBackgroundColor(getResources().getColor(R.color.state_false));
-                        break;
-                    case 2:
-                        view.setBackgroundColor(getResources().getColor(R.color.state_warning));
-                        break;
-                    case 3:
-                        view.setBackgroundColor(getResources().getColor(R.color.state_extra_high));
-                        break;
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+        }
+
         statusSwitcher.setChecked(problemItem.isSolved());
         createdTime.setText(SimpleDateFormat.getDateInstance(DateFormat.LONG, AppManager.LOCALE).format(new Date(problemItem.getCreateTime())));
         if (problemItem.isSolved()) {

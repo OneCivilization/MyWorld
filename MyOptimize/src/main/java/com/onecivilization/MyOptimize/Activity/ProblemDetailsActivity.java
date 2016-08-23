@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.onecivilization.MyOptimize.CustomView.TipsDialog;
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.Fragment.ProblemContentFragment;
 import com.onecivilization.MyOptimize.Fragment.ProblemPropertiesFragment;
@@ -118,9 +119,28 @@ public class ProblemDetailsActivity extends BaseActivity {
                 }
                 return true;
             case R.id.action_tips:
+                new TipsDialog(this, R.string.tips_problem).show();
                 return true;
         }
         return false;
+    }
+
+    public void refreshFragments() {
+        View titleIndicator = viewPager.findViewById(R.id.title_indicator);
+        switch (problem.getRank()) {
+            case Problem.LOW:
+                titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_true));
+                break;
+            case Problem.NORMAL:
+                titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_false));
+                break;
+            case Problem.HIGH:
+                titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_warning));
+                break;
+            case Problem.EXTRA_HIGH:
+                titleIndicator.setBackgroundColor(getResources().getColor(R.color.state_extra_high));
+                break;
+        }
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
