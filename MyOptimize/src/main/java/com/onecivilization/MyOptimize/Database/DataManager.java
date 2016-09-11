@@ -47,13 +47,20 @@ import java.util.zip.ZipOutputStream;
  */
 public class DataManager {
 
+    public static final String APP_DIRECTORY = Environment.getExternalStorageDirectory().getAbsolutePath() + "/My Optimize";
     private static DataManager dataManager;
-    public final String APP_DIRECTORY = "/My Optimize";
     private SQLiteDatabase db;
     private List<Care> careList;
     private List<Care> historyCareList;
     private List<Problem> problemList;
     private List<Problem> historyProblemList;
+
+    {
+        File appDirectory = new File(APP_DIRECTORY);
+        if (!appDirectory.exists()) {
+            appDirectory.mkdir();
+        }
+    }
 
     private DataManager(Context context) {
         db = new DatabaseOpenHelper(context).getWritableDatabase();
@@ -963,7 +970,7 @@ public class DataManager {
     }
 
     public ArrayList<File> getBackupList() {
-        File backupDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + APP_DIRECTORY + "/Backup");
+        File backupDirectory = new File(APP_DIRECTORY + "/Backup");
         File[] files = backupDirectory.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String filename) {
@@ -985,22 +992,19 @@ public class DataManager {
         return backups;
     }
 
-    public File backup() {
+    public File backup(String fileName) {
         try {
             //if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) return false;
-            File backupDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + APP_DIRECTORY + "/Backup");
+            File backupDirectory = new File(APP_DIRECTORY + "/Backup");
             if (!backupDirectory.exists()) {
                 backupDirectory.mkdir();
             }
-            GregorianCalendar calendar = new GregorianCalendar();
-            String fileName = backupDirectory.getAbsolutePath() + String.format("/%d%02d%02d%02d%02d%02d.backup", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
-                    calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
-            ZipOutputStream zipOutputStream = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
+            ZipOutputStream zipOutputStream = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupDirectory.getAbsolutePath() + "/" + fileName + ".backup")));
             writeZipFile("/data/data/com.onecivilization.MyOptimize/databases/MyOptimize.db", zipOutputStream);
             writeZipFile("/data/data/com.onecivilization.MyOptimize/databases/MyOptimize.db-journal", zipOutputStream);
             writeZipFile("/data/data/com.onecivilization.MyOptimize/shared_prefs/com.onecivilization.MyOptimize_preferences.xml", zipOutputStream);
             zipOutputStream.close();
-            return new File(fileName);
+            return new File(backupDirectory.getAbsolutePath() + "/" + fileName + ".backup");
         } catch (IOException e) {
             e.printStackTrace();
             return null;

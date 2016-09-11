@@ -2,12 +2,12 @@
 <resources>
 
     <string-array name="care_item_types">
-        <item>Pure text</item>
-        <item>Non-periodic</item>
+        <item>Plain text</item>
+        <item>Event-driven</item>
         <item>Periodic</item>
         <item>Periodic with sub-items</item>
         <item>Periodic with sign-time limitation</item>
-        <item>Complex</item>
+        <item>Complex periodic</item>
     </string-array>
 
     <string-array name="period_units">

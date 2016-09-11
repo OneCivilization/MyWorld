@@ -206,7 +206,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 return true;
             case R.id.nav_feedback:
                 intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:1996cgz@gmail.com"));
+                intent.setData(Uri.parse("mailto:onecivilization.cn@gmail.com"));
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback：My Optimize");
                 try {
                     startActivity(intent);

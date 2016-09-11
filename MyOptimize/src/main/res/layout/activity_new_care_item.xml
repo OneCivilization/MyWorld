@@ -110,6 +110,16 @@
                     android:paddingTop="15dp" />
             </LinearLayout>
 
+            <CheckBox
+                android:id="@+id/postpone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="10dp"
+                android:text="@string/postpone_start"
+                android:textSize="14sp" />
+
             <FrameLayout
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"

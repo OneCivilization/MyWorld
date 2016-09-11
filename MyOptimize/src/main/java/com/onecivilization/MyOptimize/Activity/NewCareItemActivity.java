@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -47,6 +48,7 @@ public class NewCareItemActivity extends BaseActivity {
     private LinearLayout description;
     private TextView descriptionTitle;
     private Spinner typeChooser;
+    private CheckBox postpone;
     private FragmentManager fragmentManager;
     private NewCareFragment newCareFragment;
     private Button createButton;
@@ -60,6 +62,7 @@ public class NewCareItemActivity extends BaseActivity {
         description = (LinearLayout) findViewById(R.id.description);
         descriptionTitle = (TextView) findViewById(R.id.description_title);
         typeChooser = (Spinner) findViewById(R.id.type_chooser);
+        postpone = (CheckBox) findViewById(R.id.postpone);
         createButton = (Button) findViewById(R.id.create_button);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -104,21 +107,27 @@ public class NewCareItemActivity extends BaseActivity {
                 switch (position) {
                     case 0:
                         replaceFragment(new NewTextCareFragment());
+                        postpone.setVisibility(View.GONE);
                         break;
                     case 1:
                         replaceFragment(new NewNonperiodicCareFragment());
+                        postpone.setVisibility(View.GONE);
                         break;
                     case 2:
                         replaceFragment(new NewPeriodicCareFragment());
+                        postpone.setVisibility(View.VISIBLE);
                         break;
                     case 3:
                         replaceFragment(new NewSubPeriodicCareFragment());
+                        postpone.setVisibility(View.VISIBLE);
                         break;
                     case 4:
                         replaceFragment(new NewTimeLimitedPeriodicCareFragment());
+                        postpone.setVisibility(View.VISIBLE);
                         break;
                     case 5:
                         replaceFragment(new NewComplexPeriodicCareFragment());
+                        postpone.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -126,6 +135,7 @@ public class NewCareItemActivity extends BaseActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        postpone.setChecked(false);
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,35 +151,36 @@ public class NewCareItemActivity extends BaseActivity {
         if (titleEditText.getText().toString().equals("")) {
             Toast.makeText(NewCareItemActivity.this, R.string.empty_title_warning, Toast.LENGTH_SHORT).show();
         } else {
+            long createdTime = postpone.isChecked() ? System.currentTimeMillis() + 86400000 : System.currentTimeMillis();
             Bundle result = newCareFragment.getResult();
             switch (result.getInt("type")) {
                 case Care.TEXT:
                     dataManager.addCareItem(new TextCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                             descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
-                            System.currentTimeMillis(), result.getInt("color")));
+                            createdTime, result.getInt("color")));
                     break;
                 case Care.NONPERIODIC:
                     dataManager.addCareItem(new NonperiodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                             descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
-                            System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1)));
+                            createdTime, result.getInt("goal", 1), result.getInt("punishment", 1)));
                     break;
                 case Care.PERIODIC:
                     dataManager.addCareItem(new PeriodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                             descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
-                            System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1),
+                            createdTime, result.getInt("goal", 1), result.getInt("punishment", 1),
                             result.getInt("periodUnit", PeriodicCare.DAY), result.getInt("periodLength", 1)));
                     break;
                 case Care.SUB_PERIODIC:
                     dataManager.addCareItem(new SubPeriodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                             descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
-                            System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1),
+                            createdTime, result.getInt("goal", 1), result.getInt("punishment", 1),
                             result.getInt("periodUnit", PeriodicCare.DAY), result.getInt("periodLength", 1), result.getInt("subGoal", 2)));
                     break;
                 case Care.TIMELIMITED_PERIODIC:
                     if (result.getBoolean("isValid")) {
                         dataManager.addCareItem(new TimeLimitedPeriodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                                 descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
-                                System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1),
+                                createdTime, result.getInt("goal", 1), result.getInt("punishment", 1),
                                 result.getInt("periodUnit", PeriodicCare.DAY), result.getInt("periodLength", 1),
                                 new TimePair(result.getInt("startHour"), result.getInt("startMinute"), result.getInt("endHour"), result.getInt("endMinute"))));
                     } else {
@@ -185,7 +196,7 @@ public class NewCareItemActivity extends BaseActivity {
                         }
                         dataManager.addCareItem(new ComplexPeriodicCare(titleEditText.getText().toString(), descriptionTitle.getText().toString(),
                                 descriptionContent, descriptionLastEditedTime, dataManager.getMaxCareOrder() + 1,
-                                System.currentTimeMillis(), result.getInt("goal", 1), result.getInt("punishment", 1),
+                                createdTime, result.getInt("goal", 1), result.getInt("punishment", 1),
                                 result.getInt("periodUnit", PeriodicCare.DAY), result.getInt("periodLength", 1), result.getInt("subGoal", 2), timePairs));
                     } else {
                         Toast.makeText(this, getString(R.string.end_time_less_than_start_time) + "（" + result.getInt("invalidPosition") + "）", Toast.LENGTH_SHORT).show();

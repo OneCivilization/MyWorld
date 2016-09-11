@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.onecivilization.MyOptimize.CustomView.TipsDialog;
@@ -26,7 +27,9 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by CGZ on 2016/8/14.
@@ -80,14 +83,20 @@ public class SettingsBackupActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_backup:
-                new AlertDialog.Builder(this).setMessage(R.string.backup_confirm)
+                GregorianCalendar calendar = new GregorianCalendar();
+                final String fileName = String.format("%d%02d%02d%02d%02d%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
+                        calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
+                final EditText title = (EditText) LayoutInflater.from(this).inflate(R.layout.dialog_edit_text, null);
+                title.setText(fileName);
+                new AlertDialog.Builder(this).setTitle(R.string.backup_confirm)
                         .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                adapter.addBackup(DataManager.getInstance().backup());
+                                adapter.addBackup(DataManager.getInstance().backup(title.getText().toString()));
                             }
                         })
                         .setNegativeButton(R.string.cancel, null)
+                        .setView(title)
                         .create().show();
                 return true;
             case R.id.action_tips:
@@ -99,8 +108,13 @@ public class SettingsBackupActivity extends BaseActivity {
 
     private class MyViewHolder extends RecyclerView.ViewHolder {
 
+        public TextView title;
+        public TextView create_time;
+
         public MyViewHolder(View itemView) {
             super(itemView);
+            title = (TextView) itemView.findViewById(R.id.title);
+            create_time = (TextView) itemView.findViewById(R.id.created_time);
         }
     }
 
@@ -119,20 +133,25 @@ public class SettingsBackupActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(final MyViewHolder holder, int position) {
-            ((TextView) holder.itemView).setText(SimpleDateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.MEDIUM, AppManager.LOCALE).format(new Date(backups.get(holder.getAdapterPosition()).lastModified())));
+            holder.title.setText(backups.get(position).getName().split("[.]")[0]);
+            holder.create_time.setText(SimpleDateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.MEDIUM, AppManager.LOCALE).format(new Date(backups.get(holder.getAdapterPosition()).lastModified())));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     new AlertDialog.Builder(SettingsBackupActivity.this)
-                            .setMessage(getString(R.string.backed_up_at) + " " + ((TextView) v).getText())
+                            .setMessage(getString(R.string.backed_up_at) + " " + holder.create_time.getText())
                             .setPositiveButton(R.string.recover, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    adapter.addBackup(DataManager.getInstance().backup());
+                                    GregorianCalendar calendar = new GregorianCalendar();
+                                    final String fileName = String.format("auto_%d%02d%02d%02d%02d%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
+                                            calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
+                                    adapter.addBackup(DataManager.getInstance().backup(fileName));
                                     DataManager.getInstance().recover(backups.get(holder.getAdapterPosition()));
                                     DataManager.getInstance().loadCareList();
                                     DataManager.getInstance().loadHistoryCareList();
                                     DataManager.getInstance().loadProblemList();
+                                    AppManager.recreateFirstActivity();
                                 }
                             })
                             .setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {

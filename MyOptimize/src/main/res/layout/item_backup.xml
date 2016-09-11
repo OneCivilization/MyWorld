@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:paddingBottom="16dp"
-    android:paddingTop="16dp"
-    android:textSize="18sp" />
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingTop="16dp"
+        android:textColor="#5babe0"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/created_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingBottom="3dp"
+        android:textSize="13sp" />
+
+</LinearLayout>

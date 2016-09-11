@@ -49,7 +49,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.contact_developer:
                 intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:1996cgz@gmail.com"));
+                intent.setData(Uri.parse("mailto:onecivilization.cn@gmail.com"));
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Contact：My Optimize");
                 try {
                     startActivity(intent);
@@ -59,7 +59,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.help_translate:
                 intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:1996cgz@gmail.com"));
+                intent.setData(Uri.parse("mailto:onecivilization.cn@gmail.com"));
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Translation：My Optimize");
                 try {
                     startActivity(intent);
@@ -74,6 +74,22 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.support_developer:
                 View view = LayoutInflater.from(this).inflate(R.layout.dialog_support_developer, null);
+                view.findViewById(R.id.alipay).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://ds.alipay.com/?from=mobilecodec&scheme=alipayqr%3A%2F%2Fplatformapi%2Fstartapp%3FsaId%3D10000007%26clientVersion%3D3.7.0.0718%26qrcode%3Dhttps%253A%252F%252Fqr.alipay.com%252Fapx09315ymtd22do9gmro15%253F_s%253Dweb-other"));
+                        startActivity(intent);
+                    }
+                });
+                view.findViewById(R.id.paypal).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://paypal.me/onecivilization"));
+                        startActivity(intent);
+                    }
+                });
                 new AlertDialog.Builder(this).setTitle(R.string.support_developer)
                         .setView(view)
                         .setPositiveButton(R.string.close, null)

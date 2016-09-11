@@ -171,6 +171,7 @@ public class NonperiodicCareRecordsFragment extends Fragment {
                                                     selectedRecordItemView.setBackgroundColor(Color.TRANSPARENT);
                                                     selectedRecordItemView = null;
                                                 }
+                                                ((CareDetailsActivity) getActivity()).refreshFragments();
                                             }
                                         }).create().show();
                             }
@@ -215,6 +216,7 @@ public class NonperiodicCareRecordsFragment extends Fragment {
                                                 selectedRecordItemView.setBackgroundColor(Color.TRANSPARENT);
                                                 selectedRecordItemView = null;
                                             }
+                                            ((CareDetailsActivity) getActivity()).refreshFragments();
                                         }
                                     })
                                     .setNegativeButton(R.string.cancel, null)
@@ -226,12 +228,6 @@ public class NonperiodicCareRecordsFragment extends Fragment {
                 });
                 new AlertDialog.Builder(getActivity())
                         .setView(dialogView)
-                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                ((CareDetailsActivity) getActivity()).refreshFragments();
-                            }
-                        })
                         .create().show();
             }
         });

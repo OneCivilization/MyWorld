@@ -52,6 +52,12 @@ public class AppManager extends Application {
         }
     }
 
+    public static void recreateFirstActivity() {
+        if (!activities.isEmpty()) {
+            activities.get(0).recreate();
+        }
+    }
+
     public static void setLanguage(int language) {
         Resources resources = context.getResources();
         Configuration config = resources.getConfiguration();

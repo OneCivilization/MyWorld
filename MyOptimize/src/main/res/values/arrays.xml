@@ -3,7 +3,7 @@
 
     <string-array name="care_item_types">
         <item>纯文本</item>
-        <item>非周期型</item>
+        <item>事件驱动型</item>
         <item>周期型</item>
         <item>带子项目周期型</item>
         <item>限时签到周期型</item>

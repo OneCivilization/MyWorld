@@ -17,6 +17,7 @@
     <color name="colorPrimary">#242424</color>
     <color name="colorPrimaryDark">#ff000000</color>
     <color name="colorAccent">#33b5e5</color>
+    <color name="colorBackground">#ffffffff</color>
 
     <color name="toggle_button_unchecked_color">#69848e</color>
     <color name="toggle_button_checked_color">#65af48</color>

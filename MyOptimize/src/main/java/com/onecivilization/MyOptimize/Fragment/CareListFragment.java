@@ -100,6 +100,11 @@ public class CareListFragment extends Fragment {
             while (iterator.hasNext()) {
                 if (iterator.next().getState() >= careItem.getState() && iterator.previousIndex() != careItemPosition) {
                     int toPosition = iterator.previousIndex();
+                    Care care = iterator.previous();
+                    while (care.getState() == careItem.getState() && care.getOrder() < careItem.getOrder()) {
+                        toPosition = iterator.nextIndex();
+                        care = iterator.next();
+                    }
                     if (toPosition > careItemPosition) {
                         adapter.careList.add(toPosition, careItem);
                         adapter.careList.remove(careItemPosition);

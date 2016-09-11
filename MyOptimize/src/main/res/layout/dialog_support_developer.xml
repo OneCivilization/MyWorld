@@ -10,28 +10,70 @@
         android:layout_marginTop="12dp"
         android:background="#000000" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp"
-        android:layout_marginTop="16dp">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/alipay" />
+        <TableRow
+            android:id="@+id/alipay"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:text="@string/alipay"
-            android:textIsSelectable="true"
-            android:textSize="16sp" />
-    </LinearLayout>
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/alipay" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="@string/alipay"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="@string/alipay_account"
+                android:textSize="16sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/paypal"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/paypal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="@string/paypal"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="@string/paypal_account"
+                android:textSize="16sp" />
+        </TableRow>
+
+    </TableLayout>
 
 </LinearLayout>
