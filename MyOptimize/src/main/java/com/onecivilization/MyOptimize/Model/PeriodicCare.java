@@ -1,5 +1,7 @@
 package com.onecivilization.MyOptimize.Model;
 
+import android.widget.Toast;
+
 import com.onecivilization.MyOptimize.Database.DataManager;
 import com.onecivilization.MyOptimize.R;
 import com.onecivilization.MyOptimize.Util.AppManager;
@@ -110,7 +112,9 @@ public class PeriodicCare extends NonperiodicCare {
         if (archivedTime == 0) {
             long start = periodStartTime + periodTime * getPeriodCount();
             if (records.isEmpty()) {
-                addRecord(false);
+                if (System.currentTimeMillis() >= createTime) {
+                    addRecord(false);
+                }
             } else if (records.getLast().time < start) {
                 long lastRecordTime = periodStartTime + records.size() * periodTime;
                 int lostPeriodCount = getPeriodCount() + 1 - records.size();
@@ -134,6 +138,10 @@ public class PeriodicCare extends NonperiodicCare {
     }
 
     public void addRecord() {
+        if (records.isEmpty()) {
+            Toast.makeText(AppManager.getContext(), R.string.attention_not_activated, Toast.LENGTH_SHORT).show();
+            return;
+        }
         modified--;
         deleteRecord(records.size() - 1);
         addRecord(true);
@@ -187,6 +195,9 @@ public class PeriodicCare extends NonperiodicCare {
 
     @Override
     public int getState() {
+        if (records.isEmpty()) {
+            return STATE_UNDONE;
+        }
         if (isSigned()) {
             if (achievedTime == 0L) {
                 return STATE_DONE;
@@ -207,6 +218,7 @@ public class PeriodicCare extends NonperiodicCare {
     }
 
     public boolean isSigned() {
+        if (records.isEmpty()) return false;
         return records.getLast().tag;
     }
 
@@ -281,6 +293,7 @@ public class PeriodicCare extends NonperiodicCare {
 
     @Override
     public int getProgress() {
+        if (records.isEmpty()) return 0;
         if (isSigned()) {
             return progress;
         } else {
@@ -304,6 +317,7 @@ public class PeriodicCare extends NonperiodicCare {
 
     @Override
     public int getFailed() {
+        if (records.isEmpty()) return 0;
         if (isSigned()) {
             return failed;
         } else {

@@ -142,6 +142,7 @@
     <string name="tips_settings_backup">* You can back up your current data by clicking the backup button on the title bar.\n\n* Click the existed backup to edit it (delete/revert).\n\n* When you revert to an existing backup, the current data will be backed up automatically.\n\n* The data is backed up at SD-card/My Optimize/Backup, the directory won’t be deleted when the app is uninstalled.</string>
     <string name="tips_settings_language"><![CDATA[* At present we only offered Simplified Chinese and English (US). The English is translated by the developer, so there might be some translation errors, if you find translation errors or is willing to help us translate the app to more languages, please click sliding menu -> feedback or sliding menu -> about -> help with translation.]]></string>
     <string name="postpone_start">Activate at tomorrow</string>
+    <string name="attention_not_activated">This attention is not activated at present</string>
 
 </resources>
  

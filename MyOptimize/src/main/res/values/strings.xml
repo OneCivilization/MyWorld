@@ -146,6 +146,7 @@
     <string name="tips_settings_backup">*点击标题栏中的备份按钮即可备份当前数据（包括选项设置和应用数据）\n\n*点击已存在的备份即可对其进行编辑（删除/恢复）\n\n*当你恢复至某一版本的备份数据时，App会先自动备份当前数据\n\n*备份的数据保存在SD卡的My Optimize/Backup文件夹中。卸载App时这个文件夹不会被删除</string>
     <string name="tips_settings_language"><![CDATA[*目前仅支持简体中文和English（US），其中英语由开发者自己翻译，限于其英语水平，可能存在翻译错误的情况，如果您发现了翻译错误，或是愿意帮助我们翻译成其它语言，欢迎点击侧滑菜单->反馈或侧滑菜单->关于->帮助翻译]]></string>
     <string name="postpone_start">等到明天再启动</string>
+    <string name="attention_not_activated">该注意点尚未启动！</string>
 
 </resources>
  

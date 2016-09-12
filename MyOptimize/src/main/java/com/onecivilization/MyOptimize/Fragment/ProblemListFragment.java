@@ -78,6 +78,7 @@ public class ProblemListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        DataManager.getInstance().sortProblemListByRank();
         adapter.notifyDataSetChanged();
     }
 
